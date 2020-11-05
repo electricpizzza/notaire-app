@@ -1,10 +1,8 @@
 <template>
   <div v-if="comparent">
-    <EntrepriseForm
-      v-if="comparent.type === 'Personne Morale'"
-      :comparent="comparent"
-    />
-    <PersonForm v-if="comparent.type === 'Personne Pysique'" />
+    <EntrepriseForm v-if="comparent.type === 'PM'" :comparent="comparent" />
+    <PersonForm v-if="comparent.type === 'PP'" :comparent="comparent" />
+    <MineurForm v-if="comparent.type === 'PPM'" :comparent="comparent" />
   </div>
 </template>
 <script>

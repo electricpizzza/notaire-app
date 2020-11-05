@@ -1,10 +1,12 @@
 <template>
   <v-form v-if="comparent" ref="form" v-model="valid" lazy-validation>
+    <h1 class="formTitle" style="color: #295075; padding: 30px">
+      Comparent / Personne Morale
+    </h1>
     <v-container>
       <v-row>
         <v-col cols="12">
           <v-text-field
-            id="raisonSociale"
             v-model="raisonSociale"
             name="raisonSociale"
             label="Raison Sociale"
@@ -38,13 +40,13 @@
         </v-col>
         <v-col cols="12" sm="6">
           <v-select
-            id="representant"
             v-model="representant"
             name="representant"
             :items="representants"
             label="Representant"
             item-value="id"
             item-text="nom"
+            multiple
           ></v-select>
         </v-col>
         <v-col cols="12">
@@ -65,7 +67,7 @@
   </v-form>
 </template>
 <script>
-import ComparentService from '../assets/sevices/comparentService'
+import ComparentService from './../../assets/sevices/comparentService.js'
 const comparentService = new ComparentService()
 export default {
   props: ['comparent'],
@@ -77,7 +79,6 @@ export default {
     raisonSociale: '',
     ice: '',
     rc: '',
-    If: '',
     cnss: '',
     Adresse: '',
     representants: [],
@@ -100,7 +101,8 @@ export default {
     })
   },
   created() {
-    console.log(this.comparent)
+    this.raisonSociale = this.comparent.nom
+    console.log(this.raisonSociale);
   },
 
   methods: {
@@ -127,7 +129,10 @@ export default {
         )
         .then((resp) => {
           console.log(resp)
-        })
+          this.$router.push(
+            `/comparent?success=Comparent était bien enregistré`
+          )
+        }).catch(err => console.error(err))
     },
   },
 }

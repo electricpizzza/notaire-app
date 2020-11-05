@@ -16,36 +16,56 @@
           exact
         >
           <v-list-item-action>
-            <v-icon>{{ item.icon }}</v-icon>
+            <v-icon color="primary">{{ item.icon }}</v-icon>
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title v-text="item.title" />
           </v-list-item-content>
         </v-list-item>
       </v-list>
+      <v-spacer />
+      <v-btn
+        class="ma-2 my-5"
+        icon
+        @click.stop="miniVariant = !miniVariant"
+        color="primary"
+      >
+        <v-icon>mdi-{{ `chevron-${miniVariant ? "right" : "left"}` }}</v-icon>
+      </v-btn>
     </v-navigation-drawer>
     <v-app-bar :clipped-left="clipped" fixed app color="primary">
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-btn icon @click.stop="miniVariant = !miniVariant">
-        <v-icon>mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon>
-      </v-btn>
+
       <v-btn icon @click.stop="clipped = !clipped">
         <v-icon>mdi-application</v-icon>
       </v-btn>
-      <v-btn icon @click.stop="fixed = !fixed">
-        <v-icon>mdi-minus</v-icon>
-      </v-btn>
-      <img
-        src="~/assets/logo.jpeg"
-        alt="Logo"
-        width="70px"
-        height="70px"
-        class="mx-3"
-      />
+      <nuxt-link to="/">
+        <img
+          src="~/assets/logo.jpeg"
+          alt="Logo"
+          width="70px"
+          height="70px"
+          class="mx-3"
+        />
+      </nuxt-link>
+      <v-row align="center" justify="space-around">
+        <v-btn tile color="info">
+          <v-icon left> mdi-folder </v-icon>
+          Creer Un Dossier
+        </v-btn>
+        <v-btn tile>
+          <v-icon left> mdi-pencil </v-icon>
+          Creer Un Acte
+        </v-btn>
+        <v-btn tile color="error" nuxt to="/comparent">
+          <v-icon left> mdi-plus </v-icon>
+          Creer Un model
+        </v-btn>
+      </v-row>
       <!-- <v-toolbar-title v-text="title" /> -->
       <v-spacer />
-      <v-btn icon @click.stop="rightDrawer = !rightDrawer">
-        <v-icon>mdi-menu</v-icon>
+      <v-btn icon @click.stop="rightDrawer = !rightDrawer" outlined fab>
+        <v-icon>mdi-format-list-bulleted-square</v-icon>
       </v-btn>
     </v-app-bar>
     <v-main>
@@ -83,9 +103,24 @@ export default {
           to: '/',
         },
         {
+          icon: 'mdi-folder',
+          title: 'Dossiers',
+          to: '/dossiers',
+        },
+        {
+          icon: 'mdi-gavel',
+          title: 'Actes',
+          to: '/actes',
+        },
+        {
           icon: 'mdi-account-group',
           title: 'Comparents',
           to: '/comparent',
+        },
+        {
+          icon: 'mdi-pencil',
+          title: 'Modeles',
+          to: '/modeles',
         },
       ],
       miniVariant: false,

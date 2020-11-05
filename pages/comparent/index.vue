@@ -4,11 +4,15 @@
     :items="comparents"
     sort-by="calories"
     class="elevation-1"
+    style="margin: 50px 20px"
   >
     <template v-slot:top>
       <v-toolbar flat>
-        <v-toolbar-title>Comparents</v-toolbar-title>
+        <v-toolbar-title style="padding: 20px">Comparents</v-toolbar-title>
         <v-divider class="mx-4" inset vertical></v-divider>
+        <v-alert dense text type="success" dismissible v-if="success">
+          {{ success }}
+        </v-alert>
         <v-spacer></v-spacer>
         <v-dialog v-model="dialog" max-width="500px">
           <template v-slot:activator="{ on, attrs }">
@@ -24,21 +28,11 @@
             <v-card-text>
               <v-container>
                 <v-row>
-                  <v-col cols="12" sm="6">
-                    <v-text-field
-                      v-model="editedItem.id"
-                      label="ID"
-                      disabled
-                      readonly
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6">
-                    <v-combobox
-                      v-model="editedItem.type"
-                      :items="items"
-                      label="Type"
-                      :disabled="!editedItem"
-                    ></v-combobox>
+                  <v-col cols="12">
+                    <v-radio-group v-model="editedItem.type" row>
+                      <v-radio label="Personne Physique" value="PP"></v-radio>
+                      <v-radio label="Personne Morale" value="PM"></v-radio>
+                    </v-radio-group>
                   </v-col>
                   <v-col cols="12">
                     <v-text-field
@@ -47,10 +41,7 @@
                     ></v-text-field>
                   </v-col>
                   <v-col
-                    v-if="
-                      editedItem.type === 'Personne Physique' ||
-                      editedItem.mineur
-                    "
+                    v-if="editedItem.type === 'PP' || editedItem.mineur"
                     cols="12"
                     sm="6"
                   >
@@ -67,6 +58,8 @@
                       v-model="editedItem.comparent"
                       label="Tutell"
                       :items="comparents"
+                      item-text="nom"
+                      item-value="id"
                       autocomplete
                     ></v-select>
                   </v-col>
@@ -76,8 +69,8 @@
 
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="close"> Cancel </v-btn>
-              <v-btn color="blue darken-1" text @click="save"> Save </v-btn>
+              <v-btn color="blue darken-1" text @click="close"> Annuler </v-btn>
+              <v-btn color="blue darken-1" text @click="save"> Suivant </v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -111,9 +104,13 @@
 </template>
 <script>
 import axios from 'axios'
+import ComparentService from './../../assets/sevices/comparentService'
+const comparentService = new ComparentService()
 export default {
   data: () => ({
     dialog: false,
+    success: null,
+    types: { PP: "Personne Physique", PM: "Personne Morale", PPM: "Personne Physique Mineur" },
     dialogForm: false,
     dialogDelete: false,
     headers: [
@@ -130,19 +127,20 @@ export default {
       type: '',
       nom: '',
       dateAjout: '',
+      mineur: false
     },
     defaultItem: {
       id: null,
       type: '',
       nom: '',
       dateAjout: '',
+      mineur: false
     },
-    items: ['Personne Physique', 'Personne Morale'],
   }),
 
   computed: {
     formTitle() {
-      return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
+      return this.editedIndex === -1 ? 'Ajouter Nouveau Comparent' : 'Modifier Comparent'
     },
   },
 
@@ -161,11 +159,11 @@ export default {
 
   methods: {
     initialize() {
+      this.success = this.$route.query.success
       axios
         .get('http://localhost:1337/comparent', { mode: 'cors' })
         .then((resp) => {
           this.comparents = resp.data
-          this.dialogForm = true
         })
         .catch((err) => console.error(err))
     },
@@ -206,11 +204,8 @@ export default {
       if (this.editedIndex > -1) {
         Object.assign(this.comparents[this.editedIndex], this.editedItem)
       } else {
-        axios
-          .post('http://localhost:1337/comparent', {
-            nom: this.editedItem.nom,
-            type: this.editedItem.type,
-          })
+        this.editedItem.type = this.editedItem.mineur ? 'PPM' : this.editedItem.type
+        comparentService.createComparent(this.editedItem.nom, this.editedItem.type)
           .then((resp) => {
             this.$router.push(
               `/comparent/ajouter?id=${resp.data.identifiers[0].id}`
