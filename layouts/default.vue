@@ -53,7 +53,7 @@
           <v-icon left> mdi-folder </v-icon>
           Creer Un Dossier
         </v-btn>
-        <v-btn tile>
+        <v-btn tile nuxt to="/actes/ajouter">
           <v-icon left> mdi-pencil </v-icon>
           Creer Un Acte
         </v-btn>

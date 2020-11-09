@@ -48,15 +48,14 @@
         <v-row>
           <v-col
             v-for="item in props.items"
-            :key="item.name"
+            :key="item.id"
             cols="12"
             sm="6"
             md="4"
-            lg="3"
           >
-            <v-card>
+            <v-card nuxt :to="`dossiers/${item.id}`">
               <v-card-title class="subheading font-weight-bold">
-                {{ item.name }}
+                {{ item.title }}
               </v-card-title>
 
               <v-divider></v-divider>
@@ -146,14 +145,13 @@ export default {
       itemsPerPage: 4,
       sortBy: 'name',
       keys: [
-        'Name',
-        'Calories',
-        'Fat',
-        'Carbs',
-        'Protein',
-        'Sodium',
-        'Calcium',
-        'Iron',
+        'title',
+        'description',
+        'nature',
+        'libelle',
+        'dateOuverture',
+        'dateFermeture',
+        'NomMaitre',
       ],
       items: [],
     }
