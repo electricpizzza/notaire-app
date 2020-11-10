@@ -1,12 +1,7 @@
 <template>
   <div>
     <div class="text-center container">
-      <h1>
-        Ajouter Un Model d'un Acte
-        <span v-if="model"
-          >de : <b>{{ model.libelle }}</b></span
-        >
-      </h1>
+      <h1>Ajouter Un Model d'un Modele</h1>
       <v-dialog v-model="dialog" width="500">
         <v-card>
           <v-card-title class="headline lighten-2">
@@ -98,20 +93,39 @@ export default {
       type: '',
       champs: [],
       dialog: this.language && this.libelle ? false : true,
-      models: [],
       nbCamps: 2,
       languages: [{ 'titre': 'Français', 'value': 'Fr' }, { 'titre': 'العربية', 'value': 'Ar' }]
     }
   },
   beforeCreate() {
-    axios.get('http://localhost:1337/model').then(resp => {
-      this.models = resp.data;
-    })
+
   },
   methods: {
     addChamps() {
       this.nbCamps++;
+    },
+    enregistrer() {
+      const inputs = document.querySelectorAll('input');
+      const wanted = [];
+      this.champs = [];
+      for (let index = 0; index < inputs.length; index++) {
+        const element = inputs[index];
+        if (element.name != "") {
+          wanted.push(element)
+        }
+      }
+      for (let index = 0; index < wanted.length - 1; index += 2) {
+        const champ = {
+          name: wanted[index].value.replace(" ", ""),
+          type: wanted[index + 1].value,
+          label: wanted[index].value,
+        }
+        this.champs.push(champ)
+      }
+      console.log(this.champs);
+      // axios.post('http://localhost:1337/model', {
 
+      // })
     }
   }
 }

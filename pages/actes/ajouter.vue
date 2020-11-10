@@ -27,6 +27,7 @@
 
           <v-card-actions>
             <v-spacer></v-spacer>
+            <v-btn color="error" text nuxt to="/actes"> Anuller </v-btn>
             <v-btn color="primary" text @click="dialog = false">
               Choisire
             </v-btn>
@@ -41,11 +42,12 @@
 </template>
 <script>
 import axios from 'axios'
+import model1 from './../../assets/model1.json'
 export default {
   name: "AjouterActe",
   data() {
     return {
-      model: null,
+      model: model1,
       dialog: this.model ? false : true,
       models: [],
     }

@@ -49,7 +49,7 @@
         />
       </nuxt-link>
       <v-row align="center" justify="space-around">
-        <v-btn tile color="info">
+        <v-btn tile color="info" nuxt to="/dossiers/ajouter">
           <v-icon left> mdi-folder </v-icon>
           Creer Un Dossier
         </v-btn>
@@ -57,7 +57,7 @@
           <v-icon left> mdi-pencil </v-icon>
           Creer Un Acte
         </v-btn>
-        <v-btn tile color="error" nuxt to="/comparent">
+        <v-btn tile color="error" nuxt to="/modeles/ajouter">
           <v-icon left> mdi-plus </v-icon>
           Creer Un model
         </v-btn>
