@@ -47,7 +47,7 @@ export default {
   name: "AjouterActe",
   data() {
     return {
-      model: model1,
+      model: null,
       dialog: this.model ? false : true,
       models: [],
     }

@@ -142,7 +142,7 @@ export default {
       filter: {},
       sortDesc: false,
       page: 1,
-      itemsPerPage: 4,
+      itemsPerPage: 6,
       sortBy: 'name',
       keys: [
         'title',
@@ -177,7 +177,6 @@ export default {
   },
   beforeCreate() {
     dossierService.getAllDocs().then(resp => {
-      console.log(resp)
       this.items = resp.data;
     })
   }

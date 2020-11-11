@@ -5,36 +5,20 @@
         <v-col cols="12">
           <v-text-field v-model="libelle" label="Titre"></v-text-field>
         </v-col>
-        <v-col cols="12" v-for="champ in shema" :bind="champ.name">
+        <v-col cols="12" v-for="champ in schema" :bind="champ.name">
           <v-sheet
             elevation="10"
             rounded="xl"
             v-if="champ.type === 'comparent'"
           >
-            <v-sheet class="pa-3 primary" dark rounded="t-xl">
-              <v-row>
-                <v-col cols="9">
-                  <h3>
-                    <v-icon>mdi-account-outline</v-icon>
-                    {{ champ.label + "(s)" }}
-                  </h3>
-                </v-col>
-                <v-col cols="3" class="text-right">
-                  <v-btn disabled icon>
-                    <v-icon>mdi-account-outline</v-icon>
-                  </v-btn>
-                  <v-btn class="ml-2" icon @click="dialogChoix = true">
-                    <v-icon>mdi-plus</v-icon>
-                  </v-btn>
-                </v-col>
-              </v-row>
-            </v-sheet>
-            <v-dialog v-model="dialogChoix" width="500">
+            <v-dialog
+              v-model="dynamicData.find((d) => d.nom == champ.name).dialogChoix"
+              width="500"
+            >
               <v-card>
                 <v-card-title class="headline grey lighten-2">
                   Choix de(s) Comparent(s)
                 </v-card-title>
-
                 <v-card-text>
                   <v-list shaped>
                     <v-list-item-group v-model="selectedItems" multiple>
@@ -69,25 +53,50 @@
                     </v-list-item-group>
                   </v-list>
                 </v-card-text>
-
                 <v-divider></v-divider>
-
                 <v-card-actions>
                   <v-spacer></v-spacer>
                   <v-btn color="primary" text @click="selectItems(champ.name)">
-                    Selectionner
+                    Selectionner {{ champ.name }}(s)
                   </v-btn>
                 </v-card-actions>
               </v-card>
             </v-dialog>
+            <v-sheet class="pa-3 primary" dark rounded="t-xl">
+              <v-row>
+                <v-col cols="9">
+                  <h3>
+                    <v-icon>mdi-account-outline</v-icon>
+                    {{ champ.label + "(s)" }}
+                  </h3>
+                </v-col>
+                <v-col cols="3" class="text-right">
+                  <v-btn disabled icon>
+                    <v-icon>mdi-account-outline</v-icon>
+                  </v-btn>
+                  <v-btn
+                    class="ml-2"
+                    icon
+                    @click="
+                      dynamicData.find(
+                        (d) => d.nom == champ.name
+                      ).dialogChoix = true
+                    "
+                  >
+                    <v-icon>mdi-plus</v-icon>
+                  </v-btn>
+                </v-col>
+              </v-row>
+            </v-sheet>
+
             <div class="pa-4">
               <v-chip-group active-class="primary--text" column>
                 <v-chip
-                  v-for="comp in dynamicData.find((d) => (d.name = champ.name))
+                  v-for="comp in dynamicData.find((d) => d.nom == champ.name)
                     .data"
                   :key="comp"
                 >
-                  {{ comp }}
+                  {{ comp.name }}
                 </v-chip>
               </v-chip-group>
             </div>
@@ -123,6 +132,7 @@
             item-value="id"
           ></v-select>
         </v-col>
+        <v-col cols="12"> </v-col>
       </v-row>
       <v-btn color="primary" class="offset-10" @click="enregistrer" dark
         >Enregistrer</v-btn
@@ -138,8 +148,9 @@ export default {
   name: "Acteform",
   data() {
     return {
-      shema: [],
+      schema: [],
       champs: [],
+      modelActuel: '',
       redacteur: '',
       fichier: '',
       dossier: '',
@@ -167,30 +178,36 @@ export default {
     })
   },
   created() {
-    // this.shema = JSON.parse(this.model.champs);
-    this.shema = this.model;
-    this.model.forEach(chmp => {
+    this.schema = JSON.parse(this.model.champs);
+    console.log(this.schema);
+    var id = 0;
+    const objs = [];
+    this.schema.forEach(chmp => {
       if (chmp.type === 'comparent') {
-        this.dynamicData.push({
-          name: chmp.name,
+        id++;
+        objs.push({
+          id,
+          dialogChoix: false,
+          nom: chmp.name,
           data: [],
         });
-      } else
-        this.dynamicData.push({
-          name: chmp.name,
-          data: '',
-        });
+      }
     });
+    this.dynamicData = objs;
+  },
+  watch: {
+    model: () => {
+      // this.schema = JSON.parse(this.model.champs)
+    }
   },
   methods: {
     selectItems(name) {
 
-      // this.dynamicData.find(d => d.name = name).data.push(this.selectedItems);
-      console.log(this.dynamicData);
-      this.dialogChoix = false
+      this.dynamicData.find(d => d.nom == name).data = [...this.selectedItems];
+      this.dynamicData.find(d => d.nom == name).dialogChoix = false
+      this.selectedItems = [];
     },
     enregistrer() {
-
       const chmps = document.querySelectorAll('input');
       chmps.forEach(chmp => {
         if (chmp.name != "") {
@@ -199,6 +216,24 @@ export default {
           )
         }
       });
+      this.dynamicData.forEach(chmp => {
+        const objs = [];
+        chmp.data.forEach(element => {
+          objs.push(element.id)
+        });
+        this.champs.push(
+          JSON.parse(`{"${chmp.nom}" : "${[...objs]}"}`)
+        )
+      });
+      console.log(JSON.stringify({
+        contenu: this.champs,
+        model: this.model.id,
+        redacteur: this.redacteur,
+        fichier: this.fichier,
+        dossierId: this.dossier,
+        libelle: this.libelle,
+        dateRedaction: new Date().getUTCDate()
+      }));
       axios.post('http://localhost:1337/actes', {
         contenu: this.champs,
         model: this.model.id,
@@ -206,9 +241,12 @@ export default {
         fichier: this.fichier,
         dossierId: this.dossier,
         libelle: this.libelle,
+        data: this.dynamicData,
         dateRedaction: new Date().toDateString()
       }).then(resp => {
-        console.log(resp)
+        this.$router.push(
+          `/actes?success=Acte est bien enregistré`
+        )
       }).catch(err => console.log(err))
     }
   }

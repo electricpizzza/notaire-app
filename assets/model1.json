@@ -10,9 +10,9 @@
         "label":"Vendeur"
     },
     {
-        "name":"Achteur",
+        "name":"Acheteur",
         "type":"comparent",
-        "label":"Achteur"
+        "label":"Acheteur"
     },
     {
         "name":"bien",

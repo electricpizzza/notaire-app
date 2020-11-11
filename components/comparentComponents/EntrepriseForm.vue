@@ -128,7 +128,6 @@ export default {
           this.Adresse
         )
         .then((resp) => {
-          console.log(resp)
           this.$router.push(
             `/comparent?success=Comparent était bien enregistré`
           )

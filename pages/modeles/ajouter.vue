@@ -72,6 +72,14 @@
               </v-col>
             </v-row>
           </v-col>
+          <v-col cols="12">
+            <RichEditor
+              v-if="type"
+              :libelle="libelle"
+              :redacteur="redacteur"
+              :type="type"
+            />
+          </v-col>
         </v-row>
       </v-form>
       <v-btn color="primary" class="offset-10" dark @click="enregistrer"
@@ -122,10 +130,24 @@ export default {
         }
         this.champs.push(champ)
       }
-      console.log(this.champs);
-      // axios.post('http://localhost:1337/model', {
-
-      // })
+      console.log(JSON.stringify({
+        language: this.language,
+        redacteur: this.redacteur,
+        libelle: this.libelle,
+        type: this.type,
+        champs: this.champs
+      }));
+      axios.post('http://localhost:1337/model', {
+        language: this.language,
+        redacteur: this.redacteur,
+        libelle: this.libelle,
+        type: this.type,
+        champs: this.champs
+      }).then(resp => {
+        this.$router.push(
+          `/modeles?success=Acte est bien enregistré`
+        )
+      }).catch(err => console.log(err))
     }
   }
 }
