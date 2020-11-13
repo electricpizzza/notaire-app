@@ -108,25 +108,26 @@ export default {
           to: '/dossiers',
         },
         {
-          icon: 'mdi-gavel',
-          title: 'Actes',
-          to: '/actes',
-        },
-        {
           icon: 'mdi-account-group',
           title: 'Comparents',
           to: '/comparent',
+        },
+        {
+          icon: 'mdi-domain',
+          title: 'Biens',
+          to: '/biens',
+        },
+        {
+          icon: 'mdi-gavel',
+          title: 'Actes',
+          to: '/actes',
         },
         {
           icon: 'mdi-pencil',
           title: 'Modeles',
           to: '/modeles',
         },
-        {
-          icon: 'mdi-domain',
-          title: 'Biens',
-          to: '/biens',
-        }
+
       ],
       miniVariant: false,
       right: true,

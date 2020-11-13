@@ -1,7 +1,9 @@
 <template>
   <v-card>
     <v-card-title>
-      <h1 class="ma-5">Biens</h1>
+      <h3 class="ma-5">
+        <v-icon class="mr-4" color="primary" large>mdi-domain</v-icon> Biens
+      </h3>
       <v-text-field
         v-model="search"
         append-icon="mdi-magnify"
@@ -32,7 +34,9 @@
               <b>Superfacie: </b>{{ item.Superficie }}
             </v-col>
             <v-col cols="12" md="6"><b>ANCFCC: </b>{{ item.ancfcc }}</v-col>
-            <v-col cols="12"><b>Address: </b>{{ item.address }}</v-col>
+            <v-col cols="12"
+              ><b>Address: </b>{{ item.address }}, {{ item.ville }}</v-col
+            >
             <v-col cols="12"><b>Description: </b>{{ item.description }}</v-col>
             <v-col cols="12" md="6"><b>Valeur: </b>{{ item.valeur }} DHS</v-col>
             <v-col cols="12" md="6">

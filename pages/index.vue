@@ -66,12 +66,16 @@
               small
               absolute
               right
+              style="z-index: 9999"
               class="mt-3 mr-0"
               @click="closeTab(doc.id)"
             >
               <v-icon color="error"> mdi-close-circle </v-icon>
+              <v-tooltip bottom>
+                <span>Fermer</span>
+              </v-tooltip>
             </v-btn>
-            <dossier class="ma-10" />
+            <dossier class="ma-5" />
           </v-card-text>
         </v-card>
       </v-tab-item>
@@ -89,7 +93,7 @@ export default {
     dossiers: [],
     dialogDos: false,
     tab: null,
-    docs: [{ id: 0, title: "DOC 00" }, { id: 1, title: "DOC 01" }, { id: 2, title: "DOC 02" }, { id: 3, title: "DOC 03" }, { id: 4, title: "DOC 04" }]
+    docs: [{ id: 0, title: "Dossier - 00" }, { id: 1, title: "Dossier - 01" }, { id: 2, title: "Dossier - 02" }, { id: 3, title: "Dossier - 03" }, { id: 4, title: "Dossier - 04" }]
   }),
   methods: {
     closeTab(id) {
@@ -105,3 +109,11 @@ export default {
   },
 }
 </script>
+<style lang="css">
+  .v-card{
+    background-image: url('https://raw.githubusercontent.com/electricpizzza/BloodDonation/master/public/img/background.png');
+  }
+  .v-data-table {
+    background: whitesmoke;
+  }
+</style>

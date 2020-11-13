@@ -10,8 +10,11 @@
       <v-alert dense text type="success" dismissible v-if="success">
         {{ success }}
       </v-alert>
-      <v-toolbar flat>
-        <v-toolbar-title class="ma-5">Comparants</v-toolbar-title>
+      <v-toolbar flat class="pa-10">
+        <v-toolbar-title class="ma-5">
+          <v-icon class="mr-5" large color="primary">mdi-account-group</v-icon>
+          Comparants
+        </v-toolbar-title>
         <v-divider class="mx-4" inset vertical></v-divider>
         <v-text-field
           v-model="search"
