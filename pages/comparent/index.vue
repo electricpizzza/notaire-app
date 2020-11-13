@@ -4,20 +4,27 @@
     :items="comparents"
     sort-by="calories"
     class="elevation-1"
-    style="margin: 50px 20px"
+    :search="search"
   >
     <template v-slot:top>
+      <v-alert dense text type="success" dismissible v-if="success">
+        {{ success }}
+      </v-alert>
       <v-toolbar flat>
-        <v-toolbar-title style="padding: 20px">Comparents</v-toolbar-title>
+        <v-toolbar-title class="ma-5">Comparants</v-toolbar-title>
         <v-divider class="mx-4" inset vertical></v-divider>
-        <v-alert dense text type="success" dismissible v-if="success">
-          {{ success }}
-        </v-alert>
+        <v-text-field
+          v-model="search"
+          append-icon="mdi-magnify"
+          label="Chercher un comparant"
+          single-line
+          hide-details
+        ></v-text-field>
         <v-spacer></v-spacer>
         <v-dialog v-model="dialog" max-width="500px">
           <template v-slot:activator="{ on, attrs }">
             <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
-              Ajouter un comparent
+              Ajouter un comparant
             </v-btn>
           </template>
           <v-card>
@@ -109,6 +116,7 @@ const comparentService = new ComparentService()
 export default {
   data: () => ({
     dialog: false,
+    search: '',
     success: null,
     types: { PP: "Personne Physique", PM: "Personne Morale", PPM: "Personne Physique Mineur" },
     dialogForm: false,

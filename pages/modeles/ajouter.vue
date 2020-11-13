@@ -2,10 +2,20 @@
   <div>
     <div class="text-center container">
       <h1>Ajouter Un Model d'un Modele</h1>
-      <v-dialog v-model="dialog" width="500">
+      <v-alert
+        border="left"
+        color="red"
+        dense
+        type="error"
+        dismissible
+        v-if="error"
+      >
+        {{ error }}
+      </v-alert>
+      <v-dialog v-model="dialog" width="500" persistent>
         <v-card>
           <v-card-title class="headline lighten-2">
-            Créer un Model
+            Créer un Modele
           </v-card-title>
 
           <v-card-text>
@@ -65,16 +75,24 @@
               </v-col>
               <v-col>
                 <v-select
-                  :items="['Text', 'Numero', 'Bien', 'Comparent', 'Dossier']"
+                  :items="[
+                    { value: 'text', label: 'Text' },
+                    { value: 'numero', label: 'Numero' },
+                    { value: 'bien', label: 'Bien' },
+                    { value: 'comparent', label: 'Comparent' },
+                    { value: 'Dossier', label: 'Dossier' },
+                  ]"
                   :name="'TypeChamps' + i"
                   :label="'Type Du champs ' + i"
+                  item-text="label"
+                  item-value="value"
                 ></v-select>
               </v-col>
             </v-row>
           </v-col>
           <v-col cols="12">
             <RichEditor
-              v-if="type"
+              v-if="libelle"
               :libelle="libelle"
               :redacteur="redacteur"
               :type="type"
@@ -90,14 +108,17 @@
 </template>
 <script>
 import axios from 'axios'
+import MarkdownStore from './../../assets/store/MarkdownStore'
 export default {
   name: "AjouterActe",
   data() {
     return {
       model: null,
+      error: null,
       language: null,
       redacteur: '',
       libelle: null,
+      boilerplate: '',
       type: '',
       champs: [],
       dialog: this.language && this.libelle ? false : true,
@@ -113,6 +134,7 @@ export default {
       this.nbCamps++;
     },
     enregistrer() {
+      this.boilerplate = MarkdownStore.data.markdown;
       const inputs = document.querySelectorAll('input');
       const wanted = [];
       this.champs = [];
@@ -130,24 +152,33 @@ export default {
         }
         this.champs.push(champ)
       }
-      console.log(JSON.stringify({
-        language: this.language,
-        redacteur: this.redacteur,
-        libelle: this.libelle,
-        type: this.type,
-        champs: this.champs
-      }));
-      axios.post('http://localhost:1337/model', {
-        language: this.language,
-        redacteur: this.redacteur,
-        libelle: this.libelle,
-        type: this.type,
-        champs: this.champs
-      }).then(resp => {
-        this.$router.push(
-          `/modeles?success=Acte est bien enregistré`
-        )
-      }).catch(err => console.log(err))
+      if (this.language === null || this.redacteur === '' || this.libelle === null || this.type === '' || this.champs === [] || this.boilerplate === '') {
+        this.error = "Veuillez Bien Saisire les données S.V.P."
+      } else {
+        console.log({
+          language: this.language,
+          redacteur: this.redacteur,
+          libelle: this.libelle,
+          type: this.type,
+          champs: this.champs,
+          boilerplate: this.boilerplate,
+        });
+        axios.post('http://localhost:1337/model', {
+          language: this.language,
+          redacteur: this.redacteur,
+          libelle: this.libelle,
+          type: this.type,
+          champs: this.champs,
+          boilerplate: this.boilerplate,
+        }).then(resp => {
+          this.$router.push(
+            `/modeles?success=Acte est bien enregistré`
+          )
+        }).catch(err => {
+          this.error = err + "!! Veuillez se conecter au serveur S.V.P.";
+          console.log(err)
+        })
+      }
     }
   }
 }

@@ -1,0 +1,117 @@
+<template>
+  <v-card>
+    <v-card-title>
+      <h1 class="ma-5">Biens</h1>
+      <v-text-field
+        v-model="search"
+        append-icon="mdi-magnify"
+        label="Search"
+        single-line
+        hide-details
+      ></v-text-field>
+      <v-btn color="primary" class="ma-5" nuxt to="/biens/ajouter"
+        ><v-icon>mdi-plus</v-icon> Ajouter un bien</v-btn
+      >
+    </v-card-title>
+    <v-data-table
+      :headers="headers"
+      :items="desserts"
+      :expanded.sync="expanded"
+      single-expand="true"
+      :search="search"
+      item-key="id"
+      show-expand
+      class="elevation-1"
+    >
+      <template v-slot:expanded-item="{ headers, item }">
+        <td :colspan="headers.length">
+          <v-row class="mx-4">
+            <v-col cols="12" md="6"><b>Libelle: </b>{{ item.libelle }}</v-col>
+            <v-col cols="12" md="6"><b>Type: </b>{{ item.type }}</v-col>
+            <v-col cols="12" md="6">
+              <b>Superfacie: </b>{{ item.Superficie }}
+            </v-col>
+            <v-col cols="12" md="6"><b>ANCFCC: </b>{{ item.ancfcc }}</v-col>
+            <v-col cols="12"><b>Address: </b>{{ item.address }}</v-col>
+            <v-col cols="12"><b>Description: </b>{{ item.description }}</v-col>
+            <v-col cols="12" md="6"><b>Valeur: </b>{{ item.valeur }} DHS</v-col>
+            <v-col cols="12" md="6">
+              <b>NB. Pieces: </b>{{ item.nb_piece }}
+            </v-col>
+            <v-col cols="12">
+              <div class="offset-9">
+                <v-btn color="success">Modifier</v-btn>
+                <v-btn color="error">Suprimer</v-btn>
+              </div>
+            </v-col>
+          </v-row>
+        </td>
+      </template>
+    </v-data-table>
+  </v-card>
+</template>
+<script>
+import Axios from 'axios'
+export default {
+  data() {
+    return {
+      search: '',
+      expanded: [],
+      headers: [
+        {
+          text: 'ID',
+          align: 'start',
+          filterable: false,
+          value: 'id',
+        },
+        { text: 'Libelle', value: 'libelle' },
+        { text: 'Type', value: 'type' },
+        { text: 'Ville', value: 'ville' },
+        { text: '', value: 'data-table-expand' },
+      ],
+      desserts: [
+        {
+          id: 1,
+          libelle: 'Appartement 123',
+          type: 'Appartement',
+          ville: "Fez",
+          Superficie: 120,
+          address: 'AV CHEFCHAOUNI 1213 CENTRE VILLE',
+          ville: 'FES',
+          description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsa.',
+          etage: 2,
+          nb_piece: 4,
+          valeur: 450000,
+          ancfcc: '1DS78DS2387',
+        },
+        {
+          id: 2,
+          libelle: 'Appartement 123',
+          type: 'Appartement',
+          ville: "Fez",
+          Superficie: 120,
+          address: 'AV CHEFCHAOUNI 1213 CENTRE VILLE',
+          ville: 'FES',
+          description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsa.',
+          etage: 2,
+          nb_piece: 4,
+          valeur: 450000,
+          ancfcc: '1DS78DS2387',
+        },
+      ],
+      biens: [],
+    }
+  },
+  beforeCreate() {
+    Axios.get('http://localhost:1337/bien').then(resp => {
+      biens = resp.data;
+    })
+  },
+}
+</script>
+<style lang="css">
+  b{
+    color: dodgerblue;
+    font-size: large;
+  }
+</style>

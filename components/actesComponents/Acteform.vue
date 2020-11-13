@@ -101,15 +101,6 @@
               </v-chip-group>
             </div>
           </v-sheet>
-          <!-- <v-select
-            v-if="champ.type === 'comparent'"
-            :items="comparents"
-            item-value="id"
-            item-text="nom"
-            v-model="champ.name"
-            :label="champ.label + '(s)'"
-            :name="champ.name"
-          ></v-select> -->
           <v-select
             v-else-if="champ.type === 'bien'"
             :items="['bien 1', 'bien 2']"

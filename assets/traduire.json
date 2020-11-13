@@ -1,0 +1,22 @@
+[
+    {
+        "id":0,
+        "ar":"",
+        "fr":"Trier par"
+    },
+        {
+        "id":1,
+        "ar":"",
+        "fr":"Chercher"
+    },
+        {
+        "id":2,
+        "ar":"",
+        "fr":"Enregistre"
+    },
+        {
+        "id":3,
+        "ar":"",
+        "fr":"Dossiers par page"
+    }
+]

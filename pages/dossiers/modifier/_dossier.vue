@@ -306,13 +306,13 @@
                     <v-row>
                       <v-col cols="9">
                         <h3>
-                          <v-icon>mdi-domain</v-icon>
+                          <v-icon>mdi-account-outline</v-icon>
                           Bien(s)
                         </h3>
                       </v-col>
                       <v-col cols="3" class="text-right">
                         <v-btn disabled icon>
-                          <v-icon>mdi-domain</v-icon>
+                          <v-icon>mdi-account-outline</v-icon>
                         </v-btn>
                         <v-btn class="ml-2" icon @click="dialogBien = true">
                           <v-icon>mdi-plus</v-icon>
@@ -366,6 +366,11 @@
 <script>
 import axios from 'axios'
 export default {
+  async asyncData({ params }) {
+    const doss = params.acte
+    console.log(doss);
+    return { doss }
+  },
   data() {
     return {
       e1: 1,
@@ -407,6 +412,20 @@ export default {
       selectedItems: [],
     }
   },
+  created() {
+    console.log(this.doss);
+    axios.get(`http://localhost:1337/dossiers/1`).then(resp => {
+      console.log(resp);
+      this.nature = resp.data.nature;
+      this.description = resp.data.description;
+      this.libelle = resp.data.libelle;
+      this.dateOuverture = resp.data.dateOuverture;
+      this.dateFermeture = resp.data.dateFermeture;
+      //   this.Bien = resp.data.Bien;
+      //   this.Comparant = resp.data.Comparant;
+      this.notaire = resp.data.NomMaitre;
+    })
+  },
   beforeCreate() {
     axios.get('http://localhost:1337/bien').then(resp => {
       this.bienList = resp.data
@@ -431,17 +450,6 @@ export default {
       this.dialogBien = false
     },
     enregistrer() {
-      console.log({
-        title: `${this.libelle} -  ${this.nature}`,
-        nature: this.nature,
-        description: this.description,
-        libelle: this.libelle,
-        dateOuverture: this.dateOuverture,
-        dateFermeture: this.dateFermeture,
-        Bien: this.Bien,
-        Comparant: this.Comparant,
-        NomMaitre: this.notaire,
-      });
       axios.post('http://localhost:1337/dossiers', {
         title: `${this.libelle} -  ${this.nature}`,
         nature: this.nature,

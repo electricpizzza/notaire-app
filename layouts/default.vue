@@ -36,9 +36,9 @@
     <v-app-bar :clipped-left="clipped" fixed app color="primary">
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
 
-      <v-btn icon @click.stop="clipped = !clipped">
+      <!-- <v-btn icon @click.stop="clipped = !clipped">
         <v-icon>mdi-application</v-icon>
-      </v-btn>
+      </v-btn> -->
       <nuxt-link to="/">
         <img
           src="~/assets/logo.jpeg"
@@ -93,13 +93,13 @@
 export default {
   data() {
     return {
-      clipped: false,
+      clipped: true,
       drawer: false,
       fixed: false,
       items: [
         {
           icon: 'mdi-apps',
-          title: 'Welcome',
+          title: 'Notary',
           to: '/',
         },
         {
@@ -122,6 +122,11 @@ export default {
           title: 'Modeles',
           to: '/modeles',
         },
+        {
+          icon: 'mdi-domain',
+          title: 'Biens',
+          to: '/biens',
+        }
       ],
       miniVariant: false,
       right: true,

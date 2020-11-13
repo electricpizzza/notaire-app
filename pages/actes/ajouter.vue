@@ -7,7 +7,7 @@
           >de : <b>{{ model.libelle }}</b></span
         >
       </h1>
-      <v-dialog v-model="dialog" width="500">
+      <v-dialog v-model="dialog" width="500" persistent>
         <v-card>
           <v-card-title class="headline lighten-2">
             Choisire un Model

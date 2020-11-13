@@ -2,9 +2,10 @@
   <div>
     <!-- Use the component in the right place of the template -->
     <tiptap-vuetify
-      :value="value"
+      :value="markdown"
       :extensions="extensions"
-      @input="$emit('input', arguments[0])"
+      @input="typing"
+      v-model="markdown"
     />
   </div>
 </template>
@@ -28,6 +29,7 @@ import {
   HorizontalRule,
   History,
 } from "tiptap-vuetify";
+import MarkdownStore from './../assets/store/MarkdownStore'
 export default {
   name: 'RichEditor',
   components: { TiptapVuetify },
@@ -36,11 +38,12 @@ export default {
     value: {
       type: String,
       default: `
-<h1>Yay Headlines!</h1>
+<h1>Headline!!</h1>
 <p>All these <strong>cool tags</strong> are working now.</p>`
     }
   },
   data: () => ({
+    markdown: '',
     extensions: [
       History,
       Blockquote,
@@ -69,13 +72,23 @@ export default {
   }),
 
   created() {
-    console.log(this.libelle);
-    this.value = `<h1>${this.libelle}</h1>`
+    this.markdown = `<h1>${this.libelle}</h1>`
   },
   watch: {
-    libelle: () => {
-      this.value = `<h1>${this.libelle}</h1>`
+    libelle(newLib) {
+
+      this.markdown = `<h1>${this.libelle}</h1>`
+    }
+  },
+  methods: {
+    typing() {
+      MarkdownStore.data.markdown = this.markdown
     }
   }
 };
 </script>
+<style scoped>
+  h1{
+    text-align: center;
+  }
+</style>
