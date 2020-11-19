@@ -431,17 +431,30 @@ export default {
       this.dialogBien = false
     },
     enregistrer() {
-      console.log({
-        title: `${this.libelle} -  ${this.nature}`,
-        nature: this.nature,
-        description: this.description,
-        libelle: this.libelle,
-        dateOuverture: this.dateOuverture,
-        dateFermeture: this.dateFermeture,
-        Bien: this.Bien,
-        Comparant: this.Comparant,
-        NomMaitre: this.notaire,
+
+      const comps = [];
+      const bins = [];
+
+      this.Comparant.forEach(Comp => {
+        comps.push(Comp.id)
       });
+      this.Bien.forEach(b => {
+        bins.push(b.id)
+      });
+
+      console.log(JSON.stringify(
+        {
+          title: `${this.libelle} -  ${this.nature}`,
+          nature: this.nature,
+          description: this.description,
+          libelle: this.libelle,
+          dateOuverture: this.dateOuverture,
+          dateFermeture: this.dateFermeture,
+          bien: bins,
+          comparents: comps,
+          NomMaitre: this.notaire,
+        }
+      ));
       axios.post('http://localhost:1337/dossiers', {
         title: `${this.libelle} -  ${this.nature}`,
         nature: this.nature,
@@ -449,8 +462,8 @@ export default {
         libelle: this.libelle,
         dateOuverture: this.dateOuverture,
         dateFermeture: this.dateFermeture,
-        Bien: this.Bien,
-        Comparant: this.Comparant,
+        Bien: JSON.stringify(bins),
+        Comparent: JSON.stringify(comps),
         NomMaitre: this.notaire,
       }).then(resp => {
         this.$router.push(

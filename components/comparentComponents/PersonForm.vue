@@ -202,10 +202,18 @@
   </v-form>
 </template>
 <script>
-import ComparentSeervice from './../../assets/sevices/comparentService'
-const comparentSeervice = new ComparentSeervice()
+import ComparentService from './../../assets/sevices/comparentService'
+const comparentService = new ComparentService()
 export default {
-  props: ["comparent"],
+  props: {
+    comparent: {
+      type: Object,
+    },
+    modifier: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data: () => ({
     valid: true,
     menu: false,
@@ -236,10 +244,60 @@ export default {
     ],
     idTypes: ['CIN', 'Acte de naissance', 'Permis de conduire'],
   }),
-
+  created() {
+    if (this.modifier) {
+      this.nomFr = this.comparent.nomFr
+      this.nomAr = this.comparent.nomAr
+      this.prenomFr = this.comparent.prenomFr
+      this.prenomAr = this.comparent.prenomAr
+      this.nationalite = this.comparent.nationalite
+      this.fonction = this.comparent.fonction
+      this.nomPereFr = this.comparent.nomPereFr
+      this.nomPereAr = this.comparent.nomPereAr
+      this.nomMereFr = this.comparent.nomMereFr
+      this.nomMereAr = this.comparent.nomMereAr
+      this.situation = this.comparent.situation
+      this.nomCompanionFr = this.comparent.nomCompanionFr
+      this.nomCompanionAr = this.comparent.nomCompanionAr
+      this.typeIdentification = this.comparent.typeIdentification
+      this.Identification = this.comparent.Identification
+      this.IdentificationValable = this.comparent.IdentificationValable
+      this.dateNaissance = this.comparent.dateNaissance
+    }
+  },
   methods: {
     enregistrer() {
-      comparentSeervice.createPerson(
+      if (this.modifier) {
+        this.edit();
+      } else
+        comparentService.createPerson(
+          this.comparent,
+          this.nomFr,
+          this.nomAr,
+          this.prenomFr,
+          this.prenomAr,
+          this.nationalite,
+          this.fonction,
+          this.nomPereFr,
+          this.nomPereAr,
+          this.nomMereFr,
+          this.nomMereAr,
+          this.situation,
+          this.nomCompanionFr,
+          this.nomCompanionAr,
+          this.typeIdentification,
+          this.Identification,
+          this.IdentificationValable,
+          this.dateNaissance
+        ).then(resp => {
+          console.log(resp)
+          this.$router.push(
+            `/comparent?success=Comparent était bien enregistré`
+          )
+        }).catch(err => console.error(err))
+    },
+    edit() {
+      comparentService.editPerson(
         this.comparent,
         this.nomFr,
         this.nomAr,
@@ -259,13 +317,11 @@ export default {
         this.IdentificationValable,
         this.dateNaissance
       ).then(resp => {
-        console.log(resp)
-        this.$router.push(
-          `/comparent?success=Comparent était bien enregistré`
-        )
-      }).catch(err => console.error(err))
+        console.log(resp.data);
+      }).catch(err => console.error(err));
     }
   },
+
 }
 </script>
 <style>

@@ -39,12 +39,12 @@
       <!-- <v-btn icon @click.stop="clipped = !clipped">
         <v-icon>mdi-application</v-icon>
       </v-btn> -->
-      <nuxt-link to="/">
+      <nuxt-link to="/" class="shadow">
         <img
           src="~/assets/logo.jpeg"
           alt="Logo"
-          width="70px"
-          height="70px"
+          width="75px"
+          height="75px"
           class="mx-3"
         />
       </nuxt-link>

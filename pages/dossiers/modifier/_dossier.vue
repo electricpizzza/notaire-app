@@ -365,10 +365,11 @@
 </template>
 <script>
 import axios from 'axios'
+import ComparentService from '~/assets/sevices/comparentService'
+const comparentService = new ComparentService()
 export default {
   async asyncData({ params }) {
-    const doss = params.acte
-    console.log(doss);
+    const doss = params.dossier
     return { doss }
   },
   data() {
@@ -398,32 +399,25 @@ export default {
       notaire: '',
       dialogBien: false,
       dialogComp: false,
-      compList: [
-        { id: 11, name: 'dinar ', identif: 'CD12132' },
-        { id: 31, name: ' zakariae', identif: 'CD12132' },
-        { id: 21, name: 'dinar zakariae', identif: 'CD12132' },
-      ],
-      bienList: [
-        { id: 11, libelle: 'Appartement addarissa 12', type: 'appartement' },
-        { id: 31, libelle: ' Villa A31', type: 'villa' },
-        { id: 21, libelle: 'Appartement Oued Fes', type: 'appartement' },
-        { id: 21, libelle: 'terrain salam', type: 'terrain' },
-      ],
+      compList: [],
+      bienList: [],
       selectedItems: [],
     }
   },
   created() {
-    console.log(this.doss);
-    axios.get(`http://localhost:1337/dossiers/1`).then(resp => {
-      console.log(resp);
+    axios.get(`http://localhost:1337/dossiers/${this.doss}`).then(resp => {
       this.nature = resp.data.nature;
       this.description = resp.data.description;
       this.libelle = resp.data.libelle;
       this.dateOuverture = resp.data.dateOuverture;
       this.dateFermeture = resp.data.dateFermeture;
-      //   this.Bien = resp.data.Bien;
-      //   this.Comparant = resp.data.Comparant;
       this.notaire = resp.data.NomMaitre;
+      // this.Bien = resp.data.Bien;
+      JSON.parse(resp.data.Comparant).forEach(comp => {
+        comparentService.getOneComparent(comp).then(c => {
+          this.Comparant.push(c.data);
+        })
+      });
     })
   },
   beforeCreate() {
@@ -450,7 +444,7 @@ export default {
       this.dialogBien = false
     },
     enregistrer() {
-      axios.post('http://localhost:1337/dossiers', {
+      axios.put(`http://localhost:1337/dossiers/${this.doss}`, {
         title: `${this.libelle} -  ${this.nature}`,
         nature: this.nature,
         description: this.description,

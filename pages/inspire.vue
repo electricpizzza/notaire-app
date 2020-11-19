@@ -13,3 +13,14 @@
     </v-col>
   </v-row>
 </template>
+<script>
+import authStore from '~/assets/store/authStore'
+export default {
+  middleware: 'authentification',
+  created() {
+    const usr = authStore.user;
+    console.log(usr);
+  },
+
+}
+</script>

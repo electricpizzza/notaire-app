@@ -10,7 +10,7 @@
       <v-alert dense text type="success" dismissible v-if="success">
         {{ success }}
       </v-alert>
-      <v-toolbar flat class="pa-10">
+      <v-toolbar flat class="pa-10 mb-6">
         <v-toolbar-title class="ma-5">
           <v-icon class="mr-5" large color="primary">mdi-account-group</v-icon>
           Comparants
@@ -179,9 +179,10 @@ export default {
         .catch((err) => console.error(err))
     },
     editItem(item) {
-      this.editedIndex = this.comparents.indexOf(item)
-      this.editedItem = Object.assign({}, item)
-      this.dialog = true
+      console.log(item);
+      this.$router.push(
+        `/comparent/modifier/${item.id}`
+      )
     },
 
     deleteItem(item) {

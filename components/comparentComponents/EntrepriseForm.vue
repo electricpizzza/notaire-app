@@ -52,6 +52,7 @@
         <v-col cols="12">
           <v-text-field
             v-model="Adresse"
+            v-bind="Address"
             label="Adresse"
             name="Adresse"
             textarea
@@ -70,7 +71,15 @@
 import ComparentService from './../../assets/sevices/comparentService.js'
 const comparentService = new ComparentService()
 export default {
-  props: ['comparent'],
+  props: {
+    comparent: {
+      type: Object
+    },
+    modifier: {
+      type: Boolean,
+      default: false,
+    }
+  },
   data: () => ({
     valid: true,
     comp: '',
@@ -82,15 +91,6 @@ export default {
     cnss: '',
     Adresse: '',
     representants: [],
-    nameRules: [
-      (v) => !!v || 'Name is required',
-      (v) => (v && v.length <= 10) || 'Name must be less than 10 characters',
-    ],
-    email: '',
-    emailRules: [
-      (v) => !!v || 'E-mail is required',
-      (v) => /.+@.+\..+/.test(v) || 'E-mail must be valid',
-    ],
     select: null,
     items: ['Item 1', 'Item 2', 'Item 3', 'Item 4'],
     checkbox: false,
@@ -101,8 +101,16 @@ export default {
     })
   },
   created() {
-    this.raisonSociale = this.comparent.nom
-    console.log(this.raisonSociale);
+    if (this.modifier) {
+      this.raisonSociale = this.comparent.raisonSociale;
+      this.ice = this.comparent.ice;
+      this.rc = this.comparent.rc;
+      this.If = this.comparent.If;
+      this.cnss = this.comparent.cnss;
+      this.representant = this.comparent.representant;
+      this.Adresse = this.comparent.Adresse;
+    } else
+      this.raisonSociale = this.comparent.nom
   },
 
   methods: {
@@ -116,23 +124,42 @@ export default {
       this.$refs.form.resetValidation()
     },
     enregistrer() {
-      comparentService
-        .saveEntreprise(
-          this.comparent.id,
-          this.raisonSociale,
-          this.ice,
-          this.rc,
-          this.If,
-          this.cnss,
-          this.representant,
-          this.Adresse
-        )
-        .then((resp) => {
-          this.$router.push(
-            `/comparent?success=Comparent était bien enregistré`
+      if (this.modifier) {
+        this.edit();
+      } else
+        comparentService
+          .saveEntreprise(
+            this.comparent.id,
+            this.raisonSociale,
+            this.ice,
+            this.rc,
+            this.If,
+            this.cnss,
+            this.representant,
+            this.Adresse
           )
-        }).catch(err => console.error(err))
+          .then((resp) => {
+            this.$router.push(
+              `/comparent?success=Comparent était bien enregistré`
+            )
+          }).catch(err => console.error(err))
     },
+    edit() {
+      comparentService.editEntreprise(
+        this.comparent.comparent,
+        this.raisonSociale,
+        this.ice,
+        this.rc,
+        this.If,
+        this.cnss,
+        this.representant,
+        this.Adresse
+      ).then(resp => {
+        this.$router.push(
+          `/comparent?success=Comparent était bien Modifié`
+        )
+      }).catch(err => console.log(err))
+    }
   },
 }
 </script>

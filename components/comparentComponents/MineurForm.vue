@@ -162,6 +162,15 @@
 import ComparentService from './../../assets/sevices/comparentService'
 const comparentService = new ComparentService()
 export default {
+  props: {
+    modifier: {
+      type: Boolean,
+      default: false,
+    },
+    comparent: {
+      type: Object,
+    }
+  },
   data: () => ({
     valid: true,
     menu: false,
@@ -185,21 +194,57 @@ export default {
 
   methods: {
     enregistrer() {
-      comparentService.createMineur(
-        this.comparent, this.nomFr, this.nomAr, this.prenomFr, this.prenomAr, this.nationalite, this.nomPereFr, this.nomPereAr, this.nomMereFr, this.nomMereAr, this.typeIdentification, this.Identification, this.IdentificationValable, this.dateNaissance, this.tutelle
-      ).then(resp => {
-        console.log(resp.date);
-        this.$router.push(
-          `/comparent?success=Comparent était bien enregistré`
-        )
-      }).catch(err => console.error(err));
+      if (this.modifier) {
+        if (this.tetulle.id) {
+          this.tetulle = this.tetulle.id
+        }
+        comparentService.editMineur(
+          this.comparent.comparent, this.nomFr, this.nomAr, this.prenomFr, this.prenomAr, this.nationalite, this.nomPereFr, this.nomPereAr, this.nomMereFr, this.nomMereAr, this.typeIdentification, this.Identification, this.IdentificationValable, this.dateNaissance, this.tetulle
+        ).then(resp => {
+          console.log(resp.date);
+          this.$router.push(
+            `/comparent?success=Comparent était bien Modifié`
+          )
+        }).catch(err => console.error(err));
+      } else
+        comparentService.createMineur(
+          this.comparent.id, this.nomFr, this.nomAr, this.prenomFr, this.prenomAr, this.nationalite, this.nomPereFr, this.nomPereAr, this.nomMereFr, this.nomMereAr, this.typeIdentification, this.Identification, this.IdentificationValable, this.dateNaissance, this.tetulle
+        ).then(resp => {
+          console.log(resp.date);
+          this.$router.push(
+            `/comparent?success=Comparent était bien enregistré`
+          )
+        }).catch(err => console.error(err));
     }
   },
 
   beforeCreate() {
+
+  },
+  created() {
     comparentService.getAllComparents().then(resp => {
-      this.tetulles = resp.data
+      this.tetulles = resp.data.filter(tet => tet.id != this.comparent.comparent && tet.type != "PM" && tet.type != "PPM")
+      if (this.modifier) {
+        this.tetulle = this.tetulles.filter(tet => tet.id === this.comparent.tutelle)[0];
+      }
     })
-  }
+    if (this.modifier) {
+
+      this.nomFr = this.comparent.nomFr;
+      this.nomAr = this.comparent.nomAr;
+      this.prenomFr = this.comparent.prenomFr;
+      this.prenomAr = this.comparent.prenomAr;
+      this.nationalite = this.comparent.nationalite;
+      this.nomPereFr = this.comparent.nomPereFr;
+      this.nomPereAr = this.comparent.nomPereAr;
+      this.nomMereFr = this.comparent.nomMereFr;
+      this.nomMereAr = this.comparent.nomMereAr;
+      this.typeIdentification = this.comparent.typeIdentification;
+      this.Identification = this.comparent.Identification;
+      this.IdentificationValable = this.comparent.IdentificationValable;
+      this.dateNaissance = this.comparent.dateNaissance;
+
+    }
+  },
 }
 </script>

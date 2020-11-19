@@ -9,10 +9,10 @@
         <v-card-text>
           <v-select
             :items="dossiers"
-            v-model="dossier"
+            v-model="toBeOpen"
             label="Dossier"
             item-text="libelle"
-            :item-value="dossier"
+            item-value="id"
           ></v-select>
         </v-card-text>
 
@@ -20,10 +20,8 @@
 
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="error" text @click="dialogDos = false"> Anuller </v-btn>
-          <v-btn color="primary" text @click="dialogDos = false">
-            Ouvrire
-          </v-btn>
+          <v-btn color="error" text @click="closeDialog"> Anuller </v-btn>
+          <v-btn color="primary" text @click="openDoc"> Ouvrire </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -46,15 +44,7 @@
       </v-tab>
     </v-tabs>
     <v-tabs-items v-model="tab">
-      <v-btn
-        fab
-        color="#3860ff"
-        dark
-        top
-        right
-        absolute
-        @click="dialogDos = true"
-      >
+      <v-btn fab color="#3860ff" dark top right absolute @click="openDialog">
         <v-icon>mdi-plus</v-icon>
       </v-btn>
       <v-tab-item v-for="doc in docs" :key="doc.id">
@@ -75,7 +65,7 @@
                 <span>Fermer</span>
               </v-tooltip>
             </v-btn>
-            <dossier class="ma-5" />
+            <dossier class="ma-5" :dossier="doc" />
           </v-card-text>
         </v-card>
       </v-tab-item>
@@ -86,30 +76,55 @@
 <script>
 import axios from 'axios'
 import DossierCard from '~/components/dossiers/DossierCard.vue';
-import _dossier from './dossiers/_dossier.vue';
+import dossierSotre from './../assets/store/dossierSotre'
 export default {
-  components: { DossierCard, _dossier },
+  components: { DossierCard },
+  middleware: 'authentification',
   data: () => ({
     dossiers: [],
     dialogDos: false,
     tab: null,
-    docs: [{ id: 0, title: "Dossier - 00" }, { id: 1, title: "Dossier - 01" }, { id: 2, title: "Dossier - 02" }, { id: 3, title: "Dossier - 03" }, { id: 4, title: "Dossier - 04" }]
+    toBeOpen: null,
+    docs: []
   }),
   methods: {
     closeTab(id) {
       console.log(id);
       this.docs = this.docs.filter(doc => doc.id != id)
-    }
+      dossierSotre.closeDossier(id);
+    },
+    openDoc() {
+      axios.get(`http://localhost:1337/dossiers/${this.toBeOpen}`).then(resp => {
+        console.log(resp.data);
+        this.docs.push(resp.data)
+        dossierSotre.addDossier(resp.data);
+        this.toBeOpen = null;
+        this.dialogDos = false;
+      }).catch(err => console.error(err))
+
+    },
+    openDialog() {
+      this.toBeOpen = null;
+      this.dialogDos = true;
+    },
+    closeDialog() {
+      this.toBeOpen = null;
+      this.dialogDos = false;
+    },
+
+
   },
   created() {
+
+    this.docs = [...dossierSotre.getDossiers()];
+
     axios.get('http://localhost:1337/dossiers').then(resp => {
-      console.log(resp);
       this.dossiers = resp.data
     })
   },
 }
 </script>
-<style lang="css">
+<style lang="css" scoped>
   .v-card{
     background-image: url('https://raw.githubusercontent.com/electricpizzza/BloodDonation/master/public/img/background.png');
   }

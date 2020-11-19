@@ -57,7 +57,7 @@ export default {
     //
   }),
   created() {
-    console.log(this.dossier);
+    // console.log(this.dossier);
   },
 }
 </script>

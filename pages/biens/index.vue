@@ -17,7 +17,7 @@
     </v-card-title>
     <v-data-table
       :headers="headers"
-      :items="desserts"
+      :items="biens"
       :expanded.sync="expanded"
       single-expand="true"
       :search="search"
@@ -73,42 +73,13 @@ export default {
         { text: 'Ville', value: 'ville' },
         { text: '', value: 'data-table-expand' },
       ],
-      desserts: [
-        {
-          id: 1,
-          libelle: 'Appartement 123',
-          type: 'Appartement',
-          ville: "Fez",
-          Superficie: 120,
-          address: 'AV CHEFCHAOUNI 1213 CENTRE VILLE',
-          ville: 'FES',
-          description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsa.',
-          etage: 2,
-          nb_piece: 4,
-          valeur: 450000,
-          ancfcc: '1DS78DS2387',
-        },
-        {
-          id: 2,
-          libelle: 'Appartement 123',
-          type: 'Appartement',
-          ville: "Fez",
-          Superficie: 120,
-          address: 'AV CHEFCHAOUNI 1213 CENTRE VILLE',
-          ville: 'FES',
-          description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsa.',
-          etage: 2,
-          nb_piece: 4,
-          valeur: 450000,
-          ancfcc: '1DS78DS2387',
-        },
-      ],
       biens: [],
     }
   },
   beforeCreate() {
     Axios.get('http://localhost:1337/bien').then(resp => {
-      biens = resp.data;
+      this.biens = resp.data;
+
     })
   },
 }

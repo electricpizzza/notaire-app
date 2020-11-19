@@ -86,7 +86,9 @@ export default {
         nb_piece: this.nb_piece,
         valeur: this.valeur,
         ancfcc: this.ancfcc,
-      })
+      }).then(resp => {
+        console.log(resp);
+      }).catch(err => console.error(err))
     }
   },
 }
