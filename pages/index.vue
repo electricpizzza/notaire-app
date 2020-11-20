@@ -79,7 +79,7 @@ import DossierCard from '~/components/dossiers/DossierCard.vue';
 import dossierSotre from './../assets/store/dossierSotre'
 export default {
   components: { DossierCard },
-  middleware: 'authentification',
+  // middleware: 'authentification',
   data: () => ({
     dossiers: [],
     dialogDos: false,

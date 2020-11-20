@@ -64,6 +64,7 @@
       </v-row>
       <!-- <v-toolbar-title v-text="title" /> -->
       <v-spacer />
+      <create-menu />
       <v-btn icon @click.stop="rightDrawer = !rightDrawer" outlined fab>
         <v-icon>mdi-format-list-bulleted-square</v-icon>
       </v-btn>
@@ -90,7 +91,9 @@
 </template>
 
 <script>
+import createMenu from '~/components/createMenu.vue'
 export default {
+  components: { createMenu },
   data() {
     return {
       clipped: true,
