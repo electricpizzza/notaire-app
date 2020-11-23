@@ -77,6 +77,7 @@
 import axios from 'axios'
 import DossierCard from '~/components/dossiers/DossierCard.vue';
 import dossierSotre from './../assets/store/dossierSotre'
+import auth from './../assets/store/authStore'
 export default {
   components: { DossierCard },
   // middleware: 'authentification',
@@ -115,6 +116,8 @@ export default {
 
   },
   created() {
+    const usr = auth.user
+    console.log(usr);
 
     this.docs = [...dossierSotre.getDossiers()];
 

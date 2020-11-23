@@ -81,6 +81,10 @@ export default {
       return errors
     },
   },
+  created() {
+    const usr = auth.user
+    console.log(usr);
+  },
 
   methods: {
     submit() {
@@ -90,7 +94,7 @@ export default {
       if (usr.authenticated) {
         console.log(usr);
         this.$router.push(
-          `/?success=Acte est bien enregistré`
+          `/inspire`
         )
       }
     },

@@ -25,8 +25,9 @@
       </v-list>
       <v-spacer />
       <v-btn
-        class="ma-2 my-5"
+        class="mx-3 miniVariant"
         icon
+        outlined
         @click.stop="miniVariant = !miniVariant"
         color="primary"
       >
@@ -49,7 +50,7 @@
         />
       </nuxt-link>
       <v-row align="center" justify="space-around">
-        <v-btn tile color="info" nuxt to="/dossiers/ajouter">
+        <!-- <v-btn tile color="info" nuxt to="/dossiers/ajouter">
           <v-icon left> mdi-folder </v-icon>
           Creer Un Dossier
         </v-btn>
@@ -60,7 +61,7 @@
         <v-btn tile color="error" nuxt to="/modeles/ajouter">
           <v-icon left> mdi-plus </v-icon>
           Creer Un model
-        </v-btn>
+        </v-btn> -->
       </v-row>
       <!-- <v-toolbar-title v-text="title" /> -->
       <v-spacer />
@@ -70,9 +71,7 @@
       </v-btn>
     </v-app-bar>
     <v-main>
-      <v-container>
-        <nuxt />
-      </v-container>
+      <nuxt />
     </v-main>
     <v-navigation-drawer v-model="rightDrawer" :right="right" temporary fixed>
       <v-list>
@@ -130,6 +129,11 @@ export default {
           title: 'Modeles',
           to: '/modeles',
         },
+        {
+          icon: 'mdi-archive',
+          title: 'Archives',
+          to: '/archives'
+        },
 
       ],
       miniVariant: false,
@@ -140,3 +144,10 @@ export default {
   },
 }
 </script>
+<style lang="css">
+  .miniVariant{
+    position: absolute;
+    top: 30vh;
+
+  }
+</style>

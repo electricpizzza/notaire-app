@@ -1,42 +1,31 @@
 <template>
   <v-speed-dial
     v-model="fab"
-    :top="top"
-    :bottom="bottom"
-    :right="right"
-    :left="left"
-    :direction="direction"
-    :open-on-hover="hover"
-    :transition="transition"
+    direction="left"
+    transition="slide-y-reverse-transition"
   >
     <template v-slot:activator>
-      <v-btn v-model="fab" color="blue darken-2" dark fab>
+      <v-btn v-model="fab" icon color="#073a65" class="mr-5" dark outlined fab>
         <v-icon v-if="fab"> mdi-close </v-icon>
-        <v-icon v-else> mdi-account-circle </v-icon>
+        <v-icon v-else> mdi-plus </v-icon>
       </v-btn>
     </template>
-    <v-btn dark small color="green"> <v-icon>mdi-pencil</v-icon> Cre </v-btn>
-    <v-btn fab dark small color="indigo">
-      <v-icon>mdi-plus</v-icon>
+    <v-btn dark color="#073a65" title nuxt to="/dossiers/ajouter">
+      <v-icon>mdi-pencil</v-icon> Creer Un Dossier
     </v-btn>
-    <v-btn fab dark small color="red">
-      <v-icon>mdi-delete</v-icon>
+    <v-btn dark color="#073a65" title nuxt to="/modeles/ajouter">
+      <v-icon>mdi-plus</v-icon> Creer Un model
+    </v-btn>
+    <v-btn dark color="#073a65" title nuxt to="/actes/ajouter">
+      <v-icon>mdi-delete</v-icon> Creer Un Acte
     </v-btn>
   </v-speed-dial>
 </template>
 <script>
 export default {
   data: () => ({
-    direction: 'left',
-    fab: false,
-    fling: false,
-    hover: true,
+    fab: true,
     tabs: null,
-    top: true,
-    right: true,
-    bottom: false,
-    left: false,
-    transition: 'slide-y-reverse-transition',
   }),
 
   computed: {
