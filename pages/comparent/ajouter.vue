@@ -1,5 +1,5 @@
 <template>
-  <div v-if="comparent">
+  <div v-if="comparent" class="mx-10 pa-10">
     <EntrepriseForm v-if="comparent.type === 'PM'" :comparent="comparent" />
     <PersonForm v-if="comparent.type === 'PP'" :comparent="comparent" />
     <MineurForm v-if="comparent.type === 'PPM'" :comparent="comparent" />

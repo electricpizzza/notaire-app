@@ -43,50 +43,61 @@
               </v-card-title>
 
               <v-card-text>
-                <v-row justify="center">
-                  <v-col>
-                    <v-text-field
-                      v-model="titre"
-                      label="Titre"
-                      id="id"
-                    ></v-text-field>
-                    <v-select
-                      :items="items"
-                      v-model="dossier"
-                      label="Dossier"
-                    ></v-select>
-                  </v-col>
-                  <v-col cols="12">
-                    <v-sheet elevation="10" rounded="xl">
-                      <v-sheet
-                        class="pa-3 primary text-right"
-                        dark
-                        rounded="t-xl"
-                      >
-                        <v-btn icon @click="seeFile">
-                          <v-icon>mdi-content-save-cog-outline</v-icon>
-                        </v-btn>
-
-                        <v-btn class="ml-2" icon>
-                          <v-icon>mdi-check-bold</v-icon>
-                        </v-btn>
-                      </v-sheet>
-
-                      <div class="pa-4">
-                        <v-chip-group active-class="primary--text" column>
-                          <v-chip v-for="tag in tags" :key="tag">
-                            {{ tag }}
-                          </v-chip>
-                          <v-file-input
-                            accept="image/*"
-                            label="File input"
-                            v-model="file"
-                          ></v-file-input>
-                        </v-chip-group>
-                      </div>
-                    </v-sheet>
-                  </v-col>
-                </v-row>
+                <v-container class="pa-10">
+                  <h2>Créer Un Nouveau Archive</h2>
+                  <form>
+                    <v-row>
+                      <v-col cols="6" md="12">
+                        <v-text-field
+                          v-model="titre"
+                          label="Titre"
+                          id="id"
+                        ></v-text-field>
+                      </v-col>
+                      <v-col cols="6" md="12">
+                        <v-text-field
+                          v-model="dossier"
+                          label="Dossier"
+                          id="id"
+                        ></v-text-field>
+                      </v-col>
+                      <h4 style="color: gray" class="ml-3">Fichiers :</h4>
+                      <v-col cols="12" class="file-show">
+                        <div
+                          v-for="(file, index) in files"
+                          v-bind="index"
+                          class="img-show ma-3"
+                        >
+                          <img src="" alt="" srcset="" />
+                          <span>{{ file.name }}</span>
+                        </div>
+                        <input
+                          type="file"
+                          id="file"
+                          ref="file"
+                          v-on:change="fileUpload()"
+                          class="img-field ma-3"
+                        />
+                      </v-col>
+                      <v-col cols="12">
+                        <v-textarea
+                          v-model="description"
+                          filled
+                          label="Description"
+                          auto-grow
+                        ></v-textarea>
+                      </v-col>
+                    </v-row>
+                    <v-btn
+                      outline
+                      color="primary"
+                      class="offset-10"
+                      dark
+                      @click="enregistrer"
+                      >Enregistrer</v-btn
+                    >
+                  </form>
+                </v-container>
               </v-card-text>
 
               <v-divider></v-divider>

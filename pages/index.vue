@@ -43,7 +43,7 @@
         {{ doc.title }}
       </v-tab>
     </v-tabs>
-    <v-tabs-items v-model="tab">
+    <v-tabs-items v-model="tab" class="workspace">
       <v-btn fab color="#3860ff" dark top right absolute @click="openDialog">
         <v-icon>mdi-plus</v-icon>
       </v-btn>
@@ -133,5 +133,8 @@ export default {
   }
   .v-data-table {
     background: whitesmoke;
+  }
+  .workspace{
+      background-image: url('/asset/undraw_folder_39kl.svg');
   }
 </style>

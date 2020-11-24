@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="mx-10 pa-10">
     <h1 class="ma-5">Ajouter Un Bien</h1>
     <form>
       <v-row>

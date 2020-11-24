@@ -10,21 +10,24 @@
         <v-icon v-else> mdi-plus </v-icon>
       </v-btn>
     </template>
-    <v-btn dark color="#073a65" title nuxt to="/dossiers/ajouter">
-      <v-icon>mdi-pencil</v-icon> Creer Un Dossier
+    <v-btn dark color="#073a65" title nuxt to="/devis">
+      <v-icon class="mr-3">mdi-file</v-icon> Creer Un Devis
     </v-btn>
     <v-btn dark color="#073a65" title nuxt to="/modeles/ajouter">
-      <v-icon>mdi-plus</v-icon> Creer Un model
+      <v-icon class="mr-3">mdi-pencil</v-icon> Creer Un modele
     </v-btn>
     <v-btn dark color="#073a65" title nuxt to="/actes/ajouter">
-      <v-icon>mdi-delete</v-icon> Creer Un Acte
+      <v-icon class="mr-3">mdi-gavel</v-icon> Creer Un Acte
+    </v-btn>
+    <v-btn dark color="#073a65" title nuxt to="/dossiers/ajouter">
+      <v-icon class="mr-3">mdi-folder</v-icon> Creer Un Dossier
     </v-btn>
   </v-speed-dial>
 </template>
 <script>
 export default {
   data: () => ({
-    fab: true,
+    fab: false,
     tabs: null,
   }),
 

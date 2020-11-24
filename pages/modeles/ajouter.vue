@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="mx-10 pa-10">
     <div class="text-center container">
       <h1>Ajouter Un Model d'un Modele</h1>
       <v-alert
@@ -60,12 +60,12 @@
               <v-col cols="12" sm="3">
                 <v-btn flat color="primary" small @click="addChamps">
                   <v-icon>mdi-plus</v-icon> Ajouter Un Champ
-                </v-btn></v-col
-              >
+                </v-btn>
+              </v-col>
             </v-row>
           </v-col>
 
-          <v-col cols="12" v-for="i in nbCamps" v-bind="i">
+          <v-col cols="12" v-for="i in nbCamps" :key="i">
             <v-row>
               <v-col cols="12" sm="6">
                 <v-text-field

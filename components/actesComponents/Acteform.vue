@@ -5,7 +5,7 @@
         <v-col cols="12">
           <v-text-field v-model="libelle" label="Titre"></v-text-field>
         </v-col>
-        <v-col cols="12" v-for="champ in schema" :bind="champ.name">
+        <v-col cols="12" v-for="champ in schema" :key="champ.name">
           <v-sheet
             elevation="10"
             rounded="xl"

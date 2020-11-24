@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="pa-5">
     <div class="text-center">
       <h1>
         Ajouter Un Acte

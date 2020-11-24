@@ -14,6 +14,7 @@
           :to="item.to"
           router
           exact
+          class="mt-5"
         >
           <v-list-item-action>
             <v-icon color="primary">{{ item.icon }}</v-icon>
@@ -67,7 +68,8 @@
       <v-spacer />
       <create-menu />
       <v-btn icon @click.stop="rightDrawer = !rightDrawer" outlined fab>
-        <v-icon>mdi-format-list-bulleted-square</v-icon>
+        <!-- <v-icon>mdi-format-list-bulleted-square</v-icon> -->
+        <v-icon>mdi-account</v-icon>
       </v-btn>
     </v-app-bar>
     <v-main>
@@ -79,7 +81,15 @@
           <v-list-item-action>
             <v-icon light> mdi-repeat </v-icon>
           </v-list-item-action>
-          <v-list-item-title>Switch drawer (click me)</v-list-item-title>
+          <v-list-item-title>
+            <h3><v-icon light> mdi-account </v-icon> Acount</h3>
+          </v-list-item-title>
+        </v-list-item>
+        <v-list-item @click="logout" class="btn">
+          <v-list-item-action>
+            <v-icon light> mdi-logout </v-icon>
+          </v-list-item-action>
+          <v-list-item-title>Logout</v-list-item-title>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
@@ -147,7 +157,9 @@ export default {
 <style lang="css">
   .miniVariant{
     position: absolute;
-    top: 30vh;
-
+    top: 80px;
+  }
+  .btn{
+    cursor: pointer;
   }
 </style>
