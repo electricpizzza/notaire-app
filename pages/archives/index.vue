@@ -33,79 +33,17 @@
             label="Sort by"
           ></v-select>
           <v-spacer></v-spacer>
-          <v-btn outline color="primary" dark @click="dialog = true"
-            >Ajouter</v-btn
-          >
+          <v-btn outline color="primary" dark nuxt to="/archives/ajouter">
+            Ajouter
+          </v-btn>
           <v-dialog v-model="dialog" width="900">
             <v-card>
               <v-card-title class="headline grey lighten-2">
                 Créer Un nouveau archive
               </v-card-title>
-
               <v-card-text>
-                <v-container class="pa-10">
-                  <h2>Créer Un Nouveau Archive</h2>
-                  <form>
-                    <v-row>
-                      <v-col cols="6" md="12">
-                        <v-text-field
-                          v-model="titre"
-                          label="Titre"
-                          id="id"
-                        ></v-text-field>
-                      </v-col>
-                      <v-col cols="6" md="12">
-                        <v-text-field
-                          v-model="dossier"
-                          label="Dossier"
-                          id="id"
-                        ></v-text-field>
-                      </v-col>
-                      <h4 style="color: gray" class="ml-3">Fichiers :</h4>
-                      <v-col cols="12" class="file-show">
-                        <div
-                          v-for="(file, index) in files"
-                          v-bind="index"
-                          class="img-show ma-3"
-                        >
-                          <img src="" alt="" srcset="" />
-                          <span>{{ file.name }}</span>
-                        </div>
-                        <input
-                          type="file"
-                          id="file"
-                          ref="file"
-                          v-on:change="fileUpload()"
-                          class="img-field ma-3"
-                        />
-                      </v-col>
-                      <v-col cols="12">
-                        <v-textarea
-                          v-model="description"
-                          filled
-                          label="Description"
-                          auto-grow
-                        ></v-textarea>
-                      </v-col>
-                    </v-row>
-                    <v-btn
-                      outline
-                      color="primary"
-                      class="offset-10"
-                      dark
-                      @click="enregistrer"
-                      >Enregistrer</v-btn
-                    >
-                  </form>
-                </v-container>
+                <AjouterArchive />
               </v-card-text>
-
-              <v-divider></v-divider>
-
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="primary" text @click="valider"> Valider </v-btn>
-              </v-card-actions>
             </v-card>
           </v-dialog>
         </template>
@@ -241,7 +179,6 @@ export default {
   created() {
     Axios.get('http://localhost:1337/archive').then(resp => {
       this.items = resp.data
-      console.log(resp.data);
     }).catch(err => console.error(err))
   },
   methods: {
@@ -253,26 +190,6 @@ export default {
     },
     updateItemsPerPage(number) {
       this.itemsPerPage = number
-    },
-    seeFile() {
-      console.log(this.file);
-    },
-    valider() {
-
-      let formData = new FormData();
-      console.log(formData);
-
-      // formData.append('files', this.file);
-      formData.append('titre', this.titre);
-      console.log(formData);
-
-      // formData.append('dossiers', this.dossier);
-      // Axios.post('http://localhost:1337/archive', {
-      //   data: formData
-      // }
-      // ).then(resp => {
-      //   console.log(resp);
-      // })
     },
   },
 }

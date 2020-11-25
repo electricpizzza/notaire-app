@@ -62,7 +62,7 @@
       <v-col cols="12" sm="6">
         <v-text-field
           name="nomMereFr"
-          v-model="nomMereFr"
+          v-model="nomMereAr"
           label="اسم الأم"
           reverse
         ></v-text-field>

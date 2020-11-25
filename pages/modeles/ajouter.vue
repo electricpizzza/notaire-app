@@ -152,7 +152,9 @@ export default {
         }
         this.champs.push(champ)
       }
-      if (this.language === null || this.redacteur === '' || this.libelle === null || this.type === '' || this.champs === [] || this.boilerplate === '') {
+
+
+      if (this.language === null || this.redacteur === '' || this.libelle === null || this.type === '' || this.champs === []) {
         this.error = "Veuillez Bien Saisire les données S.V.P."
       } else {
         console.log({

@@ -44,7 +44,7 @@ import auth from './../assets/store/authStore'
 
 export default {
   mixins: [validationMixin],
-  layout: 'empty',
+  layout: '',
   middleware: 'authentification',
   validations: {
     password: { required, maxLength: maxLength(10) },

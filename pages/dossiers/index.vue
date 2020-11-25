@@ -153,6 +153,7 @@ export default {
     this.success = this.$route.query.success
     dossierService.getAllDocs().then(resp => {
       this.items = resp.data;
+      console.log(resp.data);
     })
   },
 }

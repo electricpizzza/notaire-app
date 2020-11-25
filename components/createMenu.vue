@@ -10,7 +10,7 @@
         <v-icon v-else> mdi-plus </v-icon>
       </v-btn>
     </template>
-    <v-btn dark color="#073a65" title nuxt to="/devis">
+    <v-btn dark color="#073a65" title nuxt to="/devis/ajouter">
       <v-icon class="mr-3">mdi-file</v-icon> Creer Un Devis
     </v-btn>
     <v-btn dark color="#073a65" title nuxt to="/modeles/ajouter">
