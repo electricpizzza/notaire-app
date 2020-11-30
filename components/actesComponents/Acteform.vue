@@ -170,7 +170,6 @@ export default {
   },
   created() {
     this.schema = JSON.parse(this.model.champs);
-    console.log(this.schema);
     var id = 0;
     const objs = [];
     this.schema.forEach(chmp => {

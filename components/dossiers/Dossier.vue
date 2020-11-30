@@ -80,12 +80,41 @@
             color="success"
             class="ms-4"
             nuxt
-            :to="`http://localhost:3000/dossiers/modifier/${dossier.id}`"
+            :to="`/dossiers/modifier/${dossier.id}`"
             >Modifier</v-btn
           >
-          <v-btn color="error" class="ms-2" @click="deleteDossier"
+          <v-btn color="error" class="ms-2" @click="deleteDialog = true"
             >Suprimer</v-btn
           >
+          <v-dialog
+            v-model="deleteDialog"
+            persistent
+            :overlay="true"
+            max-width="500px"
+            transition="dialog-transition"
+          >
+            <v-card class="pa-3">
+              <v-card-head>
+                <h3 class="mx-auto">
+                  Voulez vous vraiment suprimer ce dossier ?
+                </h3>
+              </v-card-head>
+              <v-card-actions>
+                <div class="mx-auto">
+                  <v-btn
+                    outlined
+                    @click="deleteDialog = false"
+                    color="primary"
+                    dark
+                    >Non, Annuler</v-btn
+                  >
+                  <v-btn outlined @click="deleteDossier" color="error" dark
+                    >Oui, Suprimer</v-btn
+                  >
+                </div>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
         </v-col>
       </v-row>
     </v-card-actions>
@@ -97,16 +126,29 @@
         style="height: 100%"
       >
         <v-card-text class="pb-0">
-          <p class="display-1 text--primary">Origin</p>
+          <p class="display-1 text-primary">Action</p>
+          <v-container style="height: 50vh; overflow: scroll">
+            <action-timeline />
+          </v-container>
+          <v-divider vertical class="my-3"></v-divider>
+          <p class="display-1 text--primary">Actes</p>
           <p>
             late 16th century (as a noun denoting a place where alms were
             distributed): from medieval Latin eleemosynarius, from late Latin
             eleemosyna ‘alms’, from Greek eleēmosunē ‘compassion’
           </p>
+          <v-divider vertical class="my-3"></v-divider>
+          <p class="display-1 text--primary">Atachement</p>
+          <p>
+            late 16th century (as a noun denoting a place where alms were
+            distributed): from medieval Latin eleemosynarius, from late Latin
+            eleemosyna ‘alms’, from Greek eleēmosunē ‘compassion’
+          </p>
+          <v-divider vertical class="my-3"></v-divider>
         </v-card-text>
         <v-card-actions class="pt-0">
-          <v-btn text color="teal accent-4" @click="reveal = false">
-            Close
+          <v-btn icon outlined color="teal accent-4" @click="reveal = false">
+            <v-icon>mdi-chevron-left</v-icon>
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -118,17 +160,20 @@ import ComparentService from './../../assets/sevices/comparentService'
 import BienService from './../../assets/sevices/bienService'
 import Axios from 'axios'
 import dossierSotre from '~/assets/store/dossierSotre'
+import ActionTimeline from '../ActionTimeline.vue'
 
 const comparentService = new ComparentService()
 const bienService = new BienService()
 
 export default {
+  components: { ActionTimeline },
   props: {
     dossier: {
       type: Object,
     }
   },
   data: () => ({
+    deleteDialog: false,
     reveal: false,
     search: '',
     dateFermeture: null,
@@ -176,6 +221,7 @@ export default {
 
     bienService.getAllBiens(resp => {
       this.biens = resp.data;
+      console.log(resp);
     })
   },
 
@@ -184,7 +230,7 @@ export default {
       Axios.put(`http://localhost:1337/dossiers/close/${this.dossier.id}`).then(resp => {
         console.log(resp);
         const today = new Date()
-        this.dossier.dateFermeture = `${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`
+        this.dossier.dateFermeture = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`
       }).catch(err => console.error(err))
     }
   },

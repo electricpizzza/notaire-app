@@ -44,7 +44,9 @@
             </v-col>
             <v-col cols="12">
               <div class="offset-9">
-                <v-btn color="success">Modifier</v-btn>
+                <v-btn color="success" nuxt :to="'./biens/modifier/' + item.id"
+                  >Modifier</v-btn
+                >
                 <v-btn color="error">Suprimer</v-btn>
               </div>
             </v-col>

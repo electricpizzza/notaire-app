@@ -27,11 +27,11 @@
           ></v-text-field>
         </v-col>
         <v-col cols="12">
-          <v-text-field v-model="address1" label="Address"></v-text-field>
+          <v-text-field v-model="address" label="Address"></v-text-field>
         </v-col>
         <v-col cols="12">
           <v-text-field
-            v-model="address2"
+            v-model="address1"
             label="Address (Facultative)"
           ></v-text-field>
         </v-col>
@@ -71,6 +71,7 @@ export default {
       ville: "",
       Superficie: null,
       address: '',
+      address1: '',
       ville: '',
       description: '',
       etage: null,
@@ -98,7 +99,9 @@ export default {
         Immeuble: this.Immeuble,
         terrainType: this.terrainType,
       }).then(resp => {
-        console.log(resp);
+        this.$router.push(
+          `/biens?success=Dossiers est bien enregistré`
+        )
       }).catch(err => console.error(err))
     }
   },

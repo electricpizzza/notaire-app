@@ -66,17 +66,18 @@
                 <v-list-item-title class="headline mb-1">
                   {{ item.titre }}
                 </v-list-item-title>
-                <v-list-item-subtitle
-                  >Greyhound divisely hello coldly
-                  fonwderfully</v-list-item-subtitle
-                >
+                <v-list-item-subtitle>
+                  {{ item.description }}
+                </v-list-item-subtitle>
               </v-list-item-content>
 
-              <v-list-item-avatar
-                tile
-                size="80"
-                color="grey"
-              ></v-list-item-avatar>
+              <v-list-item-avatar tile size="80">
+                <img
+                  :src="'http://localhost:1337/' + item.filesPath[0]"
+                  alt=""
+                  srcset=""
+                />
+              </v-list-item-avatar>
             </v-list-item>
 
             <v-card-actions>

@@ -90,19 +90,16 @@ export default {
   }),
   methods: {
     closeTab(id) {
-      console.log(id);
       this.docs = this.docs.filter(doc => doc.id != id)
       dossierSotre.closeDossier(id);
     },
     openDoc() {
       axios.get(`http://localhost:1337/dossiers/${this.toBeOpen}`).then(resp => {
-        console.log(resp.data);
         this.docs.push(resp.data)
         dossierSotre.addDossier(resp.data);
         this.toBeOpen = null;
         this.dialogDos = false;
       }).catch(err => console.error(err))
-
     },
     openDialog() {
       this.toBeOpen = null;
@@ -116,10 +113,7 @@ export default {
 
   },
   created() {
-    const usr = auth.user
-    console.log(usr);
-
-    this.docs = [...dossierSotre.getDossiers()];
+    // const usr = auth.user
 
     axios.get('http://localhost:1337/dossiers').then(resp => {
       this.dossiers = resp.data

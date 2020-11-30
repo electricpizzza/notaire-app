@@ -18,7 +18,7 @@
             <template v-slot:activator="{ on, attrs }">
               <v-text-field
                 v-model="dateDevis"
-                label="Date Devis"
+                label="Date Validiter de Devis"
                 prepend-icon="mdi-calendar"
                 readonly
                 v-bind="attrs"
@@ -35,54 +35,40 @@
           </v-menu>
         </div>
         <div>
-          <v-select
-            :items="termes"
-            v-model="value"
+          <v-text-field
+            v-model="termes"
             label="Termes & Condition"
-          ></v-select>
+            id="id"
+          ></v-text-field>
         </div>
       </v-col>
       <v-col cols="6" ms="12">
         <v-dialog v-model="dialogComp" width="500">
           <v-card>
             <v-card-title class="headline grey lighten-2">
-              Choix de(s) Comparant(s)
+              Client
             </v-card-title>
             <v-card-text>
-              <v-list shaped>
-                <v-row>
-                  <v-col cols="9">
-                    <v-text-field
-                      v-model="search"
-                      append-icon="mdi-magnify"
-                      label="Chercher"
-                      single-line
-                      hide-details
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="3">
-                    <v-btn dark small color="primary">
-                      <v-icon>mdi-plus</v-icon> Nouveau
-                    </v-btn>
-                  </v-col>
-                </v-row>
-                <v-data-table
-                  v-model="selectedItems"
-                  :headers="headersComp"
-                  :items="compList"
-                  item-key="id"
-                  show-select
-                  :search="search"
-                  class="elevation-1"
-                >
-                </v-data-table>
-              </v-list>
+              <v-row>
+                <v-col cols="12">
+                  <v-text-field
+                    label="Nom / Raison Sociale"
+                    v-model="client.nom"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12">
+                  <v-text-field
+                    label="Adresse"
+                    v-model="client.address"
+                  ></v-text-field>
+                </v-col>
+              </v-row>
             </v-card-text>
             <v-divider></v-divider>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="primary" text @click="selectComparant">
-                Selectionner
+              <v-btn color="primary" text @click="dialogComp = false">
+                OK
               </v-btn>
             </v-card-actions>
           </v-card>
@@ -112,16 +98,14 @@
               <template v-slot:default>
                 <thead>
                   <tr>
-                    <th class="text-left">ID</th>
-                    <th class="text-left">Type</th>
-                    <th class="text-left">Nom / Raison Sociale du Comparant</th>
+                    <th class="text-left">Nom / Raison Sociale du Clien</th>
+                    <th class="text-left">Adress</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="comp in Comparant" :key="comp.id">
-                    <td>{{ comp.id }}</td>
-                    <td>{{ comp.type }}</td>
-                    <td>{{ comp.nom }}</td>
+                  <tr>
+                    <td>{{ client.nom }}</td>
+                    <td>{{ client.address }}</td>
                   </tr>
                 </tbody>
               </template>
@@ -268,6 +252,7 @@
   </div>
 </template>
 <script>
+import Axios from 'axios';
 import DevisStore from '~/assets/store/devisStore'
 export default {
   data() {
@@ -279,6 +264,7 @@ export default {
       dialogComp: false,
       total: 0,
       remisG: 0,
+      client: { nom: '', address: '' },
       articles: [
         { index: 0, ref: '', description: '', remise: 0, qte: 0, pu: 0, tva: 0, total: 0, class: '' }
       ],
@@ -302,13 +288,17 @@ export default {
       });
     },
     enregistrer() {
-      DevisStore.articles = this.articles;
-      DevisStore.remisG = this.remisG;
-      DevisStore.total = this.total;
-      DevisStore.dateDevis = this.dateDevis;
-      DevisStore.termes = this.termes;
-      DevisStore.client = this.client;
-      this.$router.push("/test")
+      Axios.post('http://localhost:1337/devis', {
+        articles: this.articles,
+        remisG: this.remisG,
+        total: this.total,
+        dateDevis: this.dateDevis,
+        termes: this.termes,
+        client: this.client
+      }).then(resp => {
+        console.log(resp);
+      })
+      // this.$router.push("/test")
     }
   },
   computed: {

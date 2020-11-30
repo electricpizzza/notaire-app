@@ -7,3 +7,6 @@ nature, libelle, date ouverture, date de fermeture, notaire
  Bien, Comparant
 
  actes, document
+
+
+{"articles":[{"index":0,"ref":"HJ1","description":"Reference site about Lorem Ipsum, giving information on its origin","remise":"200","qte":"1","pu":"3500","tva":"10","total":3630,"class":""},{"index":1,"ref":"JH12","description":"Reference site about Lorem Ipsum, giving information on its origin site , giving information on its origin","remise":"200","qte":"2","pu":"4000","tva":"10","total":8580,"class":""}],"remisG":"1000","total":12210,"dateDevis":"2021-01-01","termes":"","client":{"nom":"Dinar","address":"RUE 14 HAY OUED FES "}}

@@ -7,7 +7,7 @@
     <template v-slot:activator>
       <v-btn v-model="fab" icon color="#073a65" class="mr-5" dark outlined fab>
         <v-icon v-if="fab"> mdi-close </v-icon>
-        <v-icon v-else> mdi-plus </v-icon>
+        <v-icon v-else> mdi-view-headline </v-icon>
       </v-btn>
     </template>
     <v-btn dark color="#073a65" title nuxt to="/devis/ajouter">

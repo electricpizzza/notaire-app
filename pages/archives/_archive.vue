@@ -2,17 +2,15 @@
   <div>
     <v-card>
       <v-card-title primary-title>
-        {{ "Archive : " + titre }}
+        <h2>{{ "Archive : " + titre }}</h2>
       </v-card-title>
       <v-card-text>
-        <v-btn
-          outlined
-          color="primary"
-          x-small
-          dark
-          @click="addFileDialog = true"
-        >
+        <p>{{ description }}</p>
+        <v-btn outlined color="primary" dark @click="addFileDialog = true">
           Ajouter un ficher
+        </v-btn>
+        <v-btn outlined color="info" dark @click="telechargerArchive">
+          Telecharger l'Archive
         </v-btn>
         <v-dialog
           v-model="addFileDialog"
@@ -55,18 +53,17 @@
       </v-card-text>
     </v-card>
     <v-row>
-      <v-col cols="4" v-for="file in files" :key="file">
+      <v-col cols="12" md="4" v-for="(file, index) in files" :key="index">
         <v-card class="mx-auto" max-width="344" outlined>
           <v-list-item three-line>
             <v-list-item-content>
               <div class="overline mb-4">Attachement</div>
               <v-list-item-title class="headline mb-1">
-                File 1
+                File {{ index + 1 }}
               </v-list-item-title>
-              <v-list-item-subtitle
-                >Greyhound divisely hello coldly
-                fonwderfully</v-list-item-subtitle
-              >
+              <v-list-item-subtitle>
+                {{ file.replace("uploads/", "") }}
+              </v-list-item-subtitle>
             </v-list-item-content>
 
             <v-list-item-avatar tile size="80">
@@ -78,9 +75,10 @@
             <v-btn
               outlined
               rounded
-              text
+              color="info"
               :href="`http://localhost:1337/${file}`"
               target="_blank"
+              class="px-5"
             >
               Ouvrir
             </v-btn>
@@ -103,6 +101,7 @@ export default {
       titre: '',
       dossier: 1,
       description: '',
+      mainFile: '',
       files: [],
       addFileDialog: false,
       newFiles: [],
@@ -111,9 +110,9 @@ export default {
   created() {
     Axios.get(`http://localhost:1337/archive/${this.archive}`).then(resp => {
       this.titre = resp.data.titre;
-      this.description = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel natus facilis provident! Quidem, labore excepturi nulla reiciendis illo possimus aspernatur accusamus inventore obcaecati consectetur blanditiis, facere amet perspiciatis, ex sunt.';
-      const filesTab = JSON.parse(resp.data.filesPath);
-      this.files = [...filesTab]
+      this.description = resp.data.description;
+      this.mainFile = resp.data.mainFile;
+      this.files = [...resp.data.filesPath]
 
     })
   },
@@ -128,14 +127,25 @@ export default {
       });
 
       Axios.post(`http://localhost:1337/archive/addFiles/${this.archive}`, formData).then(resp => {
-        const filesTab = JSON.parse(resp.data.filesPath);
-        this.files = [...filesTab];
+
+        this.files = [...resp.data.filesPath];
         this.addFileDialog = false;
         this.newFiles = [];
 
       }).catch(err => console.error(err))
+    },
+    telechargerArchive() {
+      Axios.get('http://localhost:1337/uploads/cadetaf.pdf-2020-11-30T13:51:05.354Z.pdf').then(resp => {
+        console.log(this.resp);
+        const fileURL = window.URL.createObjectURL(new Blob([resp.data]));
+        const fileLink = document.createElement('a');
+        fileLink.href = fileURL;
+        document.body.appendChild(fileLink);
+        fileLink.click();
+      })
     }
   },
+
 }
 </script>
 <style lang="css">

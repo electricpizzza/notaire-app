@@ -5,4 +5,8 @@ export default class DossierService{
     async getAllDocs(){
         return await axios.get();
     }
+
+    async getOneDossier(id){
+        return await axios.get('/'+id);
+    }
 }
