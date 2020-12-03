@@ -1,0 +1,98 @@
+{
+  "ActionTimeline": {
+    "description": "Auto imported from components/ActionTimeline.vue"
+  },
+  "LazyActionTimeline": {
+    "description": "Auto imported from components/ActionTimeline.vue"
+  },
+  "FormDialog": {
+    "description": "Auto imported from components/FormDialog.vue"
+  },
+  "LazyFormDialog": {
+    "description": "Auto imported from components/FormDialog.vue"
+  },
+  "Group": {
+    "description": "Auto imported from components/Group.vue"
+  },
+  "LazyGroup": {
+    "description": "Auto imported from components/Group.vue"
+  },
+  "Logo": {
+    "description": "Auto imported from components/Logo.vue"
+  },
+  "LazyLogo": {
+    "description": "Auto imported from components/Logo.vue"
+  },
+  "RichEditor": {
+    "description": "Auto imported from components/RichEditor.vue"
+  },
+  "LazyRichEditor": {
+    "description": "Auto imported from components/RichEditor.vue"
+  },
+  "VuetifyLogo": {
+    "description": "Auto imported from components/VuetifyLogo.vue"
+  },
+  "LazyVuetifyLogo": {
+    "description": "Auto imported from components/VuetifyLogo.vue"
+  },
+  "CreateMenu": {
+    "description": "Auto imported from components/createMenu.vue"
+  },
+  "LazyCreateMenu": {
+    "description": "Auto imported from components/createMenu.vue"
+  },
+  "Acteform": {
+    "description": "Auto imported from components/actesComponents/Acteform.vue"
+  },
+  "LazyActeform": {
+    "description": "Auto imported from components/actesComponents/Acteform.vue"
+  },
+  "AjouterArchive": {
+    "description": "Auto imported from components/archives/AjouterArchive.vue"
+  },
+  "LazyAjouterArchive": {
+    "description": "Auto imported from components/archives/AjouterArchive.vue"
+  },
+  "ComparentList": {
+    "description": "Auto imported from components/comparentComponents/ComparentList.vue"
+  },
+  "LazyComparentList": {
+    "description": "Auto imported from components/comparentComponents/ComparentList.vue"
+  },
+  "EntrepriseForm": {
+    "description": "Auto imported from components/comparentComponents/EntrepriseForm.vue"
+  },
+  "LazyEntrepriseForm": {
+    "description": "Auto imported from components/comparentComponents/EntrepriseForm.vue"
+  },
+  "MineurForm": {
+    "description": "Auto imported from components/comparentComponents/MineurForm.vue"
+  },
+  "LazyMineurForm": {
+    "description": "Auto imported from components/comparentComponents/MineurForm.vue"
+  },
+  "PersonForm": {
+    "description": "Auto imported from components/comparentComponents/PersonForm.vue"
+  },
+  "LazyPersonForm": {
+    "description": "Auto imported from components/comparentComponents/PersonForm.vue"
+  },
+  "Dossier": {
+    "description": "Auto imported from components/dossiers/Dossier.vue"
+  },
+  "LazyDossier": {
+    "description": "Auto imported from components/dossiers/Dossier.vue"
+  },
+  "DossierCard": {
+    "description": "Auto imported from components/dossiers/DossierCard.vue"
+  },
+  "LazyDossierCard": {
+    "description": "Auto imported from components/dossiers/DossierCard.vue"
+  },
+  "DossierForm": {
+    "description": "Auto imported from components/dossiers/DossierForm.vue"
+  },
+  "LazyDossierForm": {
+    "description": "Auto imported from components/dossiers/DossierForm.vue"
+  }
+}

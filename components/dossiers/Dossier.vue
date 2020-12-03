@@ -19,7 +19,7 @@
           <b>date de Fermeture:</b> {{ dossier.dateFermeture }}
         </v-col>
         <v-col cols="12" md="6" v-else>
-          <v-btn outline color="error" @click="fermerDossier" dark
+          <v-btn color="error" @click="fermerDossier" dark
             >Fermer Dossier</v-btn
           >
         </v-col>

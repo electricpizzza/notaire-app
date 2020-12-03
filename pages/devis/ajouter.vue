@@ -37,12 +37,36 @@
         <div>
           <v-text-field
             v-model="termes"
+            prepend-icon="mdi-pencil"
             label="Termes & Condition"
             id="id"
           ></v-text-field>
         </div>
+        <div>
+          <v-text-field
+            v-model="maitre"
+            prepend-icon="mdi-glasses"
+            label="Maitre"
+            id="id"
+          ></v-text-field>
+        </div>
+        <div>
+          <v-select
+            :items="['Espece', 'Cheque', 'Virment']"
+            v-model="payment"
+            label="Type de Payment"
+            prepend-icon="mdi-cash-multiple"
+          ></v-select>
+        </div>
       </v-col>
-      <v-col cols="6" ms="12">
+      <v-col cols="6" ms="12" class="mt-5">
+        <div>
+          <v-text-field
+            v-model="reference"
+            prepend-icon="mdi-identification"
+            label="Reference"
+          ></v-text-field>
+        </div>
         <v-dialog v-model="dialogComp" width="500">
           <v-card>
             <v-card-title class="headline grey lighten-2">
@@ -54,11 +78,13 @@
                   <v-text-field
                     label="Nom / Raison Sociale"
                     v-model="client.nom"
+                    prepend-icon="mdi-account"
                   ></v-text-field>
                 </v-col>
                 <v-col cols="12">
                   <v-text-field
                     label="Adresse"
+                    prepend-icon="mdi-map"
                     v-model="client.address"
                   ></v-text-field>
                 </v-col>
@@ -79,7 +105,7 @@
               <v-col cols="9">
                 <h3>
                   <v-icon>mdi-account-outline</v-icon>
-                  Comparant(s)
+                  Client
                 </h3>
               </v-col>
               <v-col cols="3" class="text-right">
@@ -181,7 +207,7 @@
                 <td>{{ article.total }} Dhs</td>
                 <td>
                   <v-btn
-                    outline
+                    outlined
                     color="error"
                     x-small
                     dark
@@ -239,12 +265,7 @@
         </v-simple-table>
       </v-col>
       <v-col cols="12">
-        <v-btn
-          outline
-          class="offset-10 mt-7"
-          color="primary"
-          dark
-          @click="enregistrer"
+        <v-btn class="offset-10 mt-7" color="primary" dark @click="enregistrer"
           >Enregistrer</v-btn
         >
       </v-col>
@@ -264,6 +285,9 @@ export default {
       dialogComp: false,
       total: 0,
       remisG: 0,
+      maitre: '',
+      payment: '',
+      reference: '',
       client: { nom: '', address: '' },
       articles: [
         { index: 0, ref: '', description: '', remise: 0, qte: 0, pu: 0, tva: 0, total: 0, class: '' }
@@ -290,23 +314,22 @@ export default {
     enregistrer() {
       Axios.post('http://localhost:1337/devis', {
         articles: this.articles,
+        reference: this.reference,
         remisG: this.remisG,
         total: this.total,
         dateDevis: this.dateDevis,
         termes: this.termes,
+        maitre: this.maitre,
+        payment: this.payment,
         client: this.client
       }).then(resp => {
         console.log(resp);
+        // this.$router.push("/test")
+      }).catch(err => {
+        console.log(err);
       })
-      // this.$router.push("/test")
     }
   },
-  computed: {
-    articles(newArticle) {
-      console.log(newArticle);
-      console.log(this.articles);
-    }
-  }
 }
 </script>
 <style lang="css">

@@ -27,7 +27,7 @@
             type="file"
             id="file"
             ref="file"
-            v-on:change="fileUpload()"
+            @change="fileUpload"
             class="img-field ma-3"
             multiple
           />
@@ -41,13 +41,8 @@
           ></v-textarea>
         </v-col>
       </v-row>
-      <v-btn
-        outline
-        color="primary"
-        class="offset-10"
-        dark
-        @click="enregistrer"
-      >
+      <img :src="testimage" alt="" srcset="" />
+      <v-btn color="primary" class="offset-10" dark @click="enregistrer">
         Enregistrer
       </v-btn>
     </form>
@@ -62,6 +57,7 @@ export default {
       dossier: '',
       titre: '',
       description: '',
+      testimage: '',
     }
   },
   created() {
@@ -69,8 +65,8 @@ export default {
   },
   methods: {
     fileUpload() {
+      this.testimage = this.$refs.file.files[0].webkitRelativePath;
       this.files.push(...this.$refs.file.files);
-      console.log(this.files);
     },
     enregistrer() {
       let formData = new FormData();
@@ -102,10 +98,12 @@ export default {
     width:100px;
     height:100px;
   }
-  .img-showd{
-        width: 100px;
+  .img-show{
+    width: 100px;
     height: 100px;
-    background-color: gainsboro;
+    background-color: lightcyan;
+    background-image: url('/_nuxt/assets/placeholder.png');
+    background-size: cover;
     display: flex;
     flex-direction: column;
     justify-content: center;

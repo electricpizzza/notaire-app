@@ -12,6 +12,7 @@
         <v-btn outlined color="info" dark @click="telechargerArchive">
           Telecharger l'Archive
         </v-btn>
+
         <v-dialog
           v-model="addFileDialog"
           scrollable
@@ -135,14 +136,21 @@ export default {
       }).catch(err => console.error(err))
     },
     telechargerArchive() {
-      Axios.get('http://localhost:1337/uploads/cadetaf.pdf-2020-11-30T13:51:05.354Z.pdf').then(resp => {
-        console.log(this.resp);
-        const fileURL = window.URL.createObjectURL(new Blob([resp.data]));
-        const fileLink = document.createElement('a');
-        fileLink.href = fileURL;
-        document.body.appendChild(fileLink);
-        fileLink.click();
-      })
+      // Axios.get('http://localhost:1337/uploads/devis/devis-RKLSD12-1-12-2020.pdf').then(resp => {
+      //   resp.blob().then(blob => {
+      //     let url = window.URL.createObjectURL(blob);
+      //     let a = document.createElement('a');
+      //     a.href = url;
+      //     a.download = element.name + '.pdf';
+      //     a.click();
+      //   })
+      // })
+
+      // let url = window.URL.createObjectURL('http://localhost:1337/uploads/devis/devis-RKLSD12-1-12-2020.pdf');
+      // let a = document.createElement('a');
+      // a.href = url;
+      // a.download = element.name + '.pdf';
+      // a.click();
     }
   },
 

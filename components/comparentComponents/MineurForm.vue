@@ -153,7 +153,7 @@
         ></v-select>
       </v-col>
     </v-row>
-    <v-btn outline color="primary" class="offset-10" dark @click="enregistrer"
+    <v-btn color="primary" class="offset-10" dark @click="enregistrer"
       >Enregistre</v-btn
     >
   </v-form>

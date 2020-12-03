@@ -33,7 +33,7 @@
             label="Sort by"
           ></v-select>
           <v-spacer></v-spacer>
-          <v-btn outline color="primary" dark nuxt to="/archives/ajouter">
+          <v-btn color="primary" dark nuxt to="/archives/ajouter">
             Ajouter
           </v-btn>
           <v-dialog v-model="dialog" width="900">

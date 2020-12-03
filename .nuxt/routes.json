@@ -1,0 +1,182 @@
+[
+  {
+    "name": "actes",
+    "path": "/actes",
+    "component": "/Users/zakariae/notaire-app/pages/actes/index.vue",
+    "chunkName": "pages/actes/index"
+  },
+  {
+    "name": "archives",
+    "path": "/archives",
+    "component": "/Users/zakariae/notaire-app/pages/archives/index.vue",
+    "chunkName": "pages/archives/index"
+  },
+  {
+    "name": "biens",
+    "path": "/biens",
+    "component": "/Users/zakariae/notaire-app/pages/biens/index.vue",
+    "chunkName": "pages/biens/index"
+  },
+  {
+    "name": "comparent",
+    "path": "/comparent",
+    "component": "/Users/zakariae/notaire-app/pages/comparent/index.vue",
+    "chunkName": "pages/comparent/index"
+  },
+  {
+    "name": "comptabilite",
+    "path": "/comptabilite",
+    "component": "/Users/zakariae/notaire-app/pages/comptabilite/index.vue",
+    "chunkName": "pages/comptabilite/index"
+  },
+  {
+    "name": "devis",
+    "path": "/devis",
+    "component": "/Users/zakariae/notaire-app/pages/devis/index.vue",
+    "chunkName": "pages/devis/index"
+  },
+  {
+    "name": "dossiers",
+    "path": "/dossiers",
+    "component": "/Users/zakariae/notaire-app/pages/dossiers/index.vue",
+    "chunkName": "pages/dossiers/index"
+  },
+  {
+    "name": "factures",
+    "path": "/factures",
+    "component": "/Users/zakariae/notaire-app/pages/factures/index.vue",
+    "chunkName": "pages/factures/index"
+  },
+  {
+    "name": "home",
+    "path": "/home",
+    "component": "/Users/zakariae/notaire-app/pages/home.vue",
+    "chunkName": "pages/home"
+  },
+  {
+    "name": "inspire",
+    "path": "/inspire",
+    "component": "/Users/zakariae/notaire-app/pages/inspire.vue",
+    "chunkName": "pages/inspire"
+  },
+  {
+    "name": "login",
+    "path": "/login",
+    "component": "/Users/zakariae/notaire-app/pages/login.vue",
+    "chunkName": "pages/login"
+  },
+  {
+    "name": "modeles",
+    "path": "/modeles",
+    "component": "/Users/zakariae/notaire-app/pages/modeles/index.vue",
+    "chunkName": "pages/modeles/index"
+  },
+  {
+    "name": "test",
+    "path": "/test",
+    "component": "/Users/zakariae/notaire-app/pages/test.vue",
+    "chunkName": "pages/test"
+  },
+  {
+    "name": "actes-ajouter",
+    "path": "/actes/ajouter",
+    "component": "/Users/zakariae/notaire-app/pages/actes/ajouter.vue",
+    "chunkName": "pages/actes/ajouter"
+  },
+  {
+    "name": "archives-ajouter",
+    "path": "/archives/ajouter",
+    "component": "/Users/zakariae/notaire-app/pages/archives/ajouter.vue",
+    "chunkName": "pages/archives/ajouter"
+  },
+  {
+    "name": "biens-ajouter",
+    "path": "/biens/ajouter",
+    "component": "/Users/zakariae/notaire-app/pages/biens/ajouter.vue",
+    "chunkName": "pages/biens/ajouter"
+  },
+  {
+    "name": "comparent-ajouter",
+    "path": "/comparent/ajouter",
+    "component": "/Users/zakariae/notaire-app/pages/comparent/ajouter.vue",
+    "chunkName": "pages/comparent/ajouter"
+  },
+  {
+    "name": "devis-ajouter",
+    "path": "/devis/ajouter",
+    "component": "/Users/zakariae/notaire-app/pages/devis/ajouter.vue",
+    "chunkName": "pages/devis/ajouter"
+  },
+  {
+    "name": "devis-devi",
+    "path": "/devis/devi",
+    "component": "/Users/zakariae/notaire-app/pages/devis/devi.vue",
+    "chunkName": "pages/devis/devi"
+  },
+  {
+    "name": "dossiers-ajouter",
+    "path": "/dossiers/ajouter",
+    "component": "/Users/zakariae/notaire-app/pages/dossiers/ajouter.vue",
+    "chunkName": "pages/dossiers/ajouter"
+  },
+  {
+    "name": "modeles-ajouter",
+    "path": "/modeles/ajouter",
+    "component": "/Users/zakariae/notaire-app/pages/modeles/ajouter.vue",
+    "chunkName": "pages/modeles/ajouter"
+  },
+  {
+    "name": "biens-modifier-bien",
+    "path": "/biens/modifier/:bien?",
+    "component": "/Users/zakariae/notaire-app/pages/biens/modifier/_bien.vue",
+    "chunkName": "pages/biens/modifier/_bien"
+  },
+  {
+    "name": "comparent-modifier-comparent",
+    "path": "/comparent/modifier/:comparent?",
+    "component": "/Users/zakariae/notaire-app/pages/comparent/modifier/_comparent.vue",
+    "chunkName": "pages/comparent/modifier/_comparent"
+  },
+  {
+    "name": "dossiers-modifier-dossier",
+    "path": "/dossiers/modifier/:dossier?",
+    "component": "/Users/zakariae/notaire-app/pages/dossiers/modifier/_dossier.vue",
+    "chunkName": "pages/dossiers/modifier/_dossier"
+  },
+  {
+    "name": "actes-acte",
+    "path": "/actes/:acte",
+    "component": "/Users/zakariae/notaire-app/pages/actes/_acte.vue",
+    "chunkName": "pages/actes/_acte"
+  },
+  {
+    "name": "archives-archive",
+    "path": "/archives/:archive",
+    "component": "/Users/zakariae/notaire-app/pages/archives/_archive.vue",
+    "chunkName": "pages/archives/_archive"
+  },
+  {
+    "name": "comparent-comparent",
+    "path": "/comparent/:comparent",
+    "component": "/Users/zakariae/notaire-app/pages/comparent/_comparent.vue",
+    "chunkName": "pages/comparent/_comparent"
+  },
+  {
+    "name": "dossiers-dossier",
+    "path": "/dossiers/:dossier",
+    "component": "/Users/zakariae/notaire-app/pages/dossiers/_dossier.vue",
+    "chunkName": "pages/dossiers/_dossier"
+  },
+  {
+    "name": "modeles-modele",
+    "path": "/modeles/:modele",
+    "component": "/Users/zakariae/notaire-app/pages/modeles/_modele.vue",
+    "chunkName": "pages/modeles/_modele"
+  },
+  {
+    "name": "index",
+    "path": "/",
+    "component": "/Users/zakariae/notaire-app/pages/index.vue",
+    "chunkName": "pages/index"
+  }
+]

@@ -1,134 +1,140 @@
 <template>
-  <v-card class="ma-0" min-height="80vh">
-    <v-dialog v-model="dialogDos" width="500" persistent>
-      <v-card>
-        <v-card-title class="headline lighten-2">
-          Choisire un Dossier
-        </v-card-title>
+  <v-card class="mx-auto menu" max-width="700px">
+    <v-snackbar v-model="snackbarErr" color="error">
+      {{ error }}
 
-        <v-card-text>
-          <v-select
-            :items="dossiers"
-            v-model="toBeOpen"
-            label="Dossier"
-            item-text="libelle"
-            item-value="id"
-          ></v-select>
-        </v-card-text>
-
-        <v-divider></v-divider>
-
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="error" text @click="closeDialog"> Anuller </v-btn>
-          <v-btn color="primary" text @click="openDoc"> Ouvrire </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-    <v-card-title class="text-center justify-center py-6">
-      <img
-        src="~/assets/logo.jpeg"
-        alt="Logo"
-        width="80px"
-        height="80px"
-        class="mx-3"
-      />
-      <h1 class="font-weight-bold basil--text" style="color: #193f70">
-        Notary
-      </h1>
+      <template v-slot:action="{ attrs }">
+        <v-btn
+          color="white"
+          icon
+          text
+          v-bind="attrs"
+          @click="snackbarErr = false"
+        >
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+      </template>
+    </v-snackbar>
+    <v-img
+      class="mx-auto"
+      height="180px"
+      width="180px"
+      src="/_nuxt/assets/logo.jpeg"
+    >
+    </v-img>
+    <v-card-title primary-title class="d-flex justify-center bg-dark">
+      <h3>Vous êtes conecté au tant que Admin</h3>
     </v-card-title>
-    <v-tabs v-model="tab" background-color="primary lighten-2" dark>
-      <v-tab v-for="doc in docs" :key="doc.id">
-        <v-icon left dark> mdi-folder </v-icon>
-        {{ doc.title }}
-      </v-tab>
-    </v-tabs>
-    <v-tabs-items v-model="tab" class="workspace">
-      <v-btn fab color="#3860ff" dark top right absolute @click="openDialog">
-        <v-icon>mdi-plus</v-icon>
+    <v-card-text class="mx-auto">
+      <v-container class="d-flex flex-column justify-center px-lg-16">
+        <v-btn
+          outlined
+          color="primary"
+          large
+          dark
+          class="btn-menu my-1 mx-16 d-flex justify-start px-10"
+        >
+          <v-icon class="mr-10">mdi-gavel</v-icon> Redaction D'acte
+        </v-btn>
+        <v-btn
+          outlined
+          color="primary"
+          large
+          dark
+          class="btn-menu my-1 mx-16 d-flex justify-start px-10"
+        >
+          <v-icon class="mr-10">mdi-calculator</v-icon>Comptabilité
+        </v-btn>
+        <v-btn
+          outlined
+          color="primary"
+          large
+          dark
+          class="btn-menu my-1 mx-16 d-flex justify-start px-10"
+          nuxt
+          to="/home"
+          ><v-icon class="mr-10">mdi-folder</v-icon> Gestion des Dossier
+        </v-btn>
+        <v-btn
+          outlined
+          color="primary"
+          large
+          dark
+          class="btn-menu my-1 mx-16 d-flex justify-start px-10"
+        >
+          <v-icon class="mr-10">mdi-cog</v-icon>Paramétre
+        </v-btn>
+        <div class="d-flex my-1 mx-16 d-flex justify-start px-10">
+          <span class="mt-1">Etat du serveur</span>
+          <v-btn
+            text
+            :color="etatServeur === 'Deconecté' ? 'error' : 'success'"
+            dark
+            @click="connetToSever"
+            >{{ etatServeur }}
+          </v-btn>
+        </div>
+      </v-container>
+    </v-card-text>
+    <v-card-actions class="d-flex justify-center bg-dark">
+      <v-btn color="primary darken-4" dark>
+        <v-icon class="mr-1">mdi-logout</v-icon>
+        <!-- {{ etatServeur === "Conecté" ? "Conecté" : "Deconecté" }} -->
+        Se deconnecter
       </v-btn>
-      <v-tab-item v-for="doc in docs" :key="doc.id">
-        <v-card color="basil" flat class="pa-2">
-          <v-card-text>
-            <v-btn
-              elevation="2"
-              icon
-              small
-              absolute
-              right
-              style="z-index: 9999"
-              class="mt-3 mr-0"
-              @click="closeTab(doc.id)"
-            >
-              <v-icon color="error"> mdi-close-circle </v-icon>
-              <v-tooltip bottom>
-                <span>Fermer</span>
-              </v-tooltip>
-            </v-btn>
-            <dossier class="ma-5" :dossier="doc" />
-          </v-card-text>
-        </v-card>
-      </v-tab-item>
-    </v-tabs-items>
-    <v-card-text class="text-center"> </v-card-text>
+      <v-btn color="error" outlined dark>
+        <v-icon class="mr-1">mdi-close</v-icon> Quitter</v-btn
+      >
+    </v-card-actions>
   </v-card>
 </template>
 <script>
-import axios from 'axios'
-import DossierCard from '~/components/dossiers/DossierCard.vue';
-import dossierSotre from './../assets/store/dossierSotre'
-import auth from './../assets/store/authStore'
+import Axios from 'axios';
 export default {
-  components: { DossierCard },
-  // middleware: 'authentification',
-  data: () => ({
-    dossiers: [],
-    dialogDos: false,
-    tab: null,
-    toBeOpen: null,
-    docs: []
-  }),
+  layout: 'empty',
+  data() {
+    return {
+      etatServeur: 'Deconecté',
+      error: '',
+      snackbarErr: false,
+    }
+  },
   methods: {
-    closeTab(id) {
-      this.docs = this.docs.filter(doc => doc.id != id)
-      dossierSotre.closeDossier(id);
-    },
-    openDoc() {
-      axios.get(`http://localhost:1337/dossiers/${this.toBeOpen}`).then(resp => {
-        this.docs.push(resp.data)
-        dossierSotre.addDossier(resp.data);
-        this.toBeOpen = null;
-        this.dialogDos = false;
-      }).catch(err => console.error(err))
-    },
-    openDialog() {
-      this.toBeOpen = null;
-      this.dialogDos = true;
-    },
-    closeDialog() {
-      this.toBeOpen = null;
-      this.dialogDos = false;
-    },
-
-
+    connetToSever() {
+      if (this.etatServeur === "Deconecté") {
+        Axios.get('http://localhost:1337').then(resp => {
+          console.log(resp.data);
+          this.etatServeur = "Conecté";
+          this.snackbarErr = false;
+          this.error = '';
+        }).catch(err => {
+          console.log(err);
+          this.error = 'Erreur: Echeque de conexion, Veuillez consulter vos serveures';
+          this.snackbarErr = true;
+        })
+        // this.etatServeur = "Conecté";
+      }
+    }
   },
   created() {
-    // const usr = auth.user
-
-    axios.get('http://localhost:1337/dossiers').then(resp => {
-      this.dossiers = resp.data
+    Axios.get('http://localhost:1337').then(resp => {
+      console.log(resp.data);
+      this.etatServeur = "Conecté";
+      this.snackbarErr = false;
+      this.error = '';
+    }).catch(err => {
+      console.log(err);
+      this.error = 'Erreur: Echeque de conexion, Veuillez consulter vos serveurs';
+      this.snackbarErr = true;
     })
-  },
+  }
 }
 </script>
-<style lang="css" scoped>
-  .v-card{
-    background-image: url('https://raw.githubusercontent.com/electricpizzza/BloodDonation/master/public/img/background.png');
-  }
-  .v-data-table {
-    background: whitesmoke;
-  }
-  .workspace{
-      background-image: url('/asset/undraw_folder_39kl.svg');
-  }
+<style lang="css" scope>
+    .menu{
+      background-image: url('https://raw.githubusercontent.com/electricpizzza/BloodDonation/master/public/img/background.png');
+    }
+    .bg-dark{
+      background-color:#2195f3;
+    }
 </style>

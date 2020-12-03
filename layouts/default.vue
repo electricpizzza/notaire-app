@@ -152,6 +152,11 @@ export default {
       title: 'Notary',
     }
   },
+  methods: {
+    logout() {
+
+    }
+  },
 }
 </script>
 <style lang="css">
