@@ -73,7 +73,7 @@
 
               <v-list-item-avatar tile size="80">
                 <img
-                  :src="'http://localhost:1337/' + item.filesPath[0]"
+                  :src="'https://notair-api.herokuapp.com/' + item.filesPath[0]"
                   alt=""
                   srcset=""
                 />
@@ -178,7 +178,7 @@ export default {
     },
   },
   created() {
-    Axios.get('http://localhost:1337/archive').then(resp => {
+    Axios.get('https://notair-api.herokuapp.com/archive').then(resp => {
       this.items = resp.data
     }).catch(err => console.error(err))
   },
