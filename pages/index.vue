@@ -33,6 +33,8 @@
           large
           dark
           class="btn-menu my-1 mx-16 d-flex justify-start px-10"
+          nuxt
+          to="/actes/ajouter"
         >
           <v-icon class="mr-10">mdi-gavel</v-icon> Redaction D'acte
         </v-btn>
@@ -40,7 +42,7 @@
           outlined
           color="primary"
           large
-          dark
+          disabled
           class="btn-menu my-1 mx-16 d-flex justify-start px-10"
         >
           <v-icon class="mr-10">mdi-calculator</v-icon>Comptabilité
@@ -59,7 +61,7 @@
           outlined
           color="primary"
           large
-          dark
+          disabled
           class="btn-menu my-1 mx-16 d-flex justify-start px-10"
         >
           <v-icon class="mr-10">mdi-cog</v-icon>Paramétre

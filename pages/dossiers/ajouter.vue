@@ -442,19 +442,7 @@ export default {
         bins.push(b.id)
       });
 
-      console.log(JSON.stringify(
-        {
-          title: `${this.libelle} -  ${this.nature}`,
-          nature: this.nature,
-          description: this.description,
-          libelle: this.libelle,
-          dateOuverture: this.dateOuverture,
-          dateFermeture: this.dateFermeture,
-          bien: bins,
-          comparents: comps,
-          NomMaitre: this.notaire,
-        }
-      ));
+
       axios.post('http://localhost:1337/dossiers', {
         title: `${this.libelle} -  ${this.nature}`,
         nature: this.nature,

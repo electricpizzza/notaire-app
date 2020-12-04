@@ -115,6 +115,11 @@ export default {
           to: '/',
         },
         {
+          icon: 'mdi-folder-network',
+          title: 'Workshop',
+          to: '/home'
+        },
+        {
           icon: 'mdi-folder',
           title: 'Dossiers',
           to: '/dossiers',
@@ -160,7 +165,7 @@ export default {
 }
 </script>
 <style lang="css">
-  .miniVariant{
+  .minifVariant{
     position: absolute;
     top: 80px;
   }

@@ -1,30 +1,79 @@
 <template>
   <v-card class="ma-0" min-height="80vh">
-    <v-dialog v-model="dialogDos" width="500" persistent>
+    <v-dialog v-model="dialogDos" width="700" persistent>
       <v-card>
         <v-card-title class="headline lighten-2">
-          Choisire un Dossier
+          Choisir un Dossier
         </v-card-title>
 
         <v-card-text>
-          <v-select
-            :items="dossiers"
-            v-model="toBeOpen"
-            label="Dossier"
-            item-text="libelle"
-            item-value="id"
-          ></v-select>
+          <v-row v-if="dossiers.length === 0">
+            <v-col cols="4" class="pa-3">
+              <v-text-field
+                v-model="dossierSearch"
+                label="N˚ Dossier"
+                prepend-icon="mdi-folder-outline"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="4" class="pa-3">
+              <v-text-field
+                v-model="compSearch"
+                prepend-icon="mdi-account-outline"
+                label="Nom de Comparent"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="4" class="pa-3">
+              <v-text-field
+                v-model="bienSearch"
+                prepend-icon="mdi-domain"
+                label="Titre foncier"
+              ></v-text-field>
+            </v-col>
+          </v-row>
+          <v-row v-else>
+            <v-col cols="12">
+              <v-card
+                v-for="dossier in dossiers"
+                :key="dossier.id"
+                class="mx-15"
+              >
+                <v-checkbox
+                  :label="dossier.libelle"
+                  v-model="selected"
+                  :value="dossier"
+                ></v-checkbox>
+                <h3 class="pa-5">
+                  <v-icon large color="primary">mdi-folder-outline</v-icon>
+                  {{ dossier.libelle }}
+                </h3>
+              </v-card>
+            </v-col>
+          </v-row>
         </v-card-text>
 
         <v-divider></v-divider>
 
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="error" text @click="closeDialog"> Anuller </v-btn>
-          <v-btn color="primary" text @click="openDoc"> Ouvrire </v-btn>
+          <v-btn color="error" outlined @click="closeDialog"> Anuller </v-btn>
+          <v-btn
+            v-if="dossiers.length === 0"
+            outlined
+            color="primary"
+            @click="rechercher"
+            :disabled="
+              bienSearch === '' && compSearch === '' && dossierSearch === ''
+            "
+          >
+            <v-icon>mdi-magnify</v-icon> Rechercher
+          </v-btn>
+          <v-btn v-else color="primary" outlined @click="openDoc">
+            <v-icon fab>mdi-plus</v-icon> Ouvrir Dossier(s)
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
+
     <v-card-title class="text-center justify-center py-6">
       <img
         src="~/assets/logo.jpeg"
@@ -37,6 +86,63 @@
         Notary
       </h1>
     </v-card-title>
+    <!-- <v-card-title class="py-6 px-12">
+      <v-row v-if="dossiers.length === 0">
+        <v-col cols="4" class="pa-3">
+          <v-text-field
+            v-model="dossierSearch"
+            label="N˚ Dossier"
+            prepend-icon="mdi-folder-outline"
+          ></v-text-field>
+        </v-col>
+        <v-col cols="4" class="pa-3">
+          <v-text-field
+            v-model="compSearch"
+            prepend-icon="mdi-account-outline"
+            label="Nom de Comparent"
+          ></v-text-field>
+        </v-col>
+        <v-col cols="4" class="pa-3">
+          <v-text-field
+            v-model="bienSearch"
+            prepend-icon="mdi-domain"
+            label="Titre foncier"
+          ></v-text-field>
+        </v-col>
+        <v-col cols="12" class="d-flex justify-end">
+          <v-btn
+            outlined
+            color="primary"
+            @click="rechercher"
+            :disabled="
+              bienSearch === '' && compSearch === '' && dossierSearch === ''
+            "
+          >
+            <v-icon>mdi-magnify</v-icon> Rechercher
+          </v-btn>
+        </v-col>
+      </v-row>
+      <v-row v-else>
+        <v-col cols="12">
+          <v-card v-for="dossier in dossiers" :key="dossier.id" class="mx-15">
+            <v-checkbox
+              :label="dossier.libelle"
+              v-model="selected"
+              :value="dossier"
+            ></v-checkbox>
+            <h3 class="pa-5">
+              <v-icon large color="primary">mdi-folder-outline</v-icon>
+              {{ dossier.libelle }}
+            </h3>
+          </v-card>
+          <v-col cols="12" class="d-flex justify-end">
+            <v-btn outlined color="primary" class="mx-12" @click="openDoc">
+              <v-icon fab>mdi-plus</v-icon> Ouvrir Dossier(s)
+            </v-btn>
+          </v-col>
+        </v-col>
+      </v-row>
+    </v-card-title> -->
     <v-tabs v-model="tab" background-color="primary lighten-2" dark>
       <v-tab v-for="doc in docs" :key="doc.id">
         <v-icon left dark> mdi-folder </v-icon>
@@ -45,7 +151,7 @@
     </v-tabs>
     <v-tabs-items v-model="tab" class="workspace">
       <v-btn fab color="#3860ff" dark top right absolute @click="openDialog">
-        <v-icon>mdi-plus</v-icon>
+        <v-icon>mdi-magnify</v-icon>
       </v-btn>
       <v-container v-if="docs.length === 0">
         <img
@@ -98,7 +204,12 @@ export default {
     dialogDos: false,
     tab: null,
     toBeOpen: null,
-    docs: []
+    singleSelect: false,
+    selected: [],
+    docs: [],
+    dossierSearch: '',
+    compSearch: '',
+    bienSearch: '',
   }),
   methods: {
     closeTab(id) {
@@ -106,12 +217,11 @@ export default {
       dossierSotre.closeDossier(id);
     },
     openDoc() {
-      axios.get(`http://localhost:1337/dossiers/${this.toBeOpen}`).then(resp => {
-        this.docs.push(resp.data)
-        dossierSotre.addDossier(resp.data);
-        this.toBeOpen = null;
-        this.dialogDos = false;
-      }).catch(err => console.error(err))
+      this.docs.push(...this.selected)
+      dossierSotre.addDossier(...this.selected);
+      this.toBeOpen = null;
+      this.dialogDos = false;
+      this.dossiers = [];
     },
     openDialog() {
       this.toBeOpen = null;
@@ -120,15 +230,33 @@ export default {
     closeDialog() {
       this.toBeOpen = null;
       this.dialogDos = false;
+      this.dossiers = [];
     },
+    rechercher() {
+      axios.get(`http://localhost:1337/dossiers?dossier=${this.dossierSearch}&comp=${this.compSearch}&bien=${this.bienSearch}`).then(resp => {
+        console.log(resp.data.length);
+        if (resp.data.length !== undefined && resp.data.length > 1) {
+          this.dossiers = resp.data;
+        } else {
+          this.docs.push(resp.data)
+          this.closeDialog();
+          dossierSotre.addDossier(resp.data);
+        }
+        this.dossierSearch = '';
+        this.bienSearch = '';
+        this.compSearch = '';
 
+      }).catch(err => {
+        console.log(err);
+      })
+    }
 
   },
   created() {
     // const usr = auth.user
 
     axios.get('http://localhost:1337/dossiers').then(resp => {
-      this.dossiers = resp.data
+      //this.dossiers = resp.data
     }).catch(err => {
       console.log(err);
     })

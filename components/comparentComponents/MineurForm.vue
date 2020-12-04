@@ -154,7 +154,7 @@
       </v-col>
     </v-row>
     <v-btn color="primary" class="offset-10" dark @click="enregistrer"
-      >Enregistre</v-btn
+      >Enregistrer</v-btn
     >
   </v-form>
 </template>

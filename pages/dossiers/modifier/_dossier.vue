@@ -366,6 +366,7 @@
 <script>
 import axios from 'axios'
 import ComparentService from '~/assets/sevices/comparentService'
+import Axios from 'axios'
 const comparentService = new ComparentService()
 export default {
   async asyncData({ params }) {
@@ -412,10 +413,17 @@ export default {
       this.dateOuverture = resp.data.dateOuverture;
       this.dateFermeture = resp.data.dateFermeture;
       this.notaire = resp.data.NomMaitre;
-      // this.Bien = resp.data.Bien;
-      JSON.parse(resp.data.Comparant).forEach(comp => {
-        comparentService.getOneComparent(comp).then(c => {
-          this.Comparant.push(c.data);
+
+      console.log(resp.data);
+      JSON.parse(resp.data.comparents).forEach(comp => {
+        Axios.get(`http://localhost:1337/comparent/${comp}`).then(c => {
+          this.Comparant.push(c.data.comparent[0]);
+        })
+      });
+      JSON.parse(resp.data.bien).forEach(bien => {
+        Axios.get(`http://localhost:1337/bien/${bien}`).then(b => {
+          this.Bien.push(b.data);
+          console.log(b.data);
         })
       });
     })
@@ -444,6 +452,17 @@ export default {
       this.dialogBien = false
     },
     enregistrer() {
+      const comps = [];
+      const bins = [];
+
+      this.Comparant.forEach(Comp => {
+        comps.push(Comp.id)
+      });
+      this.Bien.forEach(b => {
+        bins.push(b.id)
+      });
+
+
       axios.put(`http://localhost:1337/dossiers/${this.doss}`, {
         title: `${this.libelle} -  ${this.nature}`,
         nature: this.nature,
@@ -451,8 +470,8 @@ export default {
         libelle: this.libelle,
         dateOuverture: this.dateOuverture,
         dateFermeture: this.dateFermeture,
-        Bien: this.Bien,
-        Comparant: this.Comparant,
+        Bien: JSON.stringify(bins),
+        Comparent: JSON.stringify(comps),
         NomMaitre: this.notaire,
       }).then(resp => {
         this.$router.push(

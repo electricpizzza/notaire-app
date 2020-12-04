@@ -9,7 +9,13 @@
         <v-btn outlined color="primary" dark @click="addFileDialog = true">
           Ajouter un ficher
         </v-btn>
-        <v-btn outlined color="info" dark @click="telechargerArchive">
+        <v-btn
+          outlined
+          color="info"
+          dark
+          target="_blank"
+          :href="`http://localhost:1337/${mainFile}`"
+        >
           Telecharger l'Archive
         </v-btn>
 

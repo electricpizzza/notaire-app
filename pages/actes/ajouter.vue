@@ -10,7 +10,7 @@
       <v-dialog v-model="dialog" width="500" persistent>
         <v-card>
           <v-card-title class="headline lighten-2">
-            Choisire un Model
+            Choisir un Model
           </v-card-title>
 
           <v-card-text>
@@ -29,7 +29,7 @@
             <v-spacer></v-spacer>
             <v-btn color="error" text nuxt to="/actes"> Anuller </v-btn>
             <v-btn color="primary" text @click="dialog = false">
-              Choisire
+              Choisir
             </v-btn>
           </v-card-actions>
         </v-card>

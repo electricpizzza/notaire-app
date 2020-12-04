@@ -127,9 +127,7 @@
       >
         <v-card-text class="pb-0">
           <p class="display-1 text-primary">Action</p>
-          <v-container style="height: 50vh; overflow: scroll">
-            <action-timeline />
-          </v-container>
+          <v-container style="height: 50vh; overflow: scroll"> </v-container>
           <v-divider vertical class="my-3"></v-divider>
           <p class="display-1 text--primary">Actes</p>
           <p>
@@ -212,17 +210,13 @@ export default {
       }).catch(err => console.log(err))
     });
 
-    // lesBiens.forEach(bien => {
-    //   bienService.getOneBien(bien).then(resp => {
-    //     console.log(resp);
-    //     this.biens.push(resp.data)
-    //   })
-    // });
+    lesBiens.forEach(bien => {
+      bienService.getOneBien(bien).then(resp => {
+        console.log(resp);
+        this.biens.push(resp.data)
+      })
+    });
 
-    bienService.getAllBiens(resp => {
-      this.biens = resp.data;
-      console.log(resp);
-    })
   },
 
   methods: {
@@ -232,13 +226,14 @@ export default {
         const today = new Date()
         this.dossier.dateFermeture = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`
       }).catch(err => console.error(err))
+    },
+    deleteDossier() {
+      Axios.delete(`http://localhost:13f37/dossiers/${this.dossier.id}`).then(resp => {
+        dossierSotre.deleteDossier(this.dossier.id)
+      }).catch(err => console.error(err))
     }
   },
-  deleteDossier() {
-    Axios.delete(`http://localhost:13f37/dossiers/${this.dossier.id}`).then(resp => {
-      dossierSotre.deleteDossier(this.dossier.id)
-    }).catch(err => console.error(err))
-  }
+
 
 }
 </script>

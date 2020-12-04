@@ -78,6 +78,9 @@ export default {
       formData.append('description', this.dossier);
       Axios.post('http://localhost:1337/archive', formData).then(resp => {
         console.log(resp);
+        this.$router.push(
+          `/archives?success=Archive est bien enregistré`
+        )
       }).catch(err => console.error(err))
     }
   },

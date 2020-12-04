@@ -27,6 +27,7 @@ const _43d264fa = () => interopDefault(import('../pages/modeles/ajouter.vue' /* 
 const _41a1946a = () => interopDefault(import('../pages/biens/modifier/_bien.vue' /* webpackChunkName: "pages/biens/modifier/_bien" */))
 const _131e12c9 = () => interopDefault(import('../pages/comparent/modifier/_comparent.vue' /* webpackChunkName: "pages/comparent/modifier/_comparent" */))
 const _057d58f8 = () => interopDefault(import('../pages/dossiers/modifier/_dossier.vue' /* webpackChunkName: "pages/dossiers/modifier/_dossier" */))
+const _34494382 = () => interopDefault(import('../pages/modeles/modifier/_modele.vue' /* webpackChunkName: "pages/modeles/modifier/_modele" */))
 const _769724ec = () => interopDefault(import('../pages/actes/_acte.vue' /* webpackChunkName: "pages/actes/_acte" */))
 const _fb9ec7ac = () => interopDefault(import('../pages/archives/_archive.vue' /* webpackChunkName: "pages/archives/_archive" */))
 const _b77e6c52 = () => interopDefault(import('../pages/comparent/_comparent.vue' /* webpackChunkName: "pages/comparent/_comparent" */))
@@ -146,6 +147,10 @@ export const routerOptions = {
     path: "/dossiers/modifier/:dossier?",
     component: _057d58f8,
     name: "dossiers-modifier-dossier"
+  }, {
+    path: "/modeles/modifier/:modele?",
+    component: _34494382,
+    name: "modeles-modifier-modele"
   }, {
     path: "/actes/:acte",
     component: _769724ec,
