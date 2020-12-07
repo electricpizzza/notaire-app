@@ -29,11 +29,13 @@
                 ></v-text-field>
               </v-col>
               <v-col cols="12" sm="6">
-                <v-text-field
+                <v-select
+                  :items="NatureDossiers"
                   v-model="nature"
                   label="Nature Du Dossier"
-                  id="id"
-                ></v-text-field>
+                  item-value="value"
+                  item-text="libelle"
+                ></v-select>
               </v-col>
               <v-col cols="12" sm="6">
                 <v-text-field
@@ -353,7 +355,13 @@
       </v-stepper-content>
 
       <v-stepper-content step="3" c>
-        <v-card class="mb-12" min-height="60vh"></v-card>
+        <v-card class="mb-12" min-height="60vh">
+          <v-row>
+            <v-col cols="6" v-for="att in attachmentList" :key="att.ref">
+              {{ att.label }}
+            </v-col>
+          </v-row>
+        </v-card>
         <div class="offset-9">
           <v-btn color="primary" @click="enregistrer"> Terminer </v-btn>
 
@@ -405,6 +413,8 @@ export default {
         { id: 21, libelle: 'terrain salam', type: 'terrain' },
       ],
       selectedItems: [],
+      NatureDossiers: [],
+      attachmentList: [],
     }
   },
   beforeCreate() {
@@ -416,9 +426,19 @@ export default {
       .then((resp) => {
         this.compList = resp.data
       })
-      .catch((err) => console.error(err))
+      .catch((err) => console.error(err));
+    axios.get('http://localhost:1337/data').then(resp => {
+      console.log(resp.data.NatureDossier);
+      this.NatureDossiers = resp.data.NatureDossier;
+    })
   },
-
+  watch: {
+    nature: (newnature, oldnature) => {
+      axios.get('http://localhost:1337/data').then(resp => {
+        this.attachmentList = resp.data.NatureDossier.find(n => n.value = newnature).attachements
+      })
+    }
+  },
   methods: {
     selectComparant() {
       this.Comparant = this.selectedItems
@@ -441,7 +461,6 @@ export default {
       this.Bien.forEach(b => {
         bins.push(b.id)
       });
-
 
       axios.post('http://localhost:1337/dossiers', {
         title: `${this.libelle} -  ${this.nature}`,

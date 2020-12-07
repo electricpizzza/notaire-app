@@ -11,7 +11,7 @@
         <v-text-field
           name="nomAr"
           v-model="nomAr"
-          label="الاسم الشخصي"
+          label="الاسم العائلي"
           reverse
         ></v-text-field>
       </v-col>
@@ -26,7 +26,7 @@
         <v-text-field
           name="prenomAr"
           v-model="prenomAr"
-          label="الاسم العائلي"
+          label="الاسم الشخصي"
           reverse
         ></v-text-field>
       </v-col>

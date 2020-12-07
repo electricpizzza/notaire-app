@@ -11,7 +11,7 @@
         <v-text-field
           name="nomAr"
           v-model="nomAr"
-          label="الاسم الشخصي"
+          label="الاسم العائلي"
           reverse
         ></v-text-field>
       </v-col>
@@ -26,7 +26,7 @@
         <v-text-field
           name="prenomAr"
           v-model="prenomAr"
-          label="الاسم العائلي"
+          label="الاسم الشخصي"
           reverse
         ></v-text-field>
       </v-col>
@@ -98,7 +98,7 @@
       </v-col>
       <v-col cols="12" sm="6">
         <v-select
-          :items="typeIdentifications"
+          :items="idTypes"
           v-model="typeIdentification"
           label="Type Identification"
         ></v-select>
@@ -190,6 +190,7 @@ export default {
     dateNaissance: new Date().toISOString().substr(0, 0),
     tetulle: '',
     tetulles: [],
+    idTypes: ['CIN', 'Acte de naissance', 'Permis de conduire'],
   }),
 
   methods: {

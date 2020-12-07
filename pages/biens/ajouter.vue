@@ -7,7 +7,13 @@
           <v-text-field v-model="libelle" label="Libelle"></v-text-field>
         </v-col>
         <v-col cols="12" md="6">
-          <v-text-field v-model="type" label="Type"></v-text-field>
+          <v-select
+            :items="bineTypes"
+            v-model="type"
+            label="Type"
+            item-text="libelle"
+            item-value="value"
+          ></v-select>
         </v-col>
         <v-col cols="12" md="6">
           <v-text-field v-model="ville" label="Ville"></v-text-field>
@@ -69,17 +75,18 @@ export default {
       libelle: '',
       type: '',
       ville: "",
-      Superficie: null,
+      Superficie: 0,
       address: '',
       address1: '',
       ville: '',
       description: '',
-      etage: null,
-      nb_piece: null,
-      valeur: null,
+      etage: 0,
+      nb_piece: 0,
+      valeur: 0,
       ancfcc: '',
       Immeuble: '',
       terrainType: '',
+      bineTypes: []
     }
   },
   methods: {
@@ -105,5 +112,11 @@ export default {
       }).catch(err => console.error(err))
     }
   },
+  created() {
+    Axios.get('http://localhost:1337/data').then(resp => {
+      console.log(resp.data.typeBien);
+      this.bineTypes = resp.data.typeBien;
+    })
+  }
 }
 </script>

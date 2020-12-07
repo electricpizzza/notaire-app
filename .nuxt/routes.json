@@ -119,6 +119,13 @@
     "_name": "_35bc9b17"
   },
   {
+    "name": "comptabilite-ajouter",
+    "path": "/comptabilite/ajouter",
+    "component": "/Users/zakariae/notaire-app/pages/comptabilite/ajouter.vue",
+    "chunkName": "pages/comptabilite/ajouter",
+    "_name": "_88504e4a"
+  },
+  {
     "name": "devis-ajouter",
     "path": "/devis/ajouter",
     "component": "/Users/zakariae/notaire-app/pages/devis/ajouter.vue",
@@ -140,6 +147,13 @@
     "_name": "_15ac429c"
   },
   {
+    "name": "factures-ajouter",
+    "path": "/factures/ajouter",
+    "component": "/Users/zakariae/notaire-app/pages/factures/ajouter.vue",
+    "chunkName": "pages/factures/ajouter",
+    "_name": "_375f7da1"
+  },
+  {
     "name": "modeles-ajouter",
     "path": "/modeles/ajouter",
     "component": "/Users/zakariae/notaire-app/pages/modeles/ajouter.vue",
@@ -159,6 +173,13 @@
     "component": "/Users/zakariae/notaire-app/pages/comparent/modifier/_comparent.vue",
     "chunkName": "pages/comparent/modifier/_comparent",
     "_name": "_131e12c9"
+  },
+  {
+    "name": "comptabilite-modifier-comptabilite",
+    "path": "/comptabilite/modifier/:comptabilite?",
+    "component": "/Users/zakariae/notaire-app/pages/comptabilite/modifier/_comptabilite.vue",
+    "chunkName": "pages/comptabilite/modifier/_comptabilite",
+    "_name": "_292dd7ff"
   },
   {
     "name": "dossiers-modifier-dossier",
@@ -194,6 +215,13 @@
     "component": "/Users/zakariae/notaire-app/pages/comparent/_comparent.vue",
     "chunkName": "pages/comparent/_comparent",
     "_name": "_b77e6c52"
+  },
+  {
+    "name": "comptabilite-comptabilite",
+    "path": "/comptabilite/:comptabilite",
+    "component": "/Users/zakariae/notaire-app/pages/comptabilite/_comptabilite.vue",
+    "chunkName": "pages/comptabilite/_comptabilite",
+    "_name": "_67a0118e"
   },
   {
     "name": "dossiers-dossier",

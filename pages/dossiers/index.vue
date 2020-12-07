@@ -52,6 +52,7 @@
   </v-card>
 </template>
 <script>
+import Axios from 'axios'
 import DossierService from './../../assets/sevices/dossierService.js'
 const dossierService = new DossierService()
 
@@ -78,7 +79,7 @@ export default {
 
   created() {
     this.success = this.$route.query.success
-    dossierService.getAllDocs().then(resp => {
+    Axios.get('http://localhost:1337/dossiers').then(resp => {
       this.dossiers = resp.data;
       console.log(resp.data);
     })

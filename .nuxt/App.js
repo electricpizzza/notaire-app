@@ -7,11 +7,12 @@ import NuxtBuildIndicator from './components/nuxt-build-indicator'
 
 import '../node_modules/vuetify/dist/vuetify.css'
 
+import _6dce7132 from '../layouts/compta.vue'
 import _6f6c098b from '../layouts/default.vue'
 import _77430317 from '../layouts/empty.vue'
 import _2d27502e from '../layouts/none.vue'
 
-const layouts = { "_default": sanitizeComponent(_6f6c098b),"_empty": sanitizeComponent(_77430317),"_none": sanitizeComponent(_2d27502e) }
+const layouts = { "_compta": sanitizeComponent(_6dce7132),"_default": sanitizeComponent(_6f6c098b),"_empty": sanitizeComponent(_77430317),"_none": sanitizeComponent(_2d27502e) }
 
 export default {
   render (h, props) {

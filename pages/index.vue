@@ -42,8 +42,9 @@
           outlined
           color="primary"
           large
-          disabled
           class="btn-menu my-1 mx-16 d-flex justify-start px-10"
+          nuxt
+          to="/comptabilite"
         >
           <v-icon class="mr-10">mdi-calculator</v-icon>Comptabilité
         </v-btn>
@@ -119,7 +120,7 @@ export default {
     }
   },
   created() {
-    Axios.get('https://notair-api.herokuapp.com').then(resp => {
+    Axios.get('http://localhost:1337/').then(resp => {
       console.log(resp.data);
       this.etatServeur = "Conecté";
       this.snackbarErr = false;

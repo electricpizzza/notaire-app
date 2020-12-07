@@ -1,56 +1,122 @@
 <template>
-  <v-data-table
-    :headers="headers"
-    :items="factures"
-    sort-by="calories"
-    class="elevation-1 mt-4"
-    :search="search"
-  >
-    <template v-slot:top>
-      <v-toolbar flat>
-        <v-toolbar-title>
-          <v-icon>mdi-document</v-icon> Les Factures
-        </v-toolbar-title>
-        <v-divider class="mx-4" inset vertical></v-divider>
-        <v-text-field
-          v-model="search"
-          append-icon="mdi-magnify"
-          label="Chercher une facture"
-          single-line
-          hide-details
-        ></v-text-field>
-      </v-toolbar>
-    </template>
-    <template v-slot:[`item.actions`]="{ item }">
-      <v-btn
-        outlined
-        color="primary"
-        dark
-        @click="downloadFacture(item.facture)"
+  <v-card>
+    <v-card-title>
+      <h3 class="ma-5">
+        <v-icon class="mr-4" color="primary" large>mdi-cash</v-icon> factures
+      </h3>
+      <v-text-field
+        v-model="search"
+        append-icon="mdi-magnify"
+        label="Search"
+        single-line
+        hide-details
+      ></v-text-field>
+      <v-btn color="primary" class="ma-5" nuxt to="/factures/ajouter"
+        ><v-icon>mdi-plus</v-icon> Ajouter un factures</v-btn
       >
-        <v-icon class="mr-2"> mdi-download-box </v-icon>
-        Telecharger
-      </v-btn>
-    </template>
-  </v-data-table>
+    </v-card-title>
+    <v-data-table
+      :headers="headers"
+      :items="factures"
+      :expanded.sync="expanded"
+      single-expand="true"
+      :search="search"
+      item-key="id"
+      show-expand
+      class="elevation-1"
+    >
+      <template v-slot:expanded-item="{ headers, item }">
+        <td :colspan="headers.length">
+          <v-row class="mx-4">
+            <v-col cols="12"
+              ><b>Client: </b>{{ item.client.nom }}, Habite á
+              {{ item.client.address }}</v-col
+            >
+
+            <v-col cols="12">
+              <v-simple-table dense>
+                <template v-slot:default>
+                  <thead>
+                    <tr>
+                      <th class="text-left">Ref</th>
+                      <th class="text-left">Description</th>
+                      <th class="text-left">Remise</th>
+                      <th class="text-left">Tva</th>
+                      <th class="text-left">Total</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="article in item.articles" :key="article.ref">
+                      <td>{{ article.ref }}</td>
+                      <td>{{ article.description }}</td>
+                      <td>{{ article.remise }}</td>
+                      <td>{{ article.tva }}</td>
+                      <td>{{ article.total }}</td>
+                    </tr>
+                  </tbody>
+                </template>
+              </v-simple-table>
+            </v-col>
+            <v-col cols="12" class="px-4 text-right"
+              ><b>Total TTC: </b>{{ item.total }} DHS</v-col
+            >
+            <v-col cols="12">
+              <div class="offset-7">
+                <v-btn
+                  color="primary"
+                  dark
+                  href="http://localhost:1337/uploads/factures/factures-RKLSD12-7-12-2020.pdf"
+                  target="_blank"
+                  >Telecharger</v-btn
+                >
+                <v-btn
+                  color="success"
+                  nuxt
+                  :to="'./factures/modifier/' + item.id"
+                  disabled
+                  >Modifier</v-btn
+                >
+                <v-btn color="error">Suprimer</v-btn>
+              </div>
+            </v-col>
+          </v-row>
+        </td>
+      </template>
+    </v-data-table>
+  </v-card>
 </template>
 <script>
+import Axios from 'axios'
 export default {
   data() {
     return {
       search: '',
+      expanded: [],
       headers: [
-        { text: 'Titre', value: 'titre' },
-        { text: 'Dossier', value: 'dossier' },
-        { text: 'Date de redaction', value: 'dateCreation' },
-        { text: 'Telecharger', value: 'actions', sortable: false, align: 'center' },
+        {
+          text: 'ID',
+          align: 'start',
+          filterable: false,
+          value: 'id',
+        },
+        { text: 'maitre', value: 'maitre' },
+        { text: 'Date validité de factures', value: 'datefactures' },
+        { text: '', value: 'data-table-expand' },
       ],
-      factures: [
-        { titre: 'Facture 1', dossier: 1, dateCreation: '12-11-2020', facture: 'http://localhost:1337' },
-        { titre: 'Facture 2223', dossier: 2, dateCreation: '02-10-2020', facture: 'http://localhost:1337' },
-        { titre: 'Facture 123', dossier: 2, dateCreation: '23-11-2020', facture: 'http://localhost:1337' }
-      ],
+      factures: [],
     }
+  },
+  beforeCreate() {
+    Axios.get('http://localhost:1337/factures').then(resp => {
+      this.factures = resp.data;
+      console.log(this.factures);
+    })
   },
 }
 </script>
+<style lang="css">
+  b{
+    color: dodgerblue;
+    font-size: large;
+  }
+</style>

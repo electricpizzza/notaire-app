@@ -7,14 +7,14 @@
       fixed
       app
     >
-      <v-list style="height: 80vh; overflow: scroll">
+      <v-list>
         <v-list-item
           v-for="(item, i) in items"
           :key="i"
           :to="item.to"
           router
           exact
-          class="mt-3"
+          class="mt-5"
         >
           <v-list-item-action>
             <v-icon color="primary">{{ item.icon }}</v-icon>
@@ -143,16 +143,6 @@ export default {
           icon: 'mdi-pencil',
           title: 'Modeles',
           to: '/modeles',
-        },
-        {
-          icon: 'mdi-file-document',
-          title: 'Factures',
-          to: '/factures',
-        },
-        {
-          icon: 'mdi-cash',
-          title: 'Devis',
-          to: '/devis',
         },
         {
           icon: 'mdi-archive',

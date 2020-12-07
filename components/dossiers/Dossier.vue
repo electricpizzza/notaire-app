@@ -29,13 +29,6 @@
         <v-card class="my-5">
           <v-card-title>
             <h2 style="color: #508bd7" class="mr-4 mt-2">Comparant(s):</h2>
-            <v-text-field
-              v-model="search"
-              append-icon="mdi-magnify"
-              label="Search"
-              single-line
-              hide-details
-            ></v-text-field>
             <v-btn color="primary" dark fab icon>
               <v-icon>mdi-plus</v-icon>
             </v-btn>
@@ -43,28 +36,16 @@
           <v-data-table
             :headers="headersComp"
             :items="comparents"
-            :search="search"
           ></v-data-table>
         </v-card>
         <v-card class="my-5">
           <v-card-title>
             <h2 style="color: #508bd7" class="mr-4 mt-2">Bien(s):</h2>
-            <v-text-field
-              v-model="search"
-              append-icon="mdi-magnify"
-              label="Search"
-              single-line
-              hide-details
-            ></v-text-field>
             <v-btn color="primary" dark fab icon>
               <v-icon>mdi-plus</v-icon>
             </v-btn>
           </v-card-title>
-          <v-data-table
-            :headers="headersBien"
-            :items="biens"
-            :search="search"
-          ></v-data-table>
+          <v-data-table :headers="headersBien" :items="biens"></v-data-table>
         </v-card>
       </div>
     </v-card-text>
