@@ -22,7 +22,7 @@
             <v-select
               :items="languages"
               v-model="language"
-              label="Language"
+              label="Langue"
               item-text="titre"
               item-value="value"
             ></v-select>
@@ -48,24 +48,19 @@
     <div v-if="!model">
       <v-form>
         <v-row>
-          <v-col cols="12" sm="6"
-            ><v-text-field v-model="type" label="Type d'Acte"></v-text-field>
+          <v-col cols="12" sm="6">
+            <v-select
+              :items="typeActes"
+              v-model="type"
+              label="Type d'Acte"
+              item-text="libelle"
+              item-value="value"
+            ></v-select>
           </v-col>
           <v-col cols="12" sm="6"
             ><v-text-field v-model="redacteur" label="Redacteur"></v-text-field>
           </v-col>
-          <v-col cols="12">
-            <v-row>
-              <v-col cols="12" sm="9"><h3>Les champs</h3></v-col>
-              <v-col cols="12" sm="3">
-                <v-btn flat color="primary" small @click="addChamps">
-                  <v-icon>mdi-plus</v-icon> Ajouter Un Champ
-                </v-btn>
-              </v-col>
-            </v-row>
-          </v-col>
-
-          <v-col cols="12" v-for="i in nbCamps" :key="i">
+          <v-col cols="12" sm="6" v-for="i in nbCamps" :key="i">
             <v-row>
               <v-col cols="12" sm="6">
                 <v-text-field
@@ -87,6 +82,27 @@
                   item-text="label"
                   item-value="value"
                 ></v-select>
+              </v-col>
+              <v-btn
+                outlined
+                color="pink"
+                class="mt-7"
+                icon
+                fab
+                @click="deleChemps(i)"
+                x-small
+              >
+                <v-icon x-small>mdi-close</v-icon>
+              </v-btn>
+            </v-row>
+          </v-col>
+          <v-col cols="12">
+            <v-row>
+              <v-col cols="12" sm="9"><h3>Les champs</h3></v-col>
+              <v-col cols="12" sm="3">
+                <v-btn flat color="primary" small @click="addChamps">
+                  <v-icon>mdi-plus</v-icon> Ajouter Un Champ
+                </v-btn>
               </v-col>
             </v-row>
           </v-col>
@@ -113,6 +129,7 @@ export default {
   name: "AjouterActe",
   data() {
     return {
+      typeActes: [],
       model: null,
       error: null,
       language: null,
@@ -127,11 +144,17 @@ export default {
     }
   },
   beforeCreate() {
-
+    axios.get('http://localhost:1337/data').then(resp => {
+      console.log(resp.data);
+      this.typeActes = resp.data.typeActe;
+    })
   },
   methods: {
     addChamps() {
       this.nbCamps++;
+    },
+    deleChemps(index) {
+      this.nbCamps--;
     },
     enregistrer() {
       this.boilerplate = MarkdownStore.data.markdown;
@@ -157,14 +180,14 @@ export default {
       if (this.language === null || this.redacteur === '' || this.libelle === null || this.type === '' || this.champs === []) {
         this.error = "Veuillez Bien Saisire les données S.V.P."
       } else {
-        console.log({
-          language: this.language,
-          redacteur: this.redacteur,
-          libelle: this.libelle,
-          type: this.type,
-          champs: this.champs,
-          boilerplate: this.boilerplate,
-        });
+        // console.log({
+        //   language: this.language,
+        //   redacteur: this.redacteur,
+        //   libelle: this.libelle,
+        //   type: this.type,
+        //   champs: this.champs,
+        //   boilerplate: this.boilerplate,
+        // });
         axios.post('http://localhost:1337/model', {
           language: this.language,
           redacteur: this.redacteur,

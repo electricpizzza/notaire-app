@@ -7,9 +7,16 @@
     :search="search"
   >
     <template v-slot:top>
-      <v-alert dense text type="success" dismissible v-if="success">
+      <v-snackbar v-model="snackbar" color="success" top timeout="5000">
         {{ success }}
-      </v-alert>
+
+        <template v-slot:action="{ attrs }">
+          <v-btn icon fav small v-bind="attrs" @click="snackbar = false">
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+        </template>
+      </v-snackbar>
+
       <v-toolbar flat class="pa-10 mb-6">
         <v-toolbar-title class="ma-5">
           <v-icon class="mr-5" large color="primary">mdi-account-group</v-icon>
@@ -119,6 +126,7 @@ const comparentService = new ComparentService()
 export default {
   data: () => ({
     dialog: false,
+    snackbar: false,
     search: '',
     success: null,
     types: { PP: "Personne Physique", PM: "Personne Morale", PPM: "Personne Physique Mineur" },
@@ -171,6 +179,9 @@ export default {
   methods: {
     initialize() {
       this.success = this.$route.query.success
+      if (this.success != null) {
+        this.snackbar = true;
+      }
       axios
         .get('http://localhost:1337/comparent', { mode: 'cors' })
         .then((resp) => {

@@ -41,17 +41,17 @@
   "LazyCreateMenu": {
     "description": "Auto imported from components/createMenu.vue"
   },
-  "Acteform": {
-    "description": "Auto imported from components/actesComponents/Acteform.vue"
-  },
-  "LazyActeform": {
-    "description": "Auto imported from components/actesComponents/Acteform.vue"
-  },
   "AjouterArchive": {
     "description": "Auto imported from components/archives/AjouterArchive.vue"
   },
   "LazyAjouterArchive": {
     "description": "Auto imported from components/archives/AjouterArchive.vue"
+  },
+  "Acteform": {
+    "description": "Auto imported from components/actesComponents/Acteform.vue"
+  },
+  "LazyActeform": {
+    "description": "Auto imported from components/actesComponents/Acteform.vue"
   },
   "ComparentList": {
     "description": "Auto imported from components/comparentComponents/ComparentList.vue"

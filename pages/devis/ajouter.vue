@@ -54,7 +54,7 @@
           <v-select
             :items="['Espece', 'Cheque', 'Virment']"
             v-model="payment"
-            label="Type de Payment"
+            label="Mode de Payment"
             prepend-icon="mdi-cash-multiple"
           ></v-select>
         </div>
@@ -324,7 +324,7 @@ export default {
         client: this.client
       }).then(resp => {
         console.log(resp);
-        // this.$router.push("/test")
+        this.$router.push("/test")
       }).catch(err => {
         console.log(err);
       })

@@ -15,7 +15,7 @@
     </v-card-title>
     <v-data-table
       :headers="headers"
-      :items="dossiers"
+      :items="comptabilite"
       :expanded.sync="expanded"
       single-expand="true"
       :search="search"
@@ -36,7 +36,7 @@
                 <v-btn
                   color="success"
                   nuxt
-                  :to="'./dossiers/modifier/' + item.id"
+                  :to="'./comptabilite/modifier/' + item.id"
                   >Modifier</v-btn
                 >
                 <v-btn color="error">Suprimer</v-btn>
@@ -70,14 +70,14 @@ export default {
         { text: 'Maitre', value: 'NomMaitre' },
         { text: '', value: 'data-table-expand' },
       ],
-      dossiers: [],
+      comptabilite: [],
     }
   },
 
   created() {
     this.success = this.$route.query.success
     Axios.get('http://localhost:1337/comptabilite/').then(resp => {
-      this.dossiers = resp.data;
+      this.comptabilite = resp.data;
       console.log(resp.data);
     })
   },

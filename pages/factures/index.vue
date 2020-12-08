@@ -2,7 +2,7 @@
   <v-card>
     <v-card-title>
       <h3 class="ma-5">
-        <v-icon class="mr-4" color="primary" large>mdi-cash</v-icon> factures
+        <v-icon class="mr-4" color="primary" large>mdi-cash</v-icon> Factures
       </h3>
       <v-text-field
         v-model="search"
@@ -11,9 +11,9 @@
         single-line
         hide-details
       ></v-text-field>
-      <v-btn color="primary" class="ma-5" nuxt to="/factures/ajouter"
-        ><v-icon>mdi-plus</v-icon> Ajouter un factures</v-btn
-      >
+      <v-btn color="primary" class="ma-5" nuxt to="/factures/ajouter">
+        <v-icon>mdi-plus</v-icon> Ajouter un factures
+      </v-btn>
     </v-card-title>
     <v-data-table
       :headers="headers"
@@ -65,7 +65,8 @@
                 <v-btn
                   color="primary"
                   dark
-                  href="http://localhost:1337/uploads/factures/factures-RKLSD12-7-12-2020.pdf"
+                  href="http://localhost:1337/uploads/factures/facture-RKLSD12-8-12-2020.pdf"
+                  download="facture-RKLSD12-7-12-2020.pdf"
                   target="_blank"
                   >Telecharger</v-btn
                 >
@@ -107,7 +108,7 @@ export default {
     }
   },
   beforeCreate() {
-    Axios.get('http://localhost:1337/factures').then(resp => {
+    Axios.get('http://localhost:1337/facture').then(resp => {
       this.factures = resp.data;
       console.log(this.factures);
     })

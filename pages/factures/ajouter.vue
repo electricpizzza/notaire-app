@@ -18,7 +18,7 @@
             <template v-slot:activator="{ on, attrs }">
               <v-text-field
                 v-model="dateDevis"
-                label="Date Validiter de Devis"
+                label="Date de la facture"
                 prepend-icon="mdi-calendar"
                 readonly
                 v-bind="attrs"
@@ -54,7 +54,7 @@
           <v-select
             :items="['Espece', 'Cheque', 'Virment']"
             v-model="payment"
-            label="Type de Payment"
+            label="Mode de Payment"
             prepend-icon="mdi-cash-multiple"
           ></v-select>
         </div>

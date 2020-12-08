@@ -66,7 +66,7 @@ export default {
           text: 'ID',
           align: 'start',
           filterable: false,
-          value: 'id',
+          value: 'identifiant',
         },
         { text: 'Titre', value: 'title' },
         { text: 'Nature', value: 'nature' },

@@ -13,7 +13,7 @@
 
       <v-divider></v-divider>
 
-      <v-stepper-step step="3"> Attachments </v-stepper-step>
+      <!-- <v-stepper-step step="3"> Attachments </v-stepper-step> -->
     </v-stepper-header>
 
     <v-stepper-items>
@@ -21,18 +21,20 @@
         <v-card class="mb-12" min-height="60vh">
           <v-container>
             <v-row>
-              <v-col cols="12">
+              <v-col cols="12" sm="6">
                 <v-text-field
-                  v-model="libelle"
-                  label="Libelle Du Dossier"
-                  id="id"
+                  v-model="identifiant"
+                  label="Identifiant"
                 ></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="6">
+                <v-text-field v-model="libelle" label="Libelle"></v-text-field>
               </v-col>
               <v-col cols="12" sm="6">
                 <v-select
                   :items="NatureDossiers"
                   v-model="nature"
-                  label="Nature Du Dossier"
+                  label="Nature"
                   item-value="value"
                   item-text="libelle"
                 ></v-select>
@@ -40,7 +42,7 @@
               <v-col cols="12" sm="6">
                 <v-text-field
                   v-model="notaire"
-                  label="Notaire Du Dossier"
+                  label="Notaire"
                   id="id"
                 ></v-text-field>
               </v-col>
@@ -57,7 +59,7 @@
                   <template v-slot:activator="{ on, attrs }">
                     <v-text-field
                       v-model="dateOuverture"
-                      label="Date Ouverture Du Dossier"
+                      label="Date Ouverture"
                       prepend-icon="mdi-calendar"
                       readonly
                       v-bind="attrs"
@@ -92,7 +94,7 @@
                   <template v-slot:activator="{ on, attrs }">
                     <v-text-field
                       v-model="dateFermeture"
-                      label="Date de Fermeture Du Dossier"
+                      label="Date de Fermeture"
                       prepend-icon="mdi-calendar"
                       readonly
                       v-bind="attrs"
@@ -126,7 +128,6 @@
         </v-card>
         <div class="offset-9">
           <v-btn color="primary" @click="e1 = 2"> Continuer </v-btn>
-
           <v-btn text nuxt to="/dossiers"> Anuller </v-btn>
         </div>
       </v-stepper-content>
@@ -348,12 +349,12 @@
         </v-card>
 
         <div class="offset-9">
-          <v-btn color="primary" @click="e1 = 3"> Continuer </v-btn>
-
+          <!-- <v-btn color="primary" @click="e1 = 3"> Continuer </v-btn> -->
+          <v-btn color="primary" @click="enregistrer"> Terminer </v-btn>
           <v-btn text nuxt to="/dossiers"> Anuller </v-btn>
         </div>
       </v-stepper-content>
-
+      <!-- 
       <v-stepper-content step="3" c>
         <v-card class="mb-12" min-height="60vh">
           <v-row>
@@ -367,7 +368,8 @@
 
           <v-btn text nuxt to="/dossiers"> Anuller </v-btn>
         </div>
-      </v-stepper-content>
+      </v-stepper-content> 
+-->
     </v-stepper-items>
   </v-stepper>
 </template>
@@ -391,6 +393,7 @@ export default {
       ],
 
       search: '',
+      identifiant: '',
       nature: '',
       libelle: '',
       description: '',
@@ -465,6 +468,7 @@ export default {
       axios.post('http://localhost:1337/dossiers', {
         title: `${this.libelle} -  ${this.nature}`,
         nature: this.nature,
+        identifiant: this.identifiant,
         description: this.description,
         libelle: this.libelle,
         dateOuverture: this.dateOuverture,

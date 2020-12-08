@@ -317,7 +317,9 @@ export default {
         this.IdentificationValable,
         this.dateNaissance
       ).then(resp => {
-        console.log(resp.data);
+        this.$router.push(
+          `/comparent?success=Comparent était bien Modifié`
+        )
       }).catch(err => console.error(err));
     }
   },

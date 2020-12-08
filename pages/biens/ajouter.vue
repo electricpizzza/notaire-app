@@ -4,7 +4,7 @@
     <form>
       <v-row>
         <v-col cols="12">
-          <v-text-field v-model="libelle" label="Libelle"></v-text-field>
+          <v-text-field v-model="libelle" label="Titre Foncier"></v-text-field>
         </v-col>
         <v-col cols="12" md="6">
           <v-select

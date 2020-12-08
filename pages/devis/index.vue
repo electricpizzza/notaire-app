@@ -2,7 +2,7 @@
   <v-card>
     <v-card-title>
       <h3 class="ma-5">
-        <v-icon class="mr-4" color="primary" large>mdi-cash</v-icon> devis
+        <v-icon class="mr-4" color="primary" large>mdi-cash</v-icon> Devis
       </h3>
       <v-text-field
         v-model="search"
@@ -65,7 +65,8 @@
                 <v-btn
                   color="primary"
                   dark
-                  href="http://localhost:1337/uploads/devis/devis-RKLSD12-7-12-2020.pdf"
+                  href="http://localhost:1337/uploads/devis/devis-RKLSD12-8-12-2020.pdf"
+                  download="devis-RKLSD12-8-12-2020.pdf"
                   target="_blank"
                   >Telecharger</v-btn
                 >
