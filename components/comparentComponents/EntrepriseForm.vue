@@ -49,7 +49,7 @@
             multiple
           ></v-select>
         </v-col>
-        <v-col cols="12">
+        <!-- <v-col cols="12">
           <v-dialog v-model="dialogComp" width="500">
             <v-card>
               <v-card-title class="headline grey lighten-2">
@@ -135,7 +135,7 @@
               </v-simple-table>
             </div>
           </v-sheet>
-        </v-col>
+        </v-col> -->
         <v-col cols="12">
           <v-text-field
             v-model="Adresse"

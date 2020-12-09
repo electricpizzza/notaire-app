@@ -186,14 +186,13 @@ export default {
     const comps = JSON.parse(this.dossier.comparents);
     const lesBiens = JSON.parse(this.dossier.bien);
     comps.forEach(comparent => {
-      comparentService.getOneComparent(comparent).then(resp => {
+      Axios.get('http://localhost:1337/comparent/'+comparent).then(resp => {
         this.comparents.push(resp.data.comparent[0])
       }).catch(err => console.log(err))
     });
 
     lesBiens.forEach(bien => {
       bienService.getOneBien(bien).then(resp => {
-        console.log(resp);
         this.biens.push(resp.data)
       })
     });
@@ -203,7 +202,6 @@ export default {
   methods: {
     fermerDossier() {
       Axios.put(`http://localhost:1337/dossiers/close/${this.dossier.id}`).then(resp => {
-        console.log(resp);
         const today = new Date()
         this.dossier.dateFermeture = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`
       }).catch(err => console.error(err))

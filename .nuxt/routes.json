@@ -161,6 +161,13 @@
     "_name": "_43d264fa"
   },
   {
+    "name": "actes-modifier-acte",
+    "path": "/actes/modifier/:acte?",
+    "component": "/Users/zakariae/notaire-app/pages/actes/modifier/_acte.vue",
+    "chunkName": "pages/actes/modifier/_acte",
+    "_name": "_6cbf0930"
+  },
+  {
     "name": "biens-modifier-bien",
     "path": "/biens/modifier/:bien?",
     "component": "/Users/zakariae/notaire-app/pages/biens/modifier/_bien.vue",

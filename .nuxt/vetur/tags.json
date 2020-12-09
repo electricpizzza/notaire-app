@@ -53,6 +53,24 @@
   "LazyActeform": {
     "description": "Auto imported from components/actesComponents/Acteform.vue"
   },
+  "Dossier": {
+    "description": "Auto imported from components/dossiers/Dossier.vue"
+  },
+  "LazyDossier": {
+    "description": "Auto imported from components/dossiers/Dossier.vue"
+  },
+  "DossierCard": {
+    "description": "Auto imported from components/dossiers/DossierCard.vue"
+  },
+  "LazyDossierCard": {
+    "description": "Auto imported from components/dossiers/DossierCard.vue"
+  },
+  "DossierForm": {
+    "description": "Auto imported from components/dossiers/DossierForm.vue"
+  },
+  "LazyDossierForm": {
+    "description": "Auto imported from components/dossiers/DossierForm.vue"
+  },
   "ComparentList": {
     "description": "Auto imported from components/comparentComponents/ComparentList.vue"
   },
@@ -76,23 +94,5 @@
   },
   "LazyPersonForm": {
     "description": "Auto imported from components/comparentComponents/PersonForm.vue"
-  },
-  "Dossier": {
-    "description": "Auto imported from components/dossiers/Dossier.vue"
-  },
-  "LazyDossier": {
-    "description": "Auto imported from components/dossiers/Dossier.vue"
-  },
-  "DossierCard": {
-    "description": "Auto imported from components/dossiers/DossierCard.vue"
-  },
-  "LazyDossierCard": {
-    "description": "Auto imported from components/dossiers/DossierCard.vue"
-  },
-  "DossierForm": {
-    "description": "Auto imported from components/dossiers/DossierForm.vue"
-  },
-  "LazyDossierForm": {
-    "description": "Auto imported from components/dossiers/DossierForm.vue"
   }
 }

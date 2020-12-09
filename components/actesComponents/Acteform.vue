@@ -215,15 +215,6 @@ export default {
           JSON.parse(`{"${chmp.nom}" : "${[...objs]}"}`)
         )
       });
-      console.log(JSON.stringify({
-        contenu: this.champs,
-        model: this.model.id,
-        redacteur: this.redacteur,
-        fichier: this.fichier,
-        dossierId: this.dossier,
-        libelle: this.libelle,
-        dateRedaction: new Date().getUTCDate()
-      }));
       axios.post('http://localhost:1337/actes', {
         contenu: this.champs,
         model: this.model.id,

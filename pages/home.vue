@@ -234,8 +234,8 @@ export default {
     },
     rechercher() {
       axios.get(`http://localhost:1337/dossiers?dossier=${this.dossierSearch}&comp=${this.compSearch}&bien=${this.bienSearch}`).then(resp => {
-        console.log(resp.data.length);
-        if (resp.data.length !== undefined && resp.data.length > 1) {
+        console.log(resp.data);
+        if (resp.data.length !== undefined) {
           this.dossiers = resp.data;
         } else {
           this.docs.push(resp.data)

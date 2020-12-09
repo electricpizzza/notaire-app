@@ -32,7 +32,7 @@
             <v-col cols="12" md="6"><h1><b>{{ item.libelle }}</b></h1></v-col>
               <div class="offset-7 ma-3">
                 <v-btn color="primary" nuxt :to="'./actes/' + item.id">Consulter</v-btn>
-                <v-btn color="success" nuxt :to="'./actes/modifier/' + item.id"
+                <v-btn color="success" nuxt :to="'./actes/modifier/' + item.id" disabled
                   >Modifier</v-btn
                 >
                 <v-btn color="error">Suprimer</v-btn>

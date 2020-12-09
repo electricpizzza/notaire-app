@@ -1,23 +1,6 @@
 <template>
-  <v-container>
-      <h1>{{ libelle }}</h1>
-      <v-row>
-        <v-col cols="12" sm="6">
-          Date de redaction : {{dateRedaction}}
-        </v-col>
-        <v-col cols="12" sm="6">
-          Redacteur : {{ redacteur }}
-        </v-col>
-        <v-col cols="12" sm="6">
-          Acte de Model : {{model}}
-        </v-col>
-        <v-col cols="12" sm="6">
-          Acte de Model : {{model}}
-        </v-col>
-        <v-col cols="12" sm="6" v-for="content in contenu" :key="content">
-          {{content}}
-        </v-col>
-      </v-row>
+  <v-container v-if="model">
+      <Acteform :model="model"/>
   </v-container>
 </template>
 
@@ -31,7 +14,7 @@ export default {
   data() {
     return {
        contenu: '',
-        model:'',
+        model:null,
         redacteur: '',
         fichier: '',
         dossierId: '',
@@ -43,10 +26,13 @@ export default {
     Axios.get('http://localhost:1337/actes/'+this.slug).then(resp => {
       console.log(resp.data[0]);
       this.contenu = JSON.parse(resp.data[0].contenu);
-      this.model = resp.data[0].model;
       this.redacteur = resp.data[0].redacteur;
       this.dateRedaction = resp.data[0].dateRedaction;
       this.libelle = resp.data[0].libelle;
+      Axios.get('http://localhost:1337/model/'+resp.data[0].modelId).then(res => {
+          this.model = res.data[0];
+          console.log(res.data);
+      })
     })
   },
 }

@@ -15,7 +15,7 @@ export default {
       comparent: null,
     }
   },
-  beforeCreate() {
+  created() {
     comparentService.getOneComparent(this.$route.query.id).then((resp) => {
       this.comparent = resp.data.comparent[0]
     })

@@ -26,6 +26,7 @@ const _dce7caea = () => interopDefault(import('../pages/devis/devi.vue' /* webpa
 const _15ac429c = () => interopDefault(import('../pages/dossiers/ajouter.vue' /* webpackChunkName: "pages/dossiers/ajouter" */))
 const _375f7da1 = () => interopDefault(import('../pages/factures/ajouter.vue' /* webpackChunkName: "pages/factures/ajouter" */))
 const _43d264fa = () => interopDefault(import('../pages/modeles/ajouter.vue' /* webpackChunkName: "pages/modeles/ajouter" */))
+const _6cbf0930 = () => interopDefault(import('../pages/actes/modifier/_acte.vue' /* webpackChunkName: "pages/actes/modifier/_acte" */))
 const _41a1946a = () => interopDefault(import('../pages/biens/modifier/_bien.vue' /* webpackChunkName: "pages/biens/modifier/_bien" */))
 const _131e12c9 = () => interopDefault(import('../pages/comparent/modifier/_comparent.vue' /* webpackChunkName: "pages/comparent/modifier/_comparent" */))
 const _292dd7ff = () => interopDefault(import('../pages/comptabilite/modifier/_comptabilite.vue' /* webpackChunkName: "pages/comptabilite/modifier/_comptabilite" */))
@@ -147,6 +148,10 @@ export const routerOptions = {
     path: "/modeles/ajouter",
     component: _43d264fa,
     name: "modeles-ajouter"
+  }, {
+    path: "/actes/modifier/:acte?",
+    component: _6cbf0930,
+    name: "actes-modifier-acte"
   }, {
     path: "/biens/modifier/:bien?",
     component: _41a1946a,
