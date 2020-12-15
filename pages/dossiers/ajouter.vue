@@ -405,15 +405,10 @@ export default {
       dialogBien: false,
       dialogComp: false,
       compList: [
-        { id: 11, name: 'dinar ', identif: 'CD12132' },
-        { id: 31, name: ' zakariae', identif: 'CD12132' },
-        { id: 21, name: 'dinar zakariae', identif: 'CD12132' },
+       
       ],
       bienList: [
-        { id: 11, libelle: 'Appartement addarissa 12', type: 'appartement' },
-        { id: 31, libelle: ' Villa A31', type: 'villa' },
-        { id: 21, libelle: 'Appartement Oued Fes', type: 'appartement' },
-        { id: 21, libelle: 'terrain salam', type: 'terrain' },
+      
       ],
       selectedItems: [],
       NatureDossiers: [],

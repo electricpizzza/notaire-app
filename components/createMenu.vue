@@ -14,7 +14,7 @@
       <v-icon class="mr-3">mdi-file</v-icon> Creer Un Devis
     </v-btn>
     <v-btn dark color="#073a65" title nuxt to="/modeles/ajouter">
-      <v-icon class="mr-3">mdi-pencil</v-icon> Creer Un modele
+      <v-icon class="mr-3">mdi-pencil</v-icon> Creer Un model
     </v-btn>
     <v-btn dark color="#073a65" title nuxt to="/actes/ajouter">
       <v-icon class="mr-3">mdi-gavel</v-icon> Creer Un Acte

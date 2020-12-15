@@ -5,7 +5,7 @@
         <v-col cols="12">
           <v-text-field v-model="libelle" label="Titre"></v-text-field>
         </v-col>
-        <v-col cols="12" v-for="champ in schema" :key="champ.name">
+        <v-col cols="12" v-for="(champ, index) in schema" :key="index">
           <v-sheet
             elevation="10"
             rounded="xl"
@@ -19,7 +19,7 @@
                 <v-card-title class="headline grey lighten-2">
                   Choix de(s) Comparent(s)
                 </v-card-title>
-                <v-card-text>
+                <!-- <v-card-text>
                   <v-list shaped>
                     <v-list-item-group v-model="selectedItems" multiple>
                       <template v-for="(item, i) in items">
@@ -51,6 +51,36 @@
                         </v-list-item>
                       </template>
                     </v-list-item-group>
+                  </v-list>
+                </v-card-text> -->
+                <v-card-text>
+                  <v-list shaped>
+                    <v-row>
+                      <v-col cols="9">
+                        <v-text-field
+                          v-model="search"
+                          append-icon="mdi-magnify"
+                          label="Chercher"
+                          single-line
+                          hide-details
+                        ></v-text-field>
+                      </v-col>
+                      <v-col cols="3">
+                        <v-btn dark small color="primary">
+                          <v-icon>mdi-plus</v-icon> Nouveau
+                        </v-btn>
+                      </v-col>
+                    </v-row>
+                    <v-data-table
+                      v-model="selectedItems"
+                      :headers="headersComp"
+                      :items="items"
+                      item-key="id"
+                      show-select
+                      :search="search"
+                      class="elevation-1"
+                    >
+                    </v-data-table>
                   </v-list>
                 </v-card-text>
                 <v-divider></v-divider>
@@ -94,9 +124,9 @@
                 <v-chip
                   v-for="comp in dynamicData.find((d) => d.nom == champ.name)
                     .data"
-                  :key="comp"
+                  :key="comp.id"
                 >
-                  {{ comp.name }}
+                  {{ comp.nom }}
                 </v-chip>
               </v-chip-group>
             </div>
@@ -112,6 +142,8 @@
             v-else
             :name="champ.name"
             :label="champ.label"
+            v-model="data[index]"
+            @change="changed"
           ></v-text-field>
         </v-col>
         <v-col cols="12">
@@ -123,7 +155,9 @@
             item-value="id"
           ></v-select>
         </v-col>
-        <v-col cols="12"> </v-col>
+        <v-col cols="12">
+          <!-- <acte-document :value="document" :libelle="libelle" :model="model" :data="data"/> -->
+        </v-col>
       </v-row>
       <v-btn color="primary" class="offset-10" @click="enregistrer" dark
         >Enregistrer</v-btn
@@ -134,11 +168,14 @@
 <script>
 import axios from 'axios'
 import ComparentService from './../../assets/sevices/comparentService'
+import RichEditor from '../RichEditor.vue'
 const comparentService = new ComparentService()
 export default {
+  components: { RichEditor },
   name: "Acteform",
   data() {
     return {
+      search: '',
       schema: [],
       champs: [],
       modelActuel: '',
@@ -150,10 +187,14 @@ export default {
       dossiers: [],
       dynamicData: [],
       dialogChoix: false,
+      document: '',
+      data: [],
       items: [
-        { id: 11, name: 'dinar ', identif: 'CD12132' },
-        { id: 31, name: ' zakariae', identif: 'CD12132' },
-        { id: 21, name: 'dinar zakariae', identif: 'CD12132' },
+      ],
+      headersComp: [
+        { text: 'ID', value: 'id' },
+        { text: 'Nom de Comparant', value: 'type' },
+        { text: 'Nom de Comparant', value: 'nom' },
       ],
       selectedItems: [],
     }
@@ -162,11 +203,11 @@ export default {
 
   beforeCreate() {
     comparentService.getAllComparents().then(resp => {
-      this.comparents = resp.data
-    })
+      this.items = resp.data;
+    });
     axios.get('http://localhost:1337/dossiers').then(res => {
-      this.dossiers = res.data
-    })
+      this.dossiers = res.data;
+    });
   },
   created() {
     this.schema = JSON.parse(this.model.champs);
@@ -179,20 +220,24 @@ export default {
           id,
           dialogChoix: false,
           nom: chmp.name,
+          type: chmp.type,
           data: [],
         });
       }
     });
     this.dynamicData = objs;
+    console.log(this.schema, objs);
   },
   watch: {
     model: () => {
       // this.schema = JSON.parse(this.model.champs)
-    }
+    },
   },
   methods: {
+    changed() {
+      // console.log(this.data);
+    },
     selectItems(name) {
-
       this.dynamicData.find(d => d.nom == name).data = [...this.selectedItems];
       this.dynamicData.find(d => d.nom == name).dialogChoix = false
       this.selectedItems = [];
@@ -201,9 +246,11 @@ export default {
       const chmps = document.querySelectorAll('input');
       chmps.forEach(chmp => {
         if (chmp.name != "") {
-          this.champs.push(
-            JSON.parse(`{"${chmp.name}" : "${chmp.value}"}`)
-          )
+          this.champs.push({
+            name: chmp.name,
+            type: chmp.type,
+            value: chmp.value,
+          });
         }
       });
       this.dynamicData.forEach(chmp => {
@@ -211,9 +258,21 @@ export default {
         chmp.data.forEach(element => {
           objs.push(element.id)
         });
-        this.champs.push(
-          JSON.parse(`{"${chmp.nom}" : "${[...objs]}"}`)
-        )
+        this.champs.push({
+          name: chmp.nom,
+          type: chmp.type,
+          value: [...objs],
+        });
+      });
+
+      console.log({
+        contenu: this.champs,
+        model: this.model.id,
+        redacteur: this.redacteur,
+        fichier: this.fichier,
+        dossierId: this.dossier,
+        libelle: this.libelle,
+        data: this.dynamicData,
       });
       axios.post('http://localhost:1337/actes', {
         contenu: this.champs,

@@ -30,7 +30,7 @@
           <v-btn class="mr-4" color="primary" @click="submit">
             Se Connecter
           </v-btn>
-          <v-btn nuxt to="/" color="error"> Fermer </v-btn>
+          <v-btn nuxt to="/" color="error lighten-1"> Fermer </v-btn>
         </v-card-actions>
       </form>
     </v-card-text>

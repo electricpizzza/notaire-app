@@ -196,9 +196,10 @@
       </v-col>
       <v-col cols="12"> </v-col>
     </v-row>
-    <v-btn color="primary" class="offset-10" dark @click="enregistrer"
-      >Enregistrer</v-btn
-    >
+    <div class="d-flex justify-space-between mx-8">
+      <v-btn color="primary" dark nuxt to="/comparent"> <v-icon>mdi-chevron-left</v-icon> Retourner</v-btn>    
+      <v-btn color="primary" dark @click="enregistrer">Enregistrer</v-btn>
+    </div>
   </v-form>
 </template>
 <script>

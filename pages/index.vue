@@ -1,6 +1,6 @@
 <template>
   <v-card class="mx-auto menu" max-width="700px">
-    <v-snackbar v-model="snackbarErr" color="error">
+    <v-snackbar v-model="snackbarErr" color="error lighten-1">
       {{ error }}
 
       <template v-slot:action="{ attrs }">
@@ -85,7 +85,7 @@
         <!-- {{ etatServeur === "Conecté" ? "Conecté" : "Deconecté" }} -->
         Se deconnecter
       </v-btn>
-      <v-btn color="error" outlined dark>
+      <v-btn color="error lighten-1" outlined dark @click="close">
         <v-icon class="mr-1">mdi-close</v-icon> Quitter</v-btn
       >
     </v-card-actions>
@@ -117,6 +117,9 @@ export default {
         })
         // this.etatServeur = "Conecté";
       }
+    },
+    close() {
+
     }
   },
   created() {

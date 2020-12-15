@@ -10,3 +10,31 @@ nature, libelle, date ouverture, date de fermeture, notaire
 
 
 {"articles":[{"index":0,"ref":"HJ1","description":"Reference site about Lorem Ipsum, giving information on its origin","remise":"200","qte":"1","pu":"3500","tva":"10","total":3630,"class":""},{"index":1,"ref":"JH12","description":"Reference site about Lorem Ipsum, giving information on its origin site , giving information on its origin","remise":"200","qte":"2","pu":"4000","tva":"10","total":8580,"class":""}],"remisG":"1000","total":12210,"dateDevis":"2021-01-01","termes":"","client":{"nom":"Dinar","address":"RUE 14 HAY OUED FES "}}
+
+
+
+Acte de Vente
+
+Je soussigné, [​VENDEUR​][NOM], le vendeur, vends à l’acheteur soussigné [​ACHETEUR​][NOM] pour la somme de ([​MONTANT], l’article suivant :
+
+MARQUE : ____________________ MODÈLE : ____________________ NUMÉRO DE SÉRIE : ___________ ANNÉE : _____________________ COULEUR : ____________________ [​AUTRES DÉTAILS SIGNIFICATIFS​]
+
+Le vendeur confirme que ces informations correspondent bien au bien vendu pour autant qu’il sache.
+
+L’acheteur accepte cet acte de vente et comprend que l’article est vendu “en état” et sans aucune garantie.
+
+Date : __________________
+
+    
+
+VENDEUR :
+
+[​VENDEUR​][NOM] [​VENDEUR​][PRENOM][​VENDEUR​][ADDRESS] [​VENDEUR​][VILLE]
+
+__________________
+
+ACHETEUR :
+
+[​ACHETEUR​][NOM] [​ACHETEUR​][PRENOM][​ACHETEUR​][ADDRESS] [​ACHETEUR​][VILLE]
+
+__________________ 

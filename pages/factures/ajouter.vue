@@ -208,7 +208,7 @@
                 <td>
                   <v-btn
                     outlined
-                    color="error"
+                    color="error lighten-1"
                     x-small
                     dark
                     icon

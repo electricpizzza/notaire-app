@@ -60,7 +60,7 @@ export default {
         },
         {
           icon: 'mdi-pencil',
-          title: 'Modeles',
+          title: 'Models',
           to: '/modeles',
         },
 

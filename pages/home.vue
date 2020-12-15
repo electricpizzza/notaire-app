@@ -55,7 +55,9 @@
 
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="error" outlined @click="closeDialog"> Anuller </v-btn>
+          <v-btn color="error lighten-1" outlined @click="closeDialog">
+            Anuller
+          </v-btn>
           <v-btn
             v-if="dossiers.length === 0"
             outlined
@@ -178,7 +180,7 @@
               class="mt-3 mr-0"
               @click="closeTab(doc.id)"
             >
-              <v-icon color="error"> mdi-close-circle </v-icon>
+              <v-icon color="error lighten-1"> mdi-close-circle </v-icon>
               <v-tooltip bottom>
                 <span>Fermer</span>
               </v-tooltip>
@@ -254,12 +256,8 @@ export default {
   },
   created() {
     // const usr = auth.user
-
-    axios.get('http://localhost:1337/dossiers').then(resp => {
-      //this.dossiers = resp.data
-    }).catch(err => {
-      console.log(err);
-    })
+    console.log(dossierSotre);
+    this.docs = dossierSotre.data.dossiers;
   },
 }
 </script>

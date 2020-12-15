@@ -59,7 +59,7 @@
           <v-icon left> mdi-pencil </v-icon>
           Creer Un Acte
         </v-btn>
-        <v-btn tile color="error" nuxt to="/modeles/ajouter">
+        <v-btn tile color="error lighten-1" nuxt to="/modeles/ajouter">
           <v-icon left> mdi-plus </v-icon>
           Creer Un model
         </v-btn> -->
@@ -141,7 +141,7 @@ export default {
         },
         {
           icon: 'mdi-pencil',
-          title: 'Modeles',
+          title: 'Models',
           to: '/modeles',
         },
         {

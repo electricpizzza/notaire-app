@@ -19,7 +19,7 @@
       :headers="headers"
       :items="devis"
       :expanded.sync="expanded"
-      single-expand="true"
+      :single-expand="true"
       :search="search"
       item-key="id"
       show-expand
@@ -44,10 +44,13 @@
             </v-col>
             <v-col cols="12">
               <div class="offset-9">
-                <v-btn color="success" nuxt :to="'./devis/modifier/' + item.id"
+                <v-btn
+                  color="success lighten-1"
+                  nuxt
+                  :to="'./devis/modifier/' + item.id"
                   >Modifier</v-btn
                 >
-                <v-btn color="error">Suprimer</v-btn>
+                <v-btn color="error lighten-1">Suprimer</v-btn>
               </div>
             </v-col>
           </v-row>

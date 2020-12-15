@@ -48,7 +48,12 @@
               />
             </v-card-text>
             <v-card-actions>
-              <v-btn outlined color="error" dark @click="addFileDialog = false">
+              <v-btn
+                outlined
+                color="error lighten-1"
+                dark
+                @click="addFileDialog = false"
+              >
                 Anuller
               </v-btn>
               <v-btn outlined color="primary" dark @click="addFile">

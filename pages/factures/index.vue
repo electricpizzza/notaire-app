@@ -19,7 +19,7 @@
       :headers="headers"
       :items="factures"
       :expanded.sync="expanded"
-      single-expand="true"
+      :single-expand="true"
       :search="search"
       item-key="id"
       show-expand
@@ -65,19 +65,19 @@
                 <v-btn
                   color="primary"
                   dark
-                  href="http://localhost:1337/uploads/factures/facture-RKLSD12-8-12-2020.pdf"
-                  download="facture-RKLSD12-7-12-2020.pdf"
+                  :href="`http://localhost:1337/${item.link}`"
+                  :download="`http://localhost:1337/${item.link}`"
                   target="_blank"
                   >Telecharger</v-btn
                 >
                 <v-btn
-                  color="success"
+                  color="success lighten-1"
                   nuxt
                   :to="'./factures/modifier/' + item.id"
                   disabled
                   >Modifier</v-btn
                 >
-                <v-btn color="error">Suprimer</v-btn>
+                <v-btn color="error lighten-1">Suprimer</v-btn>
               </div>
             </v-col>
           </v-row>
@@ -97,11 +97,10 @@ export default {
         {
           text: 'ID',
           align: 'start',
-          filterable: false,
           value: 'id',
         },
         { text: 'maitre', value: 'maitre' },
-        { text: 'Date validité de factures', value: 'datefactures' },
+        { text: 'Date de création', value: 'dateFacture' },
         { text: '', value: 'data-table-expand' },
       ],
       factures: [],

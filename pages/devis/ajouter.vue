@@ -208,7 +208,7 @@
                 <td>
                   <v-btn
                     outlined
-                    color="error"
+                    color="error lighten-1"
                     x-small
                     dark
                     icon
@@ -234,7 +234,7 @@
         </v-simple-table>
       </v-col>
       <v-col cols="8" ms="12">
-        <v-btn flat color="primary" small @click="addRow">
+        <v-btn text color="primary" small @click="addRow">
           <v-icon>mdi-plus</v-icon> Ajouter Une Ligne
         </v-btn>
       </v-col>
@@ -324,7 +324,7 @@ export default {
         client: this.client
       }).then(resp => {
         console.log(resp);
-        this.$router.push("/test")
+        this.$router.push("/devis")
       }).catch(err => {
         console.log(err);
       })

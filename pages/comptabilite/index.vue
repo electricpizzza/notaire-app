@@ -17,7 +17,7 @@
       :headers="headers"
       :items="comptabilite"
       :expanded.sync="expanded"
-      single-expand="true"
+      :single-expand="true"
       :search="search"
       item-key="id"
       show-expand
@@ -26,20 +26,19 @@
       <template v-slot:expanded-item="{ headers, item }">
         <td :colspan="headers.length">
           <v-row class="mx-4">
-            <v-col cols="12" md="6"> <b>Titre: </b>{{ item.title }} </v-col>
-            <v-col cols="12" md="6"><b>Libelle: </b>{{ item.libelle }}</v-col>
-            <v-col cols="12" md="6"><b>Nature: </b>{{ item.nature }}</v-col>
-            <v-col cols="12" md="6"><b>Maitre: </b>{{ item.NomMaitre }}</v-col>
             <v-col cols="12"><b>Description: </b>{{ item.description }}</v-col>
             <v-col cols="12">
-              <div class="offset-9">
+              <div class="offset-7">
+                <v-btn color="primary" nuxt :to="'./comptabilite/' + item.id"
+                  >Consulter</v-btn
+                >
                 <v-btn
-                  color="success"
+                  color="success lighten-1"
                   nuxt
                   :to="'./comptabilite/modifier/' + item.id"
                   >Modifier</v-btn
                 >
-                <v-btn color="error">Suprimer</v-btn>
+                <v-btn color="error lighten-1">Suprimer</v-btn>
               </div>
             </v-col>
           </v-row>
@@ -65,9 +64,8 @@ export default {
           filterable: false,
           value: 'id',
         },
-        { text: 'Titre', value: 'title' },
-        { text: 'Nature', value: 'nature' },
-        { text: 'Maitre', value: 'NomMaitre' },
+        { text: 'Dossier', value: 'dossier' },
+        { text: 'Description', value: 'description' },
         { text: '', value: 'data-table-expand' },
       ],
       comptabilite: [],
@@ -79,7 +77,7 @@ export default {
     Axios.get('http://localhost:1337/comptabilite/').then(resp => {
       this.comptabilite = resp.data;
       console.log(resp.data);
-    })
+    });
   },
 }
 </script>

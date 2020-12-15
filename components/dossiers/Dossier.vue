@@ -19,7 +19,7 @@
           <b>date de Fermeture:</b> {{ dossier.dateFermeture }}
         </v-col>
         <v-col cols="12" md="6" v-else>
-          <v-btn color="error" @click="fermerDossier" dark
+          <v-btn color="error lighten-1" @click="fermerDossier" dark
             >Fermer Dossier</v-btn
           >
         </v-col>
@@ -58,13 +58,16 @@
         </v-col>
         <v-col cols="12" md="4">
           <v-btn
-            color="success"
+            color="success lighten-1"
             class="ms-4"
             nuxt
             :to="`/dossiers/modifier/${dossier.id}`"
             >Modifier</v-btn
           >
-          <v-btn color="error" class="ms-2" @click="deleteDialog = true"
+          <v-btn
+            color="error lighten-1"
+            class="ms-2"
+            @click="deleteDialog = true"
             >Suprimer</v-btn
           >
           <v-dialog
@@ -89,7 +92,11 @@
                     dark
                     >Non, Annuler</v-btn
                   >
-                  <v-btn outlined @click="deleteDossier" color="error" dark
+                  <v-btn
+                    outlined
+                    @click="deleteDossier"
+                    color="error lighten-1"
+                    dark
                     >Oui, Suprimer</v-btn
                   >
                 </div>
@@ -186,7 +193,7 @@ export default {
     const comps = JSON.parse(this.dossier.comparents);
     const lesBiens = JSON.parse(this.dossier.bien);
     comps.forEach(comparent => {
-      Axios.get('http://localhost:1337/comparent/'+comparent).then(resp => {
+      Axios.get('http://localhost:1337/comparent/' + comparent).then(resp => {
         this.comparents.push(resp.data.comparent[0])
       }).catch(err => console.log(err))
     });

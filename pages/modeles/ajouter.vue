@@ -1,7 +1,7 @@
 <template>
   <div class="mx-10 pa-10">
     <div class="text-center container">
-      <h1>Ajouter Un Model d'un Modele</h1>
+      <h1>Ajouter Un Model</h1>
       <v-alert
         border="left"
         color="red"
@@ -15,7 +15,7 @@
       <v-dialog v-model="dialog" width="500" persistent>
         <v-card>
           <v-card-title class="headline lighten-2">
-            Créer un Modele
+            Créer un Model
           </v-card-title>
 
           <v-card-text>
@@ -33,7 +33,9 @@
 
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="error" text nuxt to="/modeles"> Anuller </v-btn>
+            <v-btn color="error lighten-1" text nuxt to="/modeles">
+              Anuller
+            </v-btn>
             <v-btn
               color="primary"
               text
@@ -100,7 +102,7 @@
             <v-row>
               <v-col cols="12" sm="9"><h3>Les champs</h3></v-col>
               <v-col cols="12" sm="3">
-                <v-btn flat color="primary" small @click="addChamps">
+                <v-btn text color="primary" small @click="addChamps">
                   <v-icon>mdi-plus</v-icon> Ajouter Un Champ
                 </v-btn>
               </v-col>
@@ -180,14 +182,6 @@ export default {
       if (this.language === null || this.redacteur === '' || this.libelle === null || this.type === '' || this.champs === []) {
         this.error = "Veuillez Bien Saisire les données S.V.P."
       } else {
-        // console.log({
-        //   language: this.language,
-        //   redacteur: this.redacteur,
-        //   libelle: this.libelle,
-        //   type: this.type,
-        //   champs: this.champs,
-        //   boilerplate: this.boilerplate,
-        // });
         axios.post('http://localhost:1337/model', {
           language: this.language,
           redacteur: this.redacteur,

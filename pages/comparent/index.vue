@@ -7,7 +7,12 @@
     :search="search"
   >
     <template v-slot:top>
-      <v-snackbar v-model="snackbar" color="success" top timeout="5000">
+      <v-snackbar
+        v-model="snackbar"
+        color="success lighten-1"
+        top
+        timeout="5000"
+      >
         {{ success }}
 
         <template v-slot:action="{ attrs }">
@@ -70,7 +75,7 @@
                       hide-details
                     ></v-checkbox>
                   </v-col>
-                  <v-col v-if="editedItem.mineur" cols="12" sm="6">
+                  <!-- <v-col v-if="editedItem.mineur" cols="12" sm="6">
                     <v-select
                       v-model="editedItem.comparent"
                       label="Tutell"
@@ -79,7 +84,7 @@
                       item-value="id"
                       autocomplete
                     ></v-select>
-                  </v-col>
+                  </v-col> -->
                 </v-row>
               </v-container>
             </v-card-text>
@@ -122,6 +127,7 @@
 <script>
 import axios from 'axios'
 import ComparentService from './../../assets/sevices/comparentService'
+import Axios from 'axios'
 const comparentService = new ComparentService()
 export default {
   data: () => ({
@@ -197,9 +203,11 @@ export default {
     },
 
     deleteItem(item) {
-      this.editedIndex = this.comparents.indexOf(item)
-      this.editedItem = Object.assign({}, item)
-      this.dialogDelete = true
+      Axios.delete('http://localhost:1337/comparent/' + item.id).then(resp => {
+        this.editedIndex = this.comparents.indexOf(item)
+        this.editedItem = Object.assign({}, item)
+        this.dialogDelete = true
+      }).catch(err => console.error(err));
     },
 
     deleteItemConfirm() {

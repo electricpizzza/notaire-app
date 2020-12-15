@@ -19,7 +19,7 @@
       :headers="headers"
       :items="biens"
       :expanded.sync="expanded"
-      single-expand="true"
+      :single-expand="true"
       :search="search"
       item-key="id"
       show-expand
@@ -47,7 +47,7 @@
                 <v-btn color="success" nuxt :to="'./biens/modifier/' + item.id"
                   >Modifier</v-btn
                 >
-                <v-btn color="error">Suprimer</v-btn>
+                <v-btn color="error lighten-1">Suprimer</v-btn>
               </div>
             </v-col>
           </v-row>

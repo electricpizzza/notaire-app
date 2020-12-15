@@ -149,12 +149,14 @@
         <v-col cols="12"> </v-col>
       </v-row>
     </v-container>
-    <v-btn color="primary" class="offset-10" dark @click="enregistrer"
-      >Enregistrer</v-btn
-    >
+    <div class="d-flex justify-space-between mx-8">
+      <v-btn color="primary" dark nuxt to="/comparent"> <v-icon>mdi-chevron-left</v-icon> Retourner</v-btn>    
+      <v-btn color="primary" dark @click="enregistrer">Enregistrer</v-btn>
+    </div>
   </v-form>
 </template>
 <script>
+import Axios from 'axios';
 import ComparentService from './../../assets/sevices/comparentService.js'
 const comparentService = new ComparentService()
 export default {
@@ -189,9 +191,9 @@ export default {
     ],
   }),
   beforeCreate() {
-    comparentService.getAllComparents().then((resp) => {
+    Axios.get('http://localhost:1337/comparent').then((resp) => {
       this.representants = resp.data
-    })
+    });
   },
   created() {
     if (this.modifier) {

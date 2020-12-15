@@ -13,14 +13,14 @@
         hide-details
       ></v-text-field>
       <v-btn color="primary" class="ma-5" nuxt to="/actes/ajouter"
-        ><v-icon>mdi-plus</v-icon> Ajouter un dossier</v-btn
+        ><v-icon>mdi-plus</v-icon> Ajouter un Acte</v-btn
       >
     </v-card-title>
     <v-data-table
       :headers="headers"
       :items="actes"
       :expanded.sync="expanded"
-      single-expand="true"
+      :single-expand="true"
       :search="search"
       item-key="id"
       show-expand
@@ -32,10 +32,10 @@
             <v-col cols="12" md="6"><h1><b>{{ item.libelle }}</b></h1></v-col>
               <div class="offset-7 ma-3">
                 <v-btn color="primary" nuxt :to="'./actes/' + item.id">Consulter</v-btn>
-                <v-btn color="success" nuxt :to="'./actes/modifier/' + item.id" disabled
+                <v-btn color="success lighten-1" nuxt :to="'./actes/modifier/' + item.id" disabled
                   >Modifier</v-btn
                 >
-                <v-btn color="error">Suprimer</v-btn>
+                <v-btn color="error lighten-1">Suprimer</v-btn>
               </div>
             </v-col>
           </v-row>

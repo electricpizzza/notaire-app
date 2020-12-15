@@ -27,7 +27,9 @@
 
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="error" text nuxt to="/actes"> Anuller </v-btn>
+            <v-btn color="error lighten-1" text nuxt to="/actes">
+              Anuller
+            </v-btn>
             <v-btn color="primary" text @click="dialog = false">
               Choisir
             </v-btn>
@@ -55,7 +57,7 @@ export default {
   beforeCreate() {
     axios.get('http://localhost:1337/model').then(resp => {
       this.models = resp.data;
-    })
+    });
   }
 }
 </script>

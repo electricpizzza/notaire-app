@@ -1,7 +1,9 @@
 <template>
   <v-container>
     <v-card>
-      <h1>Comptabiliée du dossier Hamid Idrissi</h1>
+      <h1 style="color: #295075; padding: 30px">
+        Comptabiliée du dossier Hamid Idrissi
+      </h1>
       <v-dialog v-model="dialog" width="500" persistent>
         <template v-slot:activator="{ on, attrs }">
           <v-btn color="primary" dark v-bind="attrs" class="offset-9" v-on="on">
@@ -28,7 +30,13 @@
               </v-col>
               <v-col cols="12" sm="6">
                 <v-select
-                  :items="['Espece', 'Cheque', 'virment Banquaire']"
+                  :items="[
+                    { label: 'Espece', value: 'Espece' },
+                    { label: 'Cheque', value: 'Cheque' },
+                    { label: 'Virment Bancaire', value: 'Virment' },
+                  ]"
+                  item-text="label"
+                  item-value="value"
                   v-model="typePay"
                   label="Method de Payment"
                 ></v-select>
@@ -113,48 +121,7 @@ export default {
         { text: 'valeur (DHS)', value: 'valeur' },
         { text: 'Date de Transaction', value: 'dateTrans' },
       ],
-      transactions: [
-        {
-          id: 1,
-          comptabilite: 1,
-          libelle: 'Frais Notaire',
-          typeTrans: 'Entrée',
-          typePay: 'Cheque',
-          comparent: 1,
-          valeur: 1129,
-          dateTrans: '12-12-2020',
-        },
-        {
-          id: 2,
-          comptabilite: 1,
-          libelle: 'ANCFCC',
-          typeTrans: 'Entrée',
-          typePay: 'Cheque',
-          comparent: 1,
-          valeur: 1129,
-          dateTrans: '12-12-2020',
-        },
-        {
-          id: 3,
-          comptabilite: 1,
-          libelle: 'ANCFCC',
-          typeTrans: 'Sortie',
-          typePay: 'Cheque',
-          comparent: 1,
-          valeur: 1129,
-          dateTrans: '12-12-2020',
-        },
-        {
-          id: 4,
-          comptabilite: 1,
-          libelle: 'Frais Notaire',
-          typeTrans: 'Entrée',
-          typePay: 'Cheque',
-          comparent: 1,
-          valeur: 1129,
-          dateTrans: '12-12-2020',
-        }
-      ],
+      transactions: [],
       libelle: '',
       typeTrans: '',
       typePay: '',
@@ -172,17 +139,8 @@ export default {
   },
   methods: {
     ajouter() {
-
-      this.transactions.push({
-        comptabilite: this.comp,
-        libelle: this.libelle,
-        typeTrans: this.typeTrans,
-        typePay: this.typePay,
-        comparent: this.comp,
-        valeur: this.valeur,
-      });
       this.dialog = false;
-      Axios.post('http://localhocst:1337/comptabilite/', {
+      Axios.post('http://localhost:1337/transaction/', {
         comptabilite: this.comp,
         libelle: this.libelle,
         typeTrans: this.typeTrans,
@@ -190,7 +148,17 @@ export default {
         comparent: this.comp,
         valeur: this.valeur,
       }).then(resp => {
-        console.log(resp.data);
+        const today = new Date();
+        this.transactions.push({
+          id: resp.data.identifiers[0].id,
+          comptabilite: this.comp,
+          libelle: this.libelle,
+          typeTrans: this.typeTrans,
+          typePay: this.typePay,
+          comparent: this.comp,
+          valeur: this.valeur,
+          dateTrans: `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`,
+        });
       }).catch(err => console.log(err));
     }
   },
