@@ -1,0 +1,59 @@
+{
+    "NatureDossier":[
+        {
+            "ref":"N1",
+            "libelle":"Vendre Apartement",
+            "value":"vend_App",
+            "attachements":[
+                {
+                    "name":"idVendeur",
+                    "label":"Identification du vendeur"
+                },
+                                {
+                    "name":"idAchetueur",
+                    "label":"Identification du acheteur"
+                },
+                {
+                    "name":"ActeBien",
+                    "label":"Acte du bien(Appartement)"
+                }
+            ]
+        },
+        {
+            "ref":"N2",
+            "libelle":"Vendre Terrain",
+            "value":"vend_App",
+            "attachements":[
+                {
+                    "name":"idVendeur",
+                    "label":"Identification du vendeur"
+                },
+                                {
+                    "name":"idAchetueur",
+                    "label":"Identification du acheteur"
+                },
+                {
+                    "name":"ActeBien",
+                    "label":"Acte du bien(Terrain)"
+                }
+            ]
+        }
+    ],
+    "typeBien":[
+        {
+            "ref":"bienApp",
+            "libelle":"Appartement",
+            "value":"appartement"
+        },
+        {
+            "ref":"bienTerr",
+            "libelle":"Terrain",
+            "value":"terrain"
+        },
+        {
+            "ref":"bienVilla",
+            "libelle":"Villa",
+            "value":"villa"
+        }
+    ]
+}

@@ -1,0 +1,32 @@
+[
+    {
+        "name":"maitre",
+        "type":"text",
+        "label":"Maitre"
+    },
+    {
+        "name":"Vendeur",
+        "type":"comparent",
+        "label":"Vendeur"
+    },
+    {
+        "name":"Acheteur",
+        "type":"comparent",
+        "label":"Acheteur"
+    },
+    {
+        "name":"bien",
+        "type":"bien",
+        "label":"Le bien"
+    },
+    {
+        "name":"mantant",
+        "type":"number",
+        "label":"Mantant"
+    },
+    {
+        "name":"typePay",
+        "type":"text",
+        "label":"type De Payment"
+    }
+]
