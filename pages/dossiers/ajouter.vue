@@ -1,5 +1,16 @@
 <template>
   <v-stepper v-model="e1">
+    <v-overlay :value="loading">
+      <v-progress-circular indeterminate color="primary"></v-progress-circular>
+    </v-overlay>
+    <v-snackbar v-model="snackbar" color="error lighten-1" top>
+      {{ error }}
+      <template v-slot:action="{ attrs }">
+        <v-btn icon v-bind="attrs" @click="snackbar = false">
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+      </template>
+    </v-snackbar>
     <v-stepper-header>
       <v-stepper-step @click="e1 = 1" :complete="e1 > 1" step="1">
         Creation Dossier
@@ -13,7 +24,7 @@
 
       <v-divider></v-divider>
 
-      <!-- <v-stepper-step step="3"> Attachments </v-stepper-step> -->
+      <v-stepper-step step="3"> Attachments </v-stepper-step>
     </v-stepper-header>
 
     <v-stepper-items>
@@ -231,40 +242,6 @@
                     <v-card-title class="headline grey lighten-2">
                       Choix de(s) Bien(s)
                     </v-card-title>
-                    <!-- <v-card-text>
-                      <v-list shaped>
-                        <v-list-item-group v-model="selectedItems" multiple>
-                          <template v-for="(item, i) in bienList">
-                            <v-divider
-                              v-if="!item"
-                              :key="`divider-${i}`"
-                            ></v-divider>
-
-                            <v-list-item
-                              v-else
-                              :key="`item-${i}`"
-                              :value="item"
-                              active-class="deep-purple--text text--accent-4"
-                            >
-                              <template v-slot:default="{ active }">
-                                <v-list-item-content>
-                                  <v-list-item-title
-                                    v-text="item.libelle + ' : ' + item.type"
-                                  ></v-list-item-title>
-                                </v-list-item-content>
-
-                                <v-list-item-action>
-                                  <v-checkbox
-                                    :input-value="active"
-                                    color="deep-purple accent-4"
-                                  ></v-checkbox>
-                                </v-list-item-action>
-                              </template>
-                            </v-list-item>
-                          </template>
-                        </v-list-item-group>
-                      </v-list>
-                    </v-card-text> -->
                     <v-card-text>
                       <v-list shaped>
                         <v-row>
@@ -350,28 +327,47 @@
 
         <div class="offset-7">
           <v-btn color="primary" @click="e1 = 1">
-            <v-icon>mdi-chevron-left</v-icon> Retourner
+            <v-icon>mdi-chevron-left</v-icon> Retour
           </v-btn>
-          <v-btn color="primary" @click="enregistrer"> Terminer </v-btn>
+          <v-btn color="primary" @click="e1 = 3"> Continuer </v-btn>
+          <!-- <v-btn color="primary" @click="enregistrer"> Terminer </v-btn> -->
           <v-btn text nuxt to="/dossiers"> Anuller </v-btn>
         </div>
       </v-stepper-content>
-      <!-- 
+
       <v-stepper-content step="3" c>
         <v-card class="mb-12" min-height="60vh">
+          <h4 style="color: gray" class="ml-3">Fichiers :</h4>
           <v-row>
-            <v-col cols="6" v-for="att in attachmentList" :key="att.ref">
-              {{ att.label }}
+            <v-col cols="12" class="file-show">
+              <div
+                v-for="(file, index) in files"
+                :key="index"
+                class="img-show ma-3"
+              >
+                <img src="" alt="" srcset="" />
+                <span>{{ file.name }}</span>
+              </div>
+              <input
+                type="file"
+                id="file"
+                ref="file"
+                @change="fileUpload"
+                class="img-field ma-3"
+                multiple
+              />
             </v-col>
           </v-row>
         </v-card>
-        <div class="offset-9">
+        <div class="offset-7">
+          <v-btn color="primary" @click="e1 = 2">
+            <v-icon>mdi-chevron-left</v-icon> Retour
+          </v-btn>
           <v-btn color="primary" @click="enregistrer"> Terminer </v-btn>
 
           <v-btn text nuxt to="/dossiers"> Anuller </v-btn>
         </div>
-      </v-stepper-content> 
--->
+      </v-stepper-content>
     </v-stepper-items>
   </v-stepper>
 </template>
@@ -415,31 +411,46 @@ export default {
       selectedItems: [],
       NatureDossiers: [],
       attachmentList: [],
+      files: [],
+      loading: false,
+      snackbar: false,
+      error: '',
     }
   },
   beforeCreate() {
     axios.get('http://localhost:1337/bien').then(resp => {
       this.bienList = resp.data
-    })
+    }).catch((err) => {
+      this.error = err;
+      this.snackbar = true;
+    });
     axios
       .get('http://localhost:1337/comparent', { mode: 'cors' })
       .then((resp) => {
         this.compList = resp.data
-      })
-      .catch((err) => console.error(err));
+      }).catch(err => {
+        this.error = err;
+        this.snackbar = true;
+      });
     axios.get('http://localhost:1337/data').then(resp => {
-      console.log(resp.data.NatureDossier);
       this.NatureDossiers = resp.data.NatureDossier;
-    })
+    });
   },
   watch: {
     nature: (newnature, oldnature) => {
       axios.get('http://localhost:1337/data').then(resp => {
         this.attachmentList = resp.data.NatureDossier.find(n => n.value = newnature).attachements
-      })
+      }).catch((err) => {
+        this.error = err;
+        this.snackbar = true;
+      });
     }
   },
   methods: {
+    fileUpload() {
+      this.testimage = this.$refs.file.files[0].webkitRelativePath;
+      this.files.push(...this.$refs.file.files);
+    },
     selectComparant() {
       this.Comparant = this.selectedItems
       this.selectedItems = []
@@ -454,10 +465,11 @@ export default {
       this.dialogComp = true
     },
     openBien() {
-      this.dialogComp = true
+      this.dialogBien = true
     },
     enregistrer() {
 
+      this.loading = true;
       const comps = [];
       const bins = [];
 
@@ -480,13 +492,60 @@ export default {
         Comparent: JSON.stringify(comps),
         NomMaitre: this.notaire,
       }).then(resp => {
-        this.$router.push(
-          `/dossiers?success=Dossiers est bien enregistré`
-        )
+        console.log(resp);
+        let formData = new FormData();
+        this.files.forEach(file => {
+          formData.append('files', file, name.name);
+        });
+        formData.append('titre', this.libelle);
+        formData.append('dossier', resp.data.identifiers[0].id);
+        formData.append('description', this.description);
+        axios.post('http://localhost:1337/archive', formData).then(arch => {
+          this.loading = false;
+          this.$router.push(
+            `/dossiers?success=Dossiers est bien enregistré`
+          )
+        }).catch(err => {
+          this.error = err;
+          this.loading = false;
+          this.snackbar = true;
+        });
       }).catch(err => {
-        console.error(err);
+        this.error = err;
+        this.loading = false;
+        this.snackbar = true;
       })
     }
   },
 }
 </script>
+<style lang="css">
+  .img-field::-webkit-file-upload-button {
+    color: white;
+    display: inline-block;
+    background: #1CB6E0;
+    border: none;
+    padding: 7px 15px;
+    font-weight: 700;
+    border-radius: 3px;
+    white-space: nowrap;
+    cursor: pointer;
+    font-size: 10pt;
+    width:100px;
+    height:100px;
+  }
+  .img-show{
+    width: 100px;
+    height: 100px;
+    background-color: lightcyan;
+    background-image: url('/_nuxt/assets/placeholder.png');
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .file-show{
+    display: flex;
+    flex-wrap: wrap;
+  }
+</style>

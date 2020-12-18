@@ -1,11 +1,18 @@
 <template>
   <v-card class="ma-0" min-height="80vh">
+    <v-snackbar v-model="snackbar" color="error lighten-1" top>
+      {{ error }}
+      <template v-slot:action="{ attrs }">
+        <v-btn icon v-bind="attrs" @click="snackbar = false">
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+      </template>
+    </v-snackbar>
     <v-dialog v-model="dialogDos" width="700" persistent>
       <v-card>
         <v-card-title class="headline lighten-2">
           Choisir un Dossier
         </v-card-title>
-
         <v-card-text>
           <v-row v-if="dossiers.length === 0">
             <v-col cols="4" class="pa-3">
@@ -19,7 +26,7 @@
               <v-text-field
                 v-model="compSearch"
                 prepend-icon="mdi-account-outline"
-                label="Nom de Comparent"
+                label="Nom de Comparant"
               ></v-text-field>
             </v-col>
             <v-col cols="4" class="pa-3">
@@ -54,6 +61,11 @@
         <v-divider></v-divider>
 
         <v-card-actions>
+          <v-progress-circular
+            v-if="loading"
+            indeterminate
+            color="primary"
+          ></v-progress-circular>
           <v-spacer></v-spacer>
           <v-btn color="error lighten-1" outlined @click="closeDialog">
             Anuller
@@ -101,7 +113,7 @@
           <v-text-field
             v-model="compSearch"
             prepend-icon="mdi-account-outline"
-            label="Nom de Comparent"
+            label="Nom de Comparant"
           ></v-text-field>
         </v-col>
         <v-col cols="4" class="pa-3">
@@ -212,6 +224,9 @@ export default {
     dossierSearch: '',
     compSearch: '',
     bienSearch: '',
+    loading: false,
+    snackbar: false,
+    error: '',
   }),
   methods: {
     closeTab(id) {
@@ -235,6 +250,7 @@ export default {
       this.dossiers = [];
     },
     rechercher() {
+      this.loading = true;
       axios.get(`http://localhost:1337/dossiers?dossier=${this.dossierSearch}&comp=${this.compSearch}&bien=${this.bienSearch}`).then(resp => {
         console.log(resp.data);
         if (resp.data.length !== undefined) {
@@ -244,12 +260,19 @@ export default {
           this.closeDialog();
           dossierSotre.addDossier(resp.data);
         }
+        this.loading = false;
         this.dossierSearch = '';
         this.bienSearch = '';
         this.compSearch = '';
-
       }).catch(err => {
         console.log(err);
+        this.loading = false;
+        this.snackbar = true;
+        this.error = "Aucun dossier n'est trouvé avec ces coordonnes";
+        this.dossierSearch = '';
+        this.bienSearch = '';
+        this.compSearch = '';
+        this.closeDialog();
       })
     }
 

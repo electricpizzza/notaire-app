@@ -69,6 +69,7 @@ typings/
 #.nuxt
 
 # Nuxt generate
+.nuxt
 dist
 nuxt-dist
 

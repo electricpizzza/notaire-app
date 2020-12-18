@@ -1,6 +1,14 @@
 <template>
   <div class="mx-10 pa-10">
-    <h1 class="ma-5">Ajouter Un Bien</h1>
+    <v-snackbar v-model="snackbar" color="error lighten-1" top>
+      {{ error }}
+      <template v-slot:action="{ attrs }">
+        <v-btn icon v-bind="attrs" @click="snackbar = false">
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+      </template>
+    </v-snackbar>
+    <h1 class="ma-5">Modifier Le Bien</h1>
     <form>
       <v-row>
         <v-col cols="12">
@@ -71,6 +79,10 @@
 <script>
 import Axios from 'axios'
 export default {
+  async asyncData({ params }) {
+    const slug = params.bien
+    return { slug }
+  },
   data() {
     return {
       libelle: '',
@@ -87,11 +99,13 @@ export default {
       ancfcc: '',
       Immeuble: '',
       terrainType: '',
+      snackbar: false,
+      error: '',
     }
   },
   methods: {
     enregistrer() {
-      Axios.put('http://localhost:1337/bien', {
+      Axios.put('http://localhost:1337/bien/' + this.slug, {
         libelle: this.libelle,
         type: this.type,
         ville: this.ville,
@@ -106,8 +120,13 @@ export default {
         Immeuble: this.Immeuble,
         terrainType: this.terrainType,
       }).then(resp => {
-        console.log(resp);
-      }).catch(err => console.error(err))
+        this.$router.push(
+          '/biens?success=Bien est bien modifié'
+        )
+      }).catch((err) => {
+        this.error = err;
+        this.snackbar = true;
+      });
     }
   },
   created() {

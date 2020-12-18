@@ -1,5 +1,21 @@
 <template>
   <div class="mx-10 pa-10">
+    <v-snackbar v-model="snackbar" color="error lighten-1" top>
+      {{ error }}
+      <template v-slot:action="{ attrs }">
+        <v-btn icon v-bind="attrs" @click="snackbar = false">
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+      </template>
+    </v-snackbar>
+    <v-overlay :value="loading">
+      <v-progress-circular
+        color="primary"
+        indeterminate
+        v-model="loading"
+      ></v-progress-circular>
+    </v-overlay>
+
     <h1 class="ma-5">Ajouter Un Bien</h1>
     <form>
       <v-row>
@@ -87,11 +103,13 @@ export default {
       ancfcc: '',
       Immeuble: '',
       terrainType: '',
-      bineTypes: []
+      bineTypes: [],
+      loading: false,
     }
   },
   methods: {
     enregistrer() {
+      this.loading = true;
       Axios.post('http://localhost:1337/bien', {
         libelle: this.libelle,
         type: this.type,
@@ -106,11 +124,18 @@ export default {
         ancfcc: this.ancfcc,
         Immeuble: this.Immeuble,
         terrainType: this.terrainType,
+        snackbar: false,
+        error: '',
       }).then(resp => {
+        this.loading = false;
         this.$router.push(
-          `/biens?success=Dossiers est bien enregistré`
+          `/biens?success=Bien est bien enregistré`
         )
-      }).catch(err => console.error(err))
+      }).catch((err) => {
+        this.loading = false;
+        this.error = err;
+        this.snackbar = true;
+      });
     }
   },
   created() {

@@ -5,6 +5,12 @@
   "LazyActionTimeline": {
     "description": "Auto imported from components/ActionTimeline.vue"
   },
+  "Editor": {
+    "description": "Auto imported from components/Editor.vue"
+  },
+  "LazyEditor": {
+    "description": "Auto imported from components/Editor.vue"
+  },
   "FormDialog": {
     "description": "Auto imported from components/FormDialog.vue"
   },
@@ -40,6 +46,12 @@
   },
   "LazyCreateMenu": {
     "description": "Auto imported from components/createMenu.vue"
+  },
+  "AjouterArchive": {
+    "description": "Auto imported from components/archives/AjouterArchive.vue"
+  },
+  "LazyAjouterArchive": {
+    "description": "Auto imported from components/archives/AjouterArchive.vue"
   },
   "ActeDocument": {
     "description": "Auto imported from components/actesComponents/ActeDocument.vue"
@@ -94,11 +106,5 @@
   },
   "LazyDossierForm": {
     "description": "Auto imported from components/dossiers/DossierForm.vue"
-  },
-  "AjouterArchive": {
-    "description": "Auto imported from components/archives/AjouterArchive.vue"
-  },
-  "LazyAjouterArchive": {
-    "description": "Auto imported from components/archives/AjouterArchive.vue"
   }
 }

@@ -3,42 +3,42 @@ import Router from 'vue-router'
 import { interopDefault } from './utils'
 import scrollBehavior from './router.scrollBehavior.js'
 
-const _b7a4dd08 = () => interopDefault(import('../pages/actes/index.vue' /* webpackChunkName: "pages/actes/index" */))
-const _37bc448b = () => interopDefault(import('../pages/archives/index.vue' /* webpackChunkName: "pages/archives/index" */))
-const _d665b782 = () => interopDefault(import('../pages/biens/index.vue' /* webpackChunkName: "pages/biens/index" */))
-const _64e83be7 = () => interopDefault(import('../pages/comparent/index.vue' /* webpackChunkName: "pages/comparent/index" */))
-const _50ebff4b = () => interopDefault(import('../pages/comptabilite/index.vue' /* webpackChunkName: "pages/comptabilite/index" */))
-const _714805fb = () => interopDefault(import('../pages/devis/index.vue' /* webpackChunkName: "pages/devis/index" */))
-const _1651b6e2 = () => interopDefault(import('../pages/dossiers/index.vue' /* webpackChunkName: "pages/dossiers/index" */))
-const _741f74de = () => interopDefault(import('../pages/factures/index.vue' /* webpackChunkName: "pages/factures/index" */))
-const _6f555176 = () => interopDefault(import('../pages/home.vue' /* webpackChunkName: "pages/home" */))
-const _988ddada = () => interopDefault(import('../pages/inspire.vue' /* webpackChunkName: "pages/inspire" */))
-const _cd8c783c = () => interopDefault(import('../pages/login.vue' /* webpackChunkName: "pages/login" */))
-const _bdfff55a = () => interopDefault(import('../pages/modeles/index.vue' /* webpackChunkName: "pages/modeles/index" */))
-const _47f58fa9 = () => interopDefault(import('../pages/test.vue' /* webpackChunkName: "pages/test" */))
-const _3db0a21c = () => interopDefault(import('../pages/actes/ajouter.vue' /* webpackChunkName: "pages/actes/ajouter" */))
-const _285ecd6b = () => interopDefault(import('../pages/archives/ajouter.vue' /* webpackChunkName: "pages/archives/ajouter" */))
-const _f692dfc2 = () => interopDefault(import('../pages/biens/ajouter.vue' /* webpackChunkName: "pages/biens/ajouter" */))
-const _8b2b4472 = () => interopDefault(import('../pages/comparent/ajouter.vue' /* webpackChunkName: "pages/comparent/ajouter" */))
-const _96ea4faa = () => interopDefault(import('../pages/comptabilite/ajouter.vue' /* webpackChunkName: "pages/comptabilite/ajouter" */))
-const _2dfff2db = () => interopDefault(import('../pages/devis/ajouter.vue' /* webpackChunkName: "pages/devis/ajouter" */))
-const _78c6fddb = () => interopDefault(import('../pages/devis/devi.vue' /* webpackChunkName: "pages/devis/devi" */))
-const _913df3fc = () => interopDefault(import('../pages/dossiers/ajouter.vue' /* webpackChunkName: "pages/dossiers/ajouter" */))
-const _0cd2b61e = () => interopDefault(import('../pages/factures/ajouter.vue' /* webpackChunkName: "pages/factures/ajouter" */))
-const _4fb57c33 = () => interopDefault(import('../pages/modeles/ajouter.vue' /* webpackChunkName: "pages/modeles/ajouter" */))
-const _65720880 = () => interopDefault(import('../pages/actes/modifier/_acte.vue' /* webpackChunkName: "pages/actes/modifier/_acte" */))
-const _3a5493ba = () => interopDefault(import('../pages/biens/modifier/_bien.vue' /* webpackChunkName: "pages/biens/modifier/_bien" */))
-const _414d4d79 = () => interopDefault(import('../pages/comparent/modifier/_comparent.vue' /* webpackChunkName: "pages/comparent/modifier/_comparent" */))
-const _3fd24eaf = () => interopDefault(import('../pages/comptabilite/modifier/_comptabilite.vue' /* webpackChunkName: "pages/comptabilite/modifier/_comptabilite" */))
-const _056b96d4 = () => interopDefault(import('../pages/dossiers/modifier/_dossier.vue' /* webpackChunkName: "pages/dossiers/modifier/_dossier" */))
-const _dc67ca5c = () => interopDefault(import('../pages/modeles/modifier/_modele.vue' /* webpackChunkName: "pages/modeles/modifier/_modele" */))
-const _76b8ab9c = () => interopDefault(import('../pages/actes/_acte.vue' /* webpackChunkName: "pages/actes/_acte" */))
-const _06de5eda = () => interopDefault(import('../pages/archives/_archive.vue' /* webpackChunkName: "pages/archives/_archive" */))
-const _c6186db2 = () => interopDefault(import('../pages/comparent/_comparent.vue' /* webpackChunkName: "pages/comparent/_comparent" */))
-const _574b8aee = () => interopDefault(import('../pages/comptabilite/_comptabilite.vue' /* webpackChunkName: "pages/comptabilite/_comptabilite" */))
-const _4ec4aaa8 = () => interopDefault(import('../pages/dossiers/_dossier.vue' /* webpackChunkName: "pages/dossiers/_dossier" */))
-const _0e91b13c = () => interopDefault(import('../pages/modeles/_modele.vue' /* webpackChunkName: "pages/modeles/_modele" */))
-const _60dbbe6a = () => interopDefault(import('../pages/index.vue' /* webpackChunkName: "pages/index" */))
+const _b7e7ea68 = () => interopDefault(import('../pages/actes/index.vue' /* webpackChunkName: "pages/actes/index" */))
+const _0b78ed8a = () => interopDefault(import('../pages/archives/index.vue' /* webpackChunkName: "pages/archives/index" */))
+const _d6a8c4e2 = () => interopDefault(import('../pages/biens/index.vue' /* webpackChunkName: "pages/biens/index" */))
+const _196ce592 = () => interopDefault(import('../pages/comparent/index.vue' /* webpackChunkName: "pages/comparent/index" */))
+const _3fe16bfb = () => interopDefault(import('../pages/comptabilite/index.vue' /* webpackChunkName: "pages/comptabilite/index" */))
+const _71267f4b = () => interopDefault(import('../pages/devis/index.vue' /* webpackChunkName: "pages/devis/index" */))
+const _4e4e08dc = () => interopDefault(import('../pages/dossiers/index.vue' /* webpackChunkName: "pages/dossiers/index" */))
+const _ef10eb7e = () => interopDefault(import('../pages/factures/index.vue' /* webpackChunkName: "pages/factures/index" */))
+const _5699b226 = () => interopDefault(import('../pages/home.vue' /* webpackChunkName: "pages/home" */))
+const _fc2e983a = () => interopDefault(import('../pages/inspire.vue' /* webpackChunkName: "pages/inspire" */))
+const _cafd0d9c = () => interopDefault(import('../pages/login.vue' /* webpackChunkName: "pages/login" */))
+const _23256aa3 = () => interopDefault(import('../pages/modeles/index.vue' /* webpackChunkName: "pages/modeles/index" */))
+const _2f39f059 = () => interopDefault(import('../pages/test.vue' /* webpackChunkName: "pages/test" */))
+const _8053f128 = () => interopDefault(import('../pages/actes/ajouter.vue' /* webpackChunkName: "pages/actes/ajouter" */))
+const _6627a61b = () => interopDefault(import('../pages/archives/ajouter.vue' /* webpackChunkName: "pages/archives/ajouter" */))
+const _06dbf56f = () => interopDefault(import('../pages/biens/ajouter.vue' /* webpackChunkName: "pages/biens/ajouter" */))
+const _35bc9b17 = () => interopDefault(import('../pages/comparent/ajouter.vue' /* webpackChunkName: "pages/comparent/ajouter" */))
+const _88504e4a = () => interopDefault(import('../pages/comptabilite/ajouter.vue' /* webpackChunkName: "pages/comptabilite/ajouter" */))
+const _9fb54faa = () => interopDefault(import('../pages/devis/ajouter.vue' /* webpackChunkName: "pages/devis/ajouter" */))
+const _dce7caea = () => interopDefault(import('../pages/devis/devi.vue' /* webpackChunkName: "pages/devis/devi" */))
+const _15ac429c = () => interopDefault(import('../pages/dossiers/ajouter.vue' /* webpackChunkName: "pages/dossiers/ajouter" */))
+const _375f7da1 = () => interopDefault(import('../pages/factures/ajouter.vue' /* webpackChunkName: "pages/factures/ajouter" */))
+const _43d264fa = () => interopDefault(import('../pages/modeles/ajouter.vue' /* webpackChunkName: "pages/modeles/ajouter" */))
+const _6cbf0930 = () => interopDefault(import('../pages/actes/modifier/_acte.vue' /* webpackChunkName: "pages/actes/modifier/_acte" */))
+const _41a1946a = () => interopDefault(import('../pages/biens/modifier/_bien.vue' /* webpackChunkName: "pages/biens/modifier/_bien" */))
+const _131e12c9 = () => interopDefault(import('../pages/comparent/modifier/_comparent.vue' /* webpackChunkName: "pages/comparent/modifier/_comparent" */))
+const _292dd7ff = () => interopDefault(import('../pages/comptabilite/modifier/_comptabilite.vue' /* webpackChunkName: "pages/comptabilite/modifier/_comptabilite" */))
+const _057d58f8 = () => interopDefault(import('../pages/dossiers/modifier/_dossier.vue' /* webpackChunkName: "pages/dossiers/modifier/_dossier" */))
+const _34494382 = () => interopDefault(import('../pages/modeles/modifier/_modele.vue' /* webpackChunkName: "pages/modeles/modifier/_modele" */))
+const _769724ec = () => interopDefault(import('../pages/actes/_acte.vue' /* webpackChunkName: "pages/actes/_acte" */))
+const _fb9ec7ac = () => interopDefault(import('../pages/archives/_archive.vue' /* webpackChunkName: "pages/archives/_archive" */))
+const _b77e6c52 = () => interopDefault(import('../pages/comparent/_comparent.vue' /* webpackChunkName: "pages/comparent/_comparent" */))
+const _67a0118e = () => interopDefault(import('../pages/comptabilite/_comptabilite.vue' /* webpackChunkName: "pages/comptabilite/_comptabilite" */))
+const _53efe7fc = () => interopDefault(import('../pages/dossiers/_dossier.vue' /* webpackChunkName: "pages/dossiers/_dossier" */))
+const _c619fae8 = () => interopDefault(import('../pages/modeles/_modele.vue' /* webpackChunkName: "pages/modeles/_modele" */))
+const _5e4c53ca = () => interopDefault(import('../pages/index.vue' /* webpackChunkName: "pages/index" */))
 
 // TODO: remove in Nuxt 3
 const emptyFn = () => {}
@@ -51,154 +51,154 @@ Vue.use(Router)
 
 export const routerOptions = {
   mode: 'history',
-  base: '/',
+  base: decodeURI('/'),
   linkActiveClass: 'nuxt-link-active',
   linkExactActiveClass: 'nuxt-link-exact-active',
   scrollBehavior,
 
   routes: [{
     path: "/actes",
-    component: _b7a4dd08,
+    component: _b7e7ea68,
     name: "actes"
   }, {
     path: "/archives",
-    component: _37bc448b,
+    component: _0b78ed8a,
     name: "archives"
   }, {
     path: "/biens",
-    component: _d665b782,
+    component: _d6a8c4e2,
     name: "biens"
   }, {
     path: "/comparent",
-    component: _64e83be7,
+    component: _196ce592,
     name: "comparent"
   }, {
     path: "/comptabilite",
-    component: _50ebff4b,
+    component: _3fe16bfb,
     name: "comptabilite"
   }, {
     path: "/devis",
-    component: _714805fb,
+    component: _71267f4b,
     name: "devis"
   }, {
     path: "/dossiers",
-    component: _1651b6e2,
+    component: _4e4e08dc,
     name: "dossiers"
   }, {
     path: "/factures",
-    component: _741f74de,
+    component: _ef10eb7e,
     name: "factures"
   }, {
     path: "/home",
-    component: _6f555176,
+    component: _5699b226,
     name: "home"
   }, {
     path: "/inspire",
-    component: _988ddada,
+    component: _fc2e983a,
     name: "inspire"
   }, {
     path: "/login",
-    component: _cd8c783c,
+    component: _cafd0d9c,
     name: "login"
   }, {
     path: "/modeles",
-    component: _bdfff55a,
+    component: _23256aa3,
     name: "modeles"
   }, {
     path: "/test",
-    component: _47f58fa9,
+    component: _2f39f059,
     name: "test"
   }, {
     path: "/actes/ajouter",
-    component: _3db0a21c,
+    component: _8053f128,
     name: "actes-ajouter"
   }, {
     path: "/archives/ajouter",
-    component: _285ecd6b,
+    component: _6627a61b,
     name: "archives-ajouter"
   }, {
     path: "/biens/ajouter",
-    component: _f692dfc2,
+    component: _06dbf56f,
     name: "biens-ajouter"
   }, {
     path: "/comparent/ajouter",
-    component: _8b2b4472,
+    component: _35bc9b17,
     name: "comparent-ajouter"
   }, {
     path: "/comptabilite/ajouter",
-    component: _96ea4faa,
+    component: _88504e4a,
     name: "comptabilite-ajouter"
   }, {
     path: "/devis/ajouter",
-    component: _2dfff2db,
+    component: _9fb54faa,
     name: "devis-ajouter"
   }, {
     path: "/devis/devi",
-    component: _78c6fddb,
+    component: _dce7caea,
     name: "devis-devi"
   }, {
     path: "/dossiers/ajouter",
-    component: _913df3fc,
+    component: _15ac429c,
     name: "dossiers-ajouter"
   }, {
     path: "/factures/ajouter",
-    component: _0cd2b61e,
+    component: _375f7da1,
     name: "factures-ajouter"
   }, {
     path: "/modeles/ajouter",
-    component: _4fb57c33,
+    component: _43d264fa,
     name: "modeles-ajouter"
   }, {
     path: "/actes/modifier/:acte?",
-    component: _65720880,
+    component: _6cbf0930,
     name: "actes-modifier-acte"
   }, {
     path: "/biens/modifier/:bien?",
-    component: _3a5493ba,
+    component: _41a1946a,
     name: "biens-modifier-bien"
   }, {
     path: "/comparent/modifier/:comparent?",
-    component: _414d4d79,
+    component: _131e12c9,
     name: "comparent-modifier-comparent"
   }, {
     path: "/comptabilite/modifier/:comptabilite?",
-    component: _3fd24eaf,
+    component: _292dd7ff,
     name: "comptabilite-modifier-comptabilite"
   }, {
     path: "/dossiers/modifier/:dossier?",
-    component: _056b96d4,
+    component: _057d58f8,
     name: "dossiers-modifier-dossier"
   }, {
     path: "/modeles/modifier/:modele?",
-    component: _dc67ca5c,
+    component: _34494382,
     name: "modeles-modifier-modele"
   }, {
     path: "/actes/:acte",
-    component: _76b8ab9c,
+    component: _769724ec,
     name: "actes-acte"
   }, {
     path: "/archives/:archive",
-    component: _06de5eda,
+    component: _fb9ec7ac,
     name: "archives-archive"
   }, {
     path: "/comparent/:comparent",
-    component: _c6186db2,
+    component: _b77e6c52,
     name: "comparent-comparent"
   }, {
     path: "/comptabilite/:comptabilite",
-    component: _574b8aee,
+    component: _67a0118e,
     name: "comptabilite-comptabilite"
   }, {
     path: "/dossiers/:dossier",
-    component: _4ec4aaa8,
+    component: _53efe7fc,
     name: "dossiers-dossier"
   }, {
     path: "/modeles/:modele",
-    component: _0e91b13c,
+    component: _c619fae8,
     name: "modeles-modele"
   }, {
     path: "/",
-    component: _60dbbe6a,
+    component: _5e4c53ca,
     name: "index"
   }],
 
@@ -206,16 +206,5 @@ export const routerOptions = {
 }
 
 export function createRouter () {
-  const router = new Router(routerOptions)
-  const resolve = router.resolve.bind(router)
-
-  // encodeURI(decodeURI()) ~> support both encoded and non-encoded urls
-  router.resolve = (to, current, append) => {
-    if (typeof to === 'string') {
-      to = encodeURI(decodeURI(to))
-    }
-    return resolve(to, current, append)
-  }
-
-  return router
+  return new Router(routerOptions)
 }

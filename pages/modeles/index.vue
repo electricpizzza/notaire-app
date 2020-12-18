@@ -43,7 +43,6 @@
                   color="success lighten-1"
                   nuxt
                   :to="'./modeles/modifier/' + item.id"
-                  disabled
                   >Modifier</v-btn
                 >
                 <v-btn color="error lighten-1">Suprimer</v-btn>

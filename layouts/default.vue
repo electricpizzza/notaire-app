@@ -7,14 +7,14 @@
       fixed
       app
     >
-      <v-list style="height: 80.5vh; overflow: scroll">
+      <v-list class="sideBar" style="height: 79vh; overflow: scroll">
         <v-list-item
           v-for="(item, i) in items"
           :key="i"
           :to="item.to"
           router
           exact
-          class="mt-2"
+          class="mt-1"
         >
           <v-list-item-action>
             <v-icon color="primary">{{ item.icon }}</v-icon>
@@ -94,7 +94,10 @@
       </v-list>
     </v-navigation-drawer>
     <v-footer :absolute="!fixed" app>
-      <span>&copy; {{ new Date().getFullYear() }}</span>
+      <span>
+        New<font style="color: blue">Dev</font> Maroc &copy;
+        {{ new Date().getFullYear() }}</span
+      >
     </v-footer>
   </v-app>
 </template>
@@ -126,7 +129,7 @@ export default {
         },
         {
           icon: 'mdi-account-group',
-          title: 'Comparents',
+          title: 'Comparants',
           to: '/comparent',
         },
         {
@@ -182,4 +185,7 @@ export default {
   .btn{
     cursor: pointer;
   }
+  .sideBar::-webkit-scrollbar {
+  display: none;
+}
 </style>

@@ -126,7 +126,7 @@ export default {
         },
         {
           icon: 'mdi-account-group',
-          title: 'Comparents',
+          title: 'Comparants',
           to: '/comparent',
         },
         {

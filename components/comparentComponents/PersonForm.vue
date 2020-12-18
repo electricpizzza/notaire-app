@@ -1,7 +1,15 @@
 <template>
   <v-form ref="form" v-model="valid" lazy-validation>
+    <v-snackbar v-model="snackbar" color="error lighten-1" top>
+      {{ error }}
+      <template v-slot:action="{ attrs }">
+        <v-btn icon v-bind="attrs" @click="snackbar = false">
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+      </template>
+    </v-snackbar>
     <h1 class="formTitle" style="color: #295075; padding: 30px">
-      Comparent / Personne Physique
+      Comparant / Personne Physique
     </h1>
     <v-row class="container">
       <v-col cols="12" sm="6">
@@ -131,14 +139,7 @@
           id="id"
         ></v-text-field>
       </v-col>
-      <v-col
-        cols="12"
-        sm="6"
-        v-if="
-          situation &&
-          (situation === 'mariAvecEnf' || situation === 'mariSansEnf')
-        "
-      >
+      <v-col cols="12" sm="6" v-if="situation && situation === 'marie'">
         <v-text-field
           name="nomCompanionAr"
           v-model="nomCompanionAr"
@@ -197,7 +198,9 @@
       <v-col cols="12"> </v-col>
     </v-row>
     <div class="d-flex justify-space-between mx-8">
-      <v-btn color="primary" dark nuxt to="/comparent"> <v-icon>mdi-chevron-left</v-icon> Retourner</v-btn>    
+      <v-btn color="primary" dark nuxt to="/comparent">
+        <v-icon>mdi-chevron-left</v-icon> Retour</v-btn
+      >
       <v-btn color="primary" dark @click="enregistrer">Enregistrer</v-btn>
     </div>
   </v-form>
@@ -238,12 +241,14 @@ export default {
     dateNaissance: new Date().toISOString().substr(0, 0),
     situations: [
       { situ: "celibataire", lib: "Célibataire" },
-      { situ: "mariAvecEnf", lib: "Marié avec enfant(s)" },
-      { situ: "mariSansEnf", lib: "marié sans enfant(s)" },
-      { situ: "divAvecEnf", lib: "Divorcé avec enfant(s)" },
-      { situ: "divSansEnf", lib: "Divorcé sans enfant(s)" },
+      { situ: "marie", lib: "Marié(e)" },
+      { situ: "divorce", lib: "Divorcé(e)" },
+      { situ: "veuf", lib: "Veuf(ve)" },
+
     ],
     idTypes: ['CIN', 'Acte de naissance', 'Permis de conduire'],
+    snackbar: false,
+    error: '',
   }),
   created() {
     if (this.modifier) {
@@ -295,7 +300,10 @@ export default {
           this.$router.push(
             `/comparent?success=Comparent était bien enregistré`
           )
-        }).catch(err => console.error(err))
+        }).catch((err) => {
+          this.error = err;
+          this.snackbar = true;
+        });
     },
     edit() {
       comparentService.editPerson(
@@ -321,7 +329,10 @@ export default {
         this.$router.push(
           `/comparent?success=Comparent était bien Modifié`
         )
-      }).catch(err => console.error(err));
+      }).catch((err) => {
+        this.error = err;
+        this.snackbar = true;
+      });
     }
   },
 

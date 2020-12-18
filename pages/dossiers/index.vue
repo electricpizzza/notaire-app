@@ -1,5 +1,14 @@
 <template>
   <v-card>
+    <v-snackbar v-model="snackbar" color="success lighten-1" top timeout="5000">
+      {{ success }}
+
+      <template v-slot:action="{ attrs }">
+        <v-btn icon fav small v-bind="attrs" @click="snackbar = false">
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+      </template>
+    </v-snackbar>
     <v-card-title>
       <h3 class="ma-5">
         <v-icon class="mr-4" color="primary" large>mdi-folder-outline</v-icon>
@@ -35,7 +44,10 @@
             <v-col cols="12" md="6"><b>Maitre: </b>{{ item.NomMaitre }}</v-col>
             <v-col cols="12"><b>Description: </b>{{ item.description }}</v-col>
             <v-col cols="12">
-              <div class="offset-9">
+              <div class="offset-7">
+                <v-btn color="primary" nuxt :to="'./dossiers/' + item.id"
+                  >Consulter</v-btn
+                >
                 <v-btn
                   color="success lighten-1"
                   nuxt
@@ -74,11 +86,15 @@ export default {
         { text: '', value: 'data-table-expand' },
       ],
       dossiers: [],
+      snackbar: false,
     }
   },
 
   created() {
-    this.success = this.$route.query.success
+    this.success = this.$route.query.success;
+    if (this.success != null) {
+      this.snackbar = true;
+    }
     Axios.get('http://localhost:1337/dossiers').then(resp => {
       this.dossiers = resp.data;
       console.log(resp.data);

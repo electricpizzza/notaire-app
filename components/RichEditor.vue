@@ -72,11 +72,14 @@ export default {
   }),
 
   created() {
-    this.markdown = `<h1>${this.libelle}</h1>`
+    if (this.libelle !== undefined) {
+      this.markdown = `<h1>${this.libelle}</h1>`
+    }
+    // console.log('Markdown : ', MarkdownStore.data.markdown);
+    this.markdown = MarkdownStore.data.markdown;
   },
   watch: {
     libelle(newLib) {
-
       this.markdown = `<h1>${this.libelle}</h1>`
     }
   },

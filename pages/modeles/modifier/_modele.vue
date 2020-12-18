@@ -43,7 +43,7 @@
                     { value: 'text', label: 'Text' },
                     { value: 'numero', label: 'Numero' },
                     { value: 'bien', label: 'Bien' },
-                    { value: 'comparent', label: 'Comparent' },
+                    { value: 'comparent', label: 'Comparant' },
                     { value: 'Dossier', label: 'Dossier' },
                   ]"
                   :name="'TypeChamps' + index"
@@ -82,13 +82,17 @@
               :libelle="libelle"
               :redacteur="redacteur"
               :type="type"
+              :value="boilerplate"
             />
           </v-col>
         </v-row>
       </v-form>
-      <v-btn color="primary" class="offset-10" dark @click="enregistrer"
-        >Enregistrer</v-btn
-      >
+      <div class="d-flex justify-space-between">
+        <v-btn color="primary" dark nuxt to="/modeles">
+          <v-icon>mdi-chevron-left</v-icon> Retour</v-btn
+        >
+        <v-btn color="primary" dark @click="enregistrer">Enregistrer</v-btn>
+      </div>
     </div>
   </div>
 </template>
@@ -97,7 +101,7 @@ import axios from 'axios'
 import MarkdownStore from './../../../assets/store/MarkdownStore'
 export default {
   name: "ModifierModel",
- async asyncData({ params }) {
+  async asyncData({ params }) {
     const slug = params.modele
     return { slug }
   },
@@ -112,7 +116,6 @@ export default {
       boilerplate: '',
       type: '',
       champs: [],
-      dialog: this.language && this.libelle ? false : true,
       nbCamps: 2,
       languages: [{ 'titre': 'Français', 'value': 'Fr' }, { 'titre': 'العربية', 'value': 'Ar' }]
     }
@@ -122,16 +125,16 @@ export default {
       this.typeActes = resp.data.typeActe;
     })
   },
-  created(){
-    axios.get('http://localhost:1337/model/'+this.slug).then(resp => {
+  created() {
+    axios.get('http://localhost:1337/model/' + this.slug).then(resp => {
       console.log(resp.data[0]);
-        this.libelle = resp.data[0].libelle;
-        this.redacteur = resp.data[0].redacteur;
-        this.language = resp.data[0].language;
-        this.champs = JSON.parse(resp.data[0].champs);
-        this.type = resp.data[0].type;
-
-        console.log(this.champs);
+      this.libelle = resp.data[0].libelle;
+      this.redacteur = resp.data[0].redacteur;
+      this.language = resp.data[0].language;
+      this.champs = JSON.parse(resp.data[0].champs);
+      this.type = resp.data[0].type;
+      this.boilerplate = resp.data[0].boilerplate;
+      MarkdownStore.data.markdown = resp.data[0].boilerPlate;
     })
   },
   methods: {
@@ -165,24 +168,17 @@ export default {
       if (this.language === null || this.redacteur === '' || this.libelle === null || this.type === '' || this.champs === []) {
         this.error = "Veuillez Bien Saisire les données S.V.P."
       } else {
-        // console.log({
-        //   language: this.language,
-        //   redacteur: this.redacteur,
-        //   libelle: this.libelle,
-        //   type: this.type,
-        //   champs: this.champs,
-        //   boilerplate: this.boilerplate,
-        // });
-        axios.post('http://notlocalhost:1337/model', {
+        axios.put('http://localhost:1337/model/' + this.slug, {
           language: this.language,
           redacteur: this.redacteur,
           libelle: this.libelle,
           type: this.type,
           champs: this.champs,
-          boilerplate: this.boilerplate,
+          boilerplate: MarkdownStore.data.markdown,
         }).then(resp => {
+          MarkdownStore.data.markdown = '';
           this.$router.push(
-            `/modeles?success=Acte est bien enregistré`
+            `/modeles?success=Acte est bien Modifier`
           )
         }).catch(err => {
           this.error = err + "!! Veuillez se conecter au serveur S.V.P. !!";

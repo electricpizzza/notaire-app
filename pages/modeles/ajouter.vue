@@ -2,16 +2,14 @@
   <div class="mx-10 pa-10">
     <div class="text-center container">
       <h1>Ajouter Un Model</h1>
-      <v-alert
-        border="left"
-        color="red"
-        dense
-        type="error"
-        dismissible
-        v-if="error"
-      >
+      <v-snackbar v-model="snackbar" color="error lighten-1" top>
         {{ error }}
-      </v-alert>
+        <template v-slot:action="{ attrs }">
+          <v-btn icon v-bind="attrs" @click="snackbar = false">
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+        </template>
+      </v-snackbar>
       <v-dialog v-model="dialog" width="500" persistent>
         <v-card>
           <v-card-title class="headline lighten-2">
@@ -76,7 +74,7 @@
                     { value: 'text', label: 'Text' },
                     { value: 'numero', label: 'Numero' },
                     { value: 'bien', label: 'Bien' },
-                    { value: 'comparent', label: 'Comparent' },
+                    { value: 'comparent', label: 'Comparant' },
                     { value: 'Dossier', label: 'Dossier' },
                   ]"
                   :name="'TypeChamps' + i"
@@ -118,9 +116,12 @@
           </v-col>
         </v-row>
       </v-form>
-      <v-btn color="primary" class="offset-10" dark @click="enregistrer"
-        >Enregistrer</v-btn
-      >
+      <div class="d-flex justify-space-between">
+        <v-btn color="primary" dark nuxt to="/modeles">
+          <v-icon>mdi-chevron-left</v-icon> Retour</v-btn
+        >
+        <v-btn color="primary" dark @click="enregistrer">Enregistrer</v-btn>
+      </div>
     </div>
   </div>
 </template>
@@ -133,7 +134,8 @@ export default {
     return {
       typeActes: [],
       model: null,
-      error: null,
+      snackbar: false,
+      error: '',
       language: null,
       redacteur: '',
       libelle: null,
@@ -171,7 +173,7 @@ export default {
       }
       for (let index = 0; index < wanted.length - 1; index += 2) {
         const champ = {
-          name: wanted[index].value.replace(" ", ""),
+          name: wanted[index].value.replace(/ /g, ""),
           type: wanted[index + 1].value,
           label: wanted[index].value,
         }
@@ -195,7 +197,6 @@ export default {
           )
         }).catch(err => {
           this.error = err + "!! Veuillez se conecter au serveur S.V.P.";
-          console.log(err)
         })
       }
     }

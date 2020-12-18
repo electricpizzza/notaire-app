@@ -28,16 +28,16 @@
           <v-row class="mx-4">
             <v-col cols="12"><b>Description: </b>{{ item.description }}</v-col>
             <v-col cols="12">
-              <div class="offset-7">
+              <div class="offset-9">
                 <v-btn color="primary" nuxt :to="'./comptabilite/' + item.id"
                   >Consulter</v-btn
                 >
-                <v-btn
+                <!-- <v-btn
                   color="success lighten-1"
                   nuxt
                   :to="'./comptabilite/modifier/' + item.id"
                   >Modifier</v-btn
-                >
+                > -->
                 <v-btn color="error lighten-1">Suprimer</v-btn>
               </div>
             </v-col>

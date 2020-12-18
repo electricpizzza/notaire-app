@@ -1,5 +1,13 @@
 <template>
   <v-card>
+    <v-snackbar v-model="error" color="error lighten-1">
+      {{ errorText }}
+      <template v-slot:action="{ attrs }">
+        <v-btn icon v-bind="attrs" @click="error = false">
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+      </template>
+    </v-snackbar>
     <v-card-title>
       <h3 class="ma-5">
         <v-icon class="mr-4" color="primary" large>mdi-folder-outline</v-icon>
@@ -29,13 +37,26 @@
       <template v-slot:expanded-item="{ headers, item }">
         <td :colspan="headers.length">
           <v-row class="mx-4">
-            <v-col cols="12" md="6"><h1><b>{{ item.libelle }}</b></h1></v-col>
-              <div class="offset-7 ma-3">
-                <v-btn color="primary" nuxt :to="'./actes/' + item.id">Consulter</v-btn>
-                <v-btn color="success lighten-1" nuxt :to="'./actes/modifier/' + item.id" disabled
+            <v-col cols="12">
+              <h1>
+                <b>{{ item.libelle }}</b>
+              </h1>
+            </v-col>
+            <v-col cols="12">
+              <div class="d-flex justify-end ma-3">
+                <v-btn color="primary" nuxt :to="'./actes/' + item.id"
+                  >Consulter</v-btn
+                >
+                <v-btn
+                  color="success lighten-1"
+                  nuxt
+                  :to="'./actes/modifier/' + item.id"
+                  disabled
                   >Modifier</v-btn
                 >
-                <v-btn color="error lighten-1">Suprimer</v-btn>
+                <v-btn color="error lighten-1" @click="remove(item.id)"
+                  >Suprimer</v-btn
+                >
               </div>
             </v-col>
           </v-row>
@@ -65,16 +86,30 @@ export default {
         { text: '', value: 'data-table-expand' },
       ],
       actes: [],
+      error: false,
+      errorText: '',
     }
   },
   beforeCreate() {
     axios.get('http://localhost:1337/actes').then(resp => {
       this.actes = resp.data;
-      console.log(resp.data);
-    }).catch(err => console.error(err))
+    }).catch(err => {
+      this.error = true;
+      this.errorText = 'veuillez verifier votre connexion !!';
+    });
   },
   created() {
     this.success = this.$route.query.success
-  }
+  },
+  methods: {
+    remove(id) {
+      axios.delete('http://localhost:1337/actes/' + id).then(resp => {
+        this.actes = this.actes.filter(acte => acte.id !== id);
+      }).catch(err => {
+        this.error = true;
+        this.errorText = err + 'veuillez verifier votre connexion !!';
+      })
+    }
+  },
 }
 </script>

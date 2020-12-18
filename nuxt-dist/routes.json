@@ -2,253 +2,253 @@
   {
     "name": "actes",
     "path": "/actes",
-    "component": "/Users/zakariae/Notaire/renderer/pages/actes/index.vue",
+    "component": "/Users/zakariae/notaire-app/pages/actes/index.vue",
     "chunkName": "pages/actes/index",
-    "_name": "_b7a4dd08"
+    "_name": "_b7e7ea68"
   },
   {
     "name": "archives",
     "path": "/archives",
-    "component": "/Users/zakariae/Notaire/renderer/pages/archives/index.vue",
+    "component": "/Users/zakariae/notaire-app/pages/archives/index.vue",
     "chunkName": "pages/archives/index",
-    "_name": "_37bc448b"
+    "_name": "_0b78ed8a"
   },
   {
     "name": "biens",
     "path": "/biens",
-    "component": "/Users/zakariae/Notaire/renderer/pages/biens/index.vue",
+    "component": "/Users/zakariae/notaire-app/pages/biens/index.vue",
     "chunkName": "pages/biens/index",
-    "_name": "_d665b782"
+    "_name": "_d6a8c4e2"
   },
   {
     "name": "comparent",
     "path": "/comparent",
-    "component": "/Users/zakariae/Notaire/renderer/pages/comparent/index.vue",
+    "component": "/Users/zakariae/notaire-app/pages/comparent/index.vue",
     "chunkName": "pages/comparent/index",
-    "_name": "_64e83be7"
+    "_name": "_196ce592"
   },
   {
     "name": "comptabilite",
     "path": "/comptabilite",
-    "component": "/Users/zakariae/Notaire/renderer/pages/comptabilite/index.vue",
+    "component": "/Users/zakariae/notaire-app/pages/comptabilite/index.vue",
     "chunkName": "pages/comptabilite/index",
-    "_name": "_50ebff4b"
+    "_name": "_3fe16bfb"
   },
   {
     "name": "devis",
     "path": "/devis",
-    "component": "/Users/zakariae/Notaire/renderer/pages/devis/index.vue",
+    "component": "/Users/zakariae/notaire-app/pages/devis/index.vue",
     "chunkName": "pages/devis/index",
-    "_name": "_714805fb"
+    "_name": "_71267f4b"
   },
   {
     "name": "dossiers",
     "path": "/dossiers",
-    "component": "/Users/zakariae/Notaire/renderer/pages/dossiers/index.vue",
+    "component": "/Users/zakariae/notaire-app/pages/dossiers/index.vue",
     "chunkName": "pages/dossiers/index",
-    "_name": "_1651b6e2"
+    "_name": "_4e4e08dc"
   },
   {
     "name": "factures",
     "path": "/factures",
-    "component": "/Users/zakariae/Notaire/renderer/pages/factures/index.vue",
+    "component": "/Users/zakariae/notaire-app/pages/factures/index.vue",
     "chunkName": "pages/factures/index",
-    "_name": "_741f74de"
+    "_name": "_ef10eb7e"
   },
   {
     "name": "home",
     "path": "/home",
-    "component": "/Users/zakariae/Notaire/renderer/pages/home.vue",
+    "component": "/Users/zakariae/notaire-app/pages/home.vue",
     "chunkName": "pages/home",
-    "_name": "_6f555176"
+    "_name": "_5699b226"
   },
   {
     "name": "inspire",
     "path": "/inspire",
-    "component": "/Users/zakariae/Notaire/renderer/pages/inspire.vue",
+    "component": "/Users/zakariae/notaire-app/pages/inspire.vue",
     "chunkName": "pages/inspire",
-    "_name": "_988ddada"
+    "_name": "_fc2e983a"
   },
   {
     "name": "login",
     "path": "/login",
-    "component": "/Users/zakariae/Notaire/renderer/pages/login.vue",
+    "component": "/Users/zakariae/notaire-app/pages/login.vue",
     "chunkName": "pages/login",
-    "_name": "_cd8c783c"
+    "_name": "_cafd0d9c"
   },
   {
     "name": "modeles",
     "path": "/modeles",
-    "component": "/Users/zakariae/Notaire/renderer/pages/modeles/index.vue",
+    "component": "/Users/zakariae/notaire-app/pages/modeles/index.vue",
     "chunkName": "pages/modeles/index",
-    "_name": "_bdfff55a"
+    "_name": "_23256aa3"
   },
   {
     "name": "test",
     "path": "/test",
-    "component": "/Users/zakariae/Notaire/renderer/pages/test.vue",
+    "component": "/Users/zakariae/notaire-app/pages/test.vue",
     "chunkName": "pages/test",
-    "_name": "_47f58fa9"
+    "_name": "_2f39f059"
   },
   {
     "name": "actes-ajouter",
     "path": "/actes/ajouter",
-    "component": "/Users/zakariae/Notaire/renderer/pages/actes/ajouter.vue",
+    "component": "/Users/zakariae/notaire-app/pages/actes/ajouter.vue",
     "chunkName": "pages/actes/ajouter",
-    "_name": "_3db0a21c"
+    "_name": "_8053f128"
   },
   {
     "name": "archives-ajouter",
     "path": "/archives/ajouter",
-    "component": "/Users/zakariae/Notaire/renderer/pages/archives/ajouter.vue",
+    "component": "/Users/zakariae/notaire-app/pages/archives/ajouter.vue",
     "chunkName": "pages/archives/ajouter",
-    "_name": "_285ecd6b"
+    "_name": "_6627a61b"
   },
   {
     "name": "biens-ajouter",
     "path": "/biens/ajouter",
-    "component": "/Users/zakariae/Notaire/renderer/pages/biens/ajouter.vue",
+    "component": "/Users/zakariae/notaire-app/pages/biens/ajouter.vue",
     "chunkName": "pages/biens/ajouter",
-    "_name": "_f692dfc2"
+    "_name": "_06dbf56f"
   },
   {
     "name": "comparent-ajouter",
     "path": "/comparent/ajouter",
-    "component": "/Users/zakariae/Notaire/renderer/pages/comparent/ajouter.vue",
+    "component": "/Users/zakariae/notaire-app/pages/comparent/ajouter.vue",
     "chunkName": "pages/comparent/ajouter",
-    "_name": "_8b2b4472"
+    "_name": "_35bc9b17"
   },
   {
     "name": "comptabilite-ajouter",
     "path": "/comptabilite/ajouter",
-    "component": "/Users/zakariae/Notaire/renderer/pages/comptabilite/ajouter.vue",
+    "component": "/Users/zakariae/notaire-app/pages/comptabilite/ajouter.vue",
     "chunkName": "pages/comptabilite/ajouter",
-    "_name": "_96ea4faa"
+    "_name": "_88504e4a"
   },
   {
     "name": "devis-ajouter",
     "path": "/devis/ajouter",
-    "component": "/Users/zakariae/Notaire/renderer/pages/devis/ajouter.vue",
+    "component": "/Users/zakariae/notaire-app/pages/devis/ajouter.vue",
     "chunkName": "pages/devis/ajouter",
-    "_name": "_2dfff2db"
+    "_name": "_9fb54faa"
   },
   {
     "name": "devis-devi",
     "path": "/devis/devi",
-    "component": "/Users/zakariae/Notaire/renderer/pages/devis/devi.vue",
+    "component": "/Users/zakariae/notaire-app/pages/devis/devi.vue",
     "chunkName": "pages/devis/devi",
-    "_name": "_78c6fddb"
+    "_name": "_dce7caea"
   },
   {
     "name": "dossiers-ajouter",
     "path": "/dossiers/ajouter",
-    "component": "/Users/zakariae/Notaire/renderer/pages/dossiers/ajouter.vue",
+    "component": "/Users/zakariae/notaire-app/pages/dossiers/ajouter.vue",
     "chunkName": "pages/dossiers/ajouter",
-    "_name": "_913df3fc"
+    "_name": "_15ac429c"
   },
   {
     "name": "factures-ajouter",
     "path": "/factures/ajouter",
-    "component": "/Users/zakariae/Notaire/renderer/pages/factures/ajouter.vue",
+    "component": "/Users/zakariae/notaire-app/pages/factures/ajouter.vue",
     "chunkName": "pages/factures/ajouter",
-    "_name": "_0cd2b61e"
+    "_name": "_375f7da1"
   },
   {
     "name": "modeles-ajouter",
     "path": "/modeles/ajouter",
-    "component": "/Users/zakariae/Notaire/renderer/pages/modeles/ajouter.vue",
+    "component": "/Users/zakariae/notaire-app/pages/modeles/ajouter.vue",
     "chunkName": "pages/modeles/ajouter",
-    "_name": "_4fb57c33"
+    "_name": "_43d264fa"
   },
   {
     "name": "actes-modifier-acte",
     "path": "/actes/modifier/:acte?",
-    "component": "/Users/zakariae/Notaire/renderer/pages/actes/modifier/_acte.vue",
+    "component": "/Users/zakariae/notaire-app/pages/actes/modifier/_acte.vue",
     "chunkName": "pages/actes/modifier/_acte",
-    "_name": "_65720880"
+    "_name": "_6cbf0930"
   },
   {
     "name": "biens-modifier-bien",
     "path": "/biens/modifier/:bien?",
-    "component": "/Users/zakariae/Notaire/renderer/pages/biens/modifier/_bien.vue",
+    "component": "/Users/zakariae/notaire-app/pages/biens/modifier/_bien.vue",
     "chunkName": "pages/biens/modifier/_bien",
-    "_name": "_3a5493ba"
+    "_name": "_41a1946a"
   },
   {
     "name": "comparent-modifier-comparent",
     "path": "/comparent/modifier/:comparent?",
-    "component": "/Users/zakariae/Notaire/renderer/pages/comparent/modifier/_comparent.vue",
+    "component": "/Users/zakariae/notaire-app/pages/comparent/modifier/_comparent.vue",
     "chunkName": "pages/comparent/modifier/_comparent",
-    "_name": "_414d4d79"
+    "_name": "_131e12c9"
   },
   {
     "name": "comptabilite-modifier-comptabilite",
     "path": "/comptabilite/modifier/:comptabilite?",
-    "component": "/Users/zakariae/Notaire/renderer/pages/comptabilite/modifier/_comptabilite.vue",
+    "component": "/Users/zakariae/notaire-app/pages/comptabilite/modifier/_comptabilite.vue",
     "chunkName": "pages/comptabilite/modifier/_comptabilite",
-    "_name": "_3fd24eaf"
+    "_name": "_292dd7ff"
   },
   {
     "name": "dossiers-modifier-dossier",
     "path": "/dossiers/modifier/:dossier?",
-    "component": "/Users/zakariae/Notaire/renderer/pages/dossiers/modifier/_dossier.vue",
+    "component": "/Users/zakariae/notaire-app/pages/dossiers/modifier/_dossier.vue",
     "chunkName": "pages/dossiers/modifier/_dossier",
-    "_name": "_056b96d4"
+    "_name": "_057d58f8"
   },
   {
     "name": "modeles-modifier-modele",
     "path": "/modeles/modifier/:modele?",
-    "component": "/Users/zakariae/Notaire/renderer/pages/modeles/modifier/_modele.vue",
+    "component": "/Users/zakariae/notaire-app/pages/modeles/modifier/_modele.vue",
     "chunkName": "pages/modeles/modifier/_modele",
-    "_name": "_dc67ca5c"
+    "_name": "_34494382"
   },
   {
     "name": "actes-acte",
     "path": "/actes/:acte",
-    "component": "/Users/zakariae/Notaire/renderer/pages/actes/_acte.vue",
+    "component": "/Users/zakariae/notaire-app/pages/actes/_acte.vue",
     "chunkName": "pages/actes/_acte",
-    "_name": "_76b8ab9c"
+    "_name": "_769724ec"
   },
   {
     "name": "archives-archive",
     "path": "/archives/:archive",
-    "component": "/Users/zakariae/Notaire/renderer/pages/archives/_archive.vue",
+    "component": "/Users/zakariae/notaire-app/pages/archives/_archive.vue",
     "chunkName": "pages/archives/_archive",
-    "_name": "_06de5eda"
+    "_name": "_fb9ec7ac"
   },
   {
     "name": "comparent-comparent",
     "path": "/comparent/:comparent",
-    "component": "/Users/zakariae/Notaire/renderer/pages/comparent/_comparent.vue",
+    "component": "/Users/zakariae/notaire-app/pages/comparent/_comparent.vue",
     "chunkName": "pages/comparent/_comparent",
-    "_name": "_c6186db2"
+    "_name": "_b77e6c52"
   },
   {
     "name": "comptabilite-comptabilite",
     "path": "/comptabilite/:comptabilite",
-    "component": "/Users/zakariae/Notaire/renderer/pages/comptabilite/_comptabilite.vue",
+    "component": "/Users/zakariae/notaire-app/pages/comptabilite/_comptabilite.vue",
     "chunkName": "pages/comptabilite/_comptabilite",
-    "_name": "_574b8aee"
+    "_name": "_67a0118e"
   },
   {
     "name": "dossiers-dossier",
     "path": "/dossiers/:dossier",
-    "component": "/Users/zakariae/Notaire/renderer/pages/dossiers/_dossier.vue",
+    "component": "/Users/zakariae/notaire-app/pages/dossiers/_dossier.vue",
     "chunkName": "pages/dossiers/_dossier",
-    "_name": "_4ec4aaa8"
+    "_name": "_53efe7fc"
   },
   {
     "name": "modeles-modele",
     "path": "/modeles/:modele",
-    "component": "/Users/zakariae/Notaire/renderer/pages/modeles/_modele.vue",
+    "component": "/Users/zakariae/notaire-app/pages/modeles/_modele.vue",
     "chunkName": "pages/modeles/_modele",
-    "_name": "_0e91b13c"
+    "_name": "_c619fae8"
   },
   {
     "name": "index",
     "path": "/",
-    "component": "/Users/zakariae/Notaire/renderer/pages/index.vue",
+    "component": "/Users/zakariae/notaire-app/pages/index.vue",
     "chunkName": "pages/index",
-    "_name": "_60dbbe6a"
+    "_name": "_5e4c53ca"
   }
 ]

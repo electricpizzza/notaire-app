@@ -96,18 +96,16 @@
             </v-card-actions>
           </v-card>
         </v-dialog>
-        <v-dialog v-model="dialogDelete" max-width="500px">
+        <v-dialog v-model="dialogDelete" max-width="650px">
           <v-card>
-            <v-card-title class="headline"
-              >Are you sure you want to delete this item?</v-card-title
-            >
+            <v-card-title class="headline">
+              Êtes-vous sûr de bien vouloir supprimer ce Comparant?
+            </v-card-title>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="closeDelete"
-                >Cancel</v-btn
-              >
-              <v-btn color="blue darken-1" text @click="deleteItemConfirm"
-                >OK</v-btn
+              <v-btn color="blue darken-1" text @click="closeDelete">Non</v-btn>
+              <v-btn color="error darken-1" text @click="deleteItemConfirm"
+                >Oui, Supprimer</v-btn
               >
               <v-spacer></v-spacer>
             </v-card-actions>
@@ -196,22 +194,29 @@ export default {
         .catch((err) => console.error(err))
     },
     editItem(item) {
-      console.log(item);
       this.$router.push(
         `/comparent/modifier/${item.id}`
       )
     },
 
     deleteItem(item) {
-      Axios.delete('http://localhost:1337/comparent/' + item.id).then(resp => {
-        this.editedIndex = this.comparents.indexOf(item)
-        this.editedItem = Object.assign({}, item)
-        this.dialogDelete = true
-      }).catch(err => console.error(err));
+      this.dialogDelete = true
+      this.editedIndex = item.id;
     },
 
     deleteItemConfirm() {
-      this.comparents.splice(this.editedIndex, 1)
+
+      console.log(this.editedIndex);
+      Axios.delete('http://localhost:1337/comparent/' + this.editedIndex).then(resp => {
+        this.comparents = this.comparents.filter(comp => comp.id !== this.editedIndex);
+        axios
+          .get('http://localhost:1337/comparent', { mode: 'cors' })
+          .then((resp) => {
+            this.comparents = resp.data
+          })
+          .catch((err) => console.error(err))
+        this.dialogDelete = false;
+      }).catch(err => console.error(err));
       this.closeDelete()
     },
 

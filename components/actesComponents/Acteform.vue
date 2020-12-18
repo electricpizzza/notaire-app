@@ -1,5 +1,13 @@
 <template>
   <v-container>
+    <v-snackbar v-model="snackbar" color="error lighten-1" top>
+      {{ error }}
+      <template v-slot:action="{ attrs }">
+        <v-btn icon v-bind="attrs" @click="snackbar = false">
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+      </template>
+    </v-snackbar>
     <v-form>
       <v-row>
         <v-col cols="12">
@@ -17,7 +25,7 @@
             >
               <v-card>
                 <v-card-title class="headline grey lighten-2">
-                  Choix de(s) Comparent(s)
+                  Choix de(s) Comparant(s)
                 </v-card-title>
                 <!-- <v-card-text>
                   <v-list shaped>
@@ -197,6 +205,8 @@ export default {
         { text: 'Nom de Comparant', value: 'nom' },
       ],
       selectedItems: [],
+      snackbar: false,
+      error: '',
     }
   },
   props: ["model"],
@@ -207,6 +217,9 @@ export default {
     });
     axios.get('http://localhost:1337/dossiers').then(res => {
       this.dossiers = res.data;
+    }).catch((err) => {
+      this.error = err;
+      this.snackbar = true;
     });
   },
   created() {
@@ -287,7 +300,10 @@ export default {
         this.$router.push(
           `/actes?success=Acte est bien enregistré`
         )
-      }).catch(err => console.log(err))
+      }).catch((err) => {
+        this.error = err;
+        this.snackbar = true;
+      });
     }
   }
 }

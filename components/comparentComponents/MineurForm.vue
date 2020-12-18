@@ -1,7 +1,15 @@
 <template>
   <v-form ref="form" v-model="valid" lazy-validation>
+    <v-snackbar v-model="snackbar" color="error lighten-1" top>
+      {{ error }}
+      <template v-slot:action="{ attrs }">
+        <v-btn icon v-bind="attrs" @click="snackbar = false">
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+      </template>
+    </v-snackbar>
     <h1 class="formTitle" style="color: #295075; padding: 30px">
-      Comparent / Personne Physique Mineur
+      Comparant / Personne Physique Mineur
     </h1>
     <v-row class="container">
       <v-col cols="12" sm="6">
@@ -154,7 +162,9 @@
       </v-col>
     </v-row>
     <div class="d-flex justify-space-between mx-8">
-      <v-btn color="primary" dark nuxt to="/comparent"> <v-icon>mdi-chevron-left</v-icon> Retourner</v-btn>    
+      <v-btn color="primary" dark nuxt to="/comparent">
+        <v-icon>mdi-chevron-left</v-icon> Retour</v-btn
+      >
       <v-btn color="primary" dark @click="enregistrer">Enregistrer</v-btn>
     </div>
   </v-form>
@@ -193,6 +203,8 @@ export default {
     tetulle: '',
     tetulles: [],
     idTypes: ['CIN', 'Acte de naissance', 'Permis de conduire'],
+    snackbar: false,
+    error: '',
   }),
 
   methods: {
@@ -208,7 +220,10 @@ export default {
           this.$router.push(
             `/comparent?success=Comparent était bien Modifié`
           )
-        }).catch(err => console.error(err));
+        }).catch((err) => {
+          this.error = err;
+          this.snackbar = true;
+        });
       } else
         comparentService.createMineur(
           this.comparent.id, this.nomFr, this.nomAr, this.prenomFr, this.prenomAr, this.nationalite, this.nomPereFr, this.nomPereAr, this.nomMereFr, this.nomMereAr, this.typeIdentification, this.Identification, this.IdentificationValable, this.dateNaissance, this.tetulle
@@ -217,7 +232,10 @@ export default {
           this.$router.push(
             `/comparent?success=Comparent était bien enregistré`
           )
-        }).catch(err => console.error(err));
+        }).catch((err) => {
+          this.error = err;
+          this.snackbar = true;
+        });
     }
   },
 

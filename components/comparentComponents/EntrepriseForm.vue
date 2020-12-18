@@ -1,7 +1,15 @@
 <template>
   <v-form v-if="comparent" ref="form" v-model="valid" lazy-validation>
+    <v-snackbar v-model="snackbar" color="error lighten-1" top>
+      {{ error }}
+      <template v-slot:action="{ attrs }">
+        <v-btn icon v-bind="attrs" @click="snackbar = false">
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+      </template>
+    </v-snackbar>
     <h1 class="formTitle" style="color: #295075; padding: 30px">
-      Comparent / Personne Morale
+      Comparant / Personne Morale
     </h1>
     <v-container>
       <v-row>
@@ -150,7 +158,9 @@
       </v-row>
     </v-container>
     <div class="d-flex justify-space-between mx-8">
-      <v-btn color="primary" dark nuxt to="/comparent"> <v-icon>mdi-chevron-left</v-icon> Retourner</v-btn>    
+      <v-btn color="primary" dark nuxt to="/comparent">
+        <v-icon>mdi-chevron-left</v-icon> Retour</v-btn
+      >
       <v-btn color="primary" dark @click="enregistrer">Enregistrer</v-btn>
     </div>
   </v-form>
@@ -189,10 +199,15 @@ export default {
       { text: 'Nom de Comparant', value: 'type' },
       { text: 'Nom de Comparant', value: 'nom' },
     ],
+    snackbar: false,
+    error: '',
   }),
   beforeCreate() {
     Axios.get('http://localhost:1337/comparent').then((resp) => {
       this.representants = resp.data
+    }).catch((err) => {
+      this.error = err;
+      this.snackbar = true;
     });
   },
   created() {
@@ -242,7 +257,10 @@ export default {
             this.$router.push(
               `/comparent?success=Comparent était bien enregistré`
             )
-          }).catch(err => console.error(err))
+          }).catch((err) => {
+            this.error = err;
+            this.snackbar = true;
+          });
     },
     edit() {
       comparentService.editEntreprise(
@@ -258,7 +276,10 @@ export default {
         this.$router.push(
           `/comparent?success=Comparent était bien Modifié`
         )
-      }).catch(err => console.log(err))
+      }).catch((err) => {
+        this.error = err;
+        this.snackbar = true;
+      });
     }
   },
 }

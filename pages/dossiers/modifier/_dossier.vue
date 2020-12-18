@@ -1,5 +1,13 @@
 <template>
   <v-stepper v-model="e1">
+    <v-snackbar v-model="snackbar" color="error lighten-1" top>
+      {{ error }}
+      <template v-slot:action="{ attrs }">
+        <v-btn icon v-bind="attrs" @click="snackbar = false">
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+      </template>
+    </v-snackbar>
     <v-stepper-header>
       <v-stepper-step :complete="e1 > 1" step="1">
         Creation Dossier
@@ -228,40 +236,6 @@
                     <v-card-title class="headline grey lighten-2">
                       Choix de(s) Bien(s)
                     </v-card-title>
-                    <!-- <v-card-text>
-                      <v-list shaped>
-                        <v-list-item-group v-model="selectedItems" multiple>
-                          <template v-for="(item, i) in bienList">
-                            <v-divider
-                              v-if="!item"
-                              :key="`divider-${i}`"
-                            ></v-divider>
-
-                            <v-list-item
-                              v-else
-                              :key="`item-${i}`"
-                              :value="item"
-                              active-class="deep-purple--text text--accent-4"
-                            >
-                              <template v-slot:default="{ active }">
-                                <v-list-item-content>
-                                  <v-list-item-title
-                                    v-text="item.libelle + ' : ' + item.type"
-                                  ></v-list-item-title>
-                                </v-list-item-content>
-
-                                <v-list-item-action>
-                                  <v-checkbox
-                                    :input-value="active"
-                                    color="deep-purple accent-4"
-                                  ></v-checkbox>
-                                </v-list-item-action>
-                              </template>
-                            </v-list-item>
-                          </template>
-                        </v-list-item-group>
-                      </v-list>
-                    </v-card-text> -->
                     <v-card-text>
                       <v-list shaped>
                         <v-row>
@@ -347,7 +321,7 @@
 
         <div class="offset-7">
           <v-btn color="primary" @click="e1 = 1">
-            <v-icon>mdi-chevron-left</v-icon> Retourner
+            <v-icon>mdi-chevron-left</v-icon> Retour
           </v-btn>
           <v-btn color="primary" @click="enregistrer"> Terminer </v-btn>
           <v-btn text nuxt to="/dossiers"> Anuller </v-btn>
@@ -405,6 +379,8 @@ export default {
       compList: [],
       bienList: [],
       selectedItems: [],
+      snackbar: false,
+      error: '',
     }
   },
   created() {
@@ -420,25 +396,39 @@ export default {
       JSON.parse(resp.data.comparents).forEach(comp => {
         Axios.get(`http://localhost:1337/comparent/${comp}`).then(c => {
           this.Comparant.push(c.data.comparent[0]);
-        })
+        }).catch((err) => {
+          this.error = err;
+          this.snackbar = true;
+        });
       });
       JSON.parse(resp.data.bien).forEach(bien => {
         Axios.get(`http://localhost:1337/bien/${bien}`).then(b => {
           this.Bien.push(b.data);
-        })
+        }).catch((err) => {
+          this.error = err;
+          this.snackbar = true;
+        });
       });
-    })
+    }).catch((err) => {
+      this.error = err;
+      this.snackbar = true;
+    });
   },
   beforeCreate() {
     axios.get('http://localhost:1337/bien').then(resp => {
       this.bienList = resp.data
-    })
+    }).catch((err) => {
+      this.error = err;
+      this.snackbar = true;
+    });
     axios
       .get('http://localhost:1337/comparent', { mode: 'cors' })
       .then((resp) => {
         this.compList = resp.data
-      })
-      .catch((err) => console.error(err))
+      }).catch((err) => {
+        this.error = err;
+        this.snackbar = true;
+      });
   },
 
   methods: {
@@ -486,9 +476,10 @@ export default {
         this.$router.push(
           `/dossiers?success=Dossiers est bien enregistré`
         )
-      }).catch(err => {
-        console.error(err);
-      })
+      }).catch((err) => {
+        this.error = err;
+        this.snackbar = true;
+      });
     }
   },
 }

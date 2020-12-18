@@ -1,5 +1,13 @@
 <template>
   <div class="ma-10">
+    <v-snackbar v-model="snackbar" color="error lighten-1" top>
+      {{ error }}
+      <template v-slot:action="{ attrs }">
+        <v-btn icon v-bind="attrs" @click="snackbar = false">
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+      </template>
+    </v-snackbar>
     <v-row>
       <v-col cols="12">
         <h1>Nouveau Devis</h1>
@@ -288,6 +296,8 @@ export default {
       maitre: '',
       payment: '',
       reference: '',
+      snackbar: false,
+      error: '',
       client: { nom: '', address: '' },
       articles: [
         { index: 0, ref: '', description: '', remise: 0, qte: 0, pu: 0, tva: 0, total: 0, class: '' }
@@ -325,9 +335,10 @@ export default {
       }).then(resp => {
         console.log(resp);
         this.$router.push("/devis")
-      }).catch(err => {
-        console.log(err);
-      })
+      }).catch((err) => {
+        this.error = err;
+        this.snackbar = true;
+      });
     }
   },
 }

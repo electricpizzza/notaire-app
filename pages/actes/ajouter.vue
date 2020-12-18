@@ -1,5 +1,13 @@
 <template>
   <div class="pa-5">
+    <v-snackbar v-model="snackbar" color="error lighten-1" top>
+      {{ error }}
+      <template v-slot:action="{ attrs }">
+        <v-btn icon v-bind="attrs" @click="snackbar = false">
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+      </template>
+    </v-snackbar>
     <div class="text-center">
       <h1>
         Ajouter Un Acte
@@ -52,11 +60,16 @@ export default {
       model: null,
       dialog: this.model ? false : true,
       models: [],
+      snackbar: false,
+      error: '',
     }
   },
   beforeCreate() {
     axios.get('http://localhost:1337/model').then(resp => {
       this.models = resp.data;
+    }).catch((err) => {
+      this.error = err;
+      this.snackbar = true;
     });
   }
 }

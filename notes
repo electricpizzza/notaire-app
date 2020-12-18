@@ -38,3 +38,28 @@ ACHETEUR :
 [​ACHETEUR​][NOM] [​ACHETEUR​][PRENOM][​ACHETEUR​][ADDRESS] [​ACHETEUR​][VILLE]
 
 __________________ 
+
+
+
+
+Acte Vendre appartement 
+
+Je soussigné, <VENDEUR​><NOM> <VENDEUR​><PRENOM>, le vendeur, vends à l’acheteur soussigné <ACHETEUR​><NOM> <ACHETEUR​><PRENOM> pour la somme de ​<MONTANT> DHS, l’article suivant :
+
+Appartement situer á <APPARTEMENT><ADDRESS>
+
+Le vendeur confirme que ces informations correspondent bien au bien vendu pour autant qu’il sache.
+
+L’acheteur accepte cet acte de vente et comprend que l’article est vendu “en état” et sans aucune garantie.
+
+VENDEUR
+
+<VENDEUR​><NOM><ACHETEUR​><VILLE>
+
+__________________ 
+
+ACHETEUR
+
+<ACHETEUR​><NOM><ACHETEUR​><VILLE>
+
+__________________ 
