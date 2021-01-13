@@ -14,6 +14,13 @@
       </v-col>
       <v-col cols="6" ms="12">
         <div>
+          <v-text-field
+            v-model="reference"
+            prepend-icon="mdi-cash"
+            label="Reference"
+          ></v-text-field>
+        </div>
+        <div>
           <v-menu
             ref="menu"
             v-model="menu"
@@ -35,27 +42,27 @@
             </template>
             <v-date-picker v-model="dateDevis" no-title scrollable>
               <v-spacer></v-spacer>
-              <v-btn text color="primary" @click="menu = false"> Cancel </v-btn>
+              <v-btn text color="primary" @click="menu = false">
+                Anuller
+              </v-btn>
               <v-btn text color="primary" @click="$refs.menu.save(dateDevis)">
                 OK
               </v-btn>
             </v-date-picker>
           </v-menu>
         </div>
-        <div>
+        <!-- <div>
           <v-text-field
             v-model="termes"
             prepend-icon="mdi-pencil"
             label="Termes & Condition"
-            id="id"
           ></v-text-field>
-        </div>
+        </div> -->
         <div>
           <v-text-field
             v-model="maitre"
             prepend-icon="mdi-glasses"
             label="Maitre"
-            id="id"
           ></v-text-field>
         </div>
         <div>
@@ -68,13 +75,6 @@
         </div>
       </v-col>
       <v-col cols="6" ms="12" class="mt-5">
-        <div>
-          <v-text-field
-            v-model="reference"
-            prepend-icon="mdi-identification"
-            label="Reference"
-          ></v-text-field>
-        </div>
         <v-dialog v-model="dialogComp" width="500">
           <v-card>
             <v-card-title class="headline grey lighten-2">
@@ -147,71 +147,45 @@
           </div>
         </v-sheet>
       </v-col>
-      <v-col cols="12" v-for="article in articles" :key="article.index">
+      <v-col cols="12">
         <v-simple-table>
           <template v-slot:default>
             <thead>
               <tr>
                 <th class="text-left">Réf.</th>
-                <th class="text-left">Description</th>
-                <th class="text-left">Qté.</th>
-                <th class="text-left">PU.</th>
-                <th class="text-left">Remise</th>
-                <th class="text-left">%T.V.A.</th>
+                <th class="text-left">Libelle</th>
+                <th class="text-left">Tarife</th>
+                <!-- <th class="text-left">%T.V.A.</th> -->
                 <th class="text-left">Total</th>
                 <th class="text-left"></th>
               </tr>
             </thead>
             <tbody>
-              <tr>
+              <tr v-for="article in articles" :key="article.id">
                 <td>
-                  <v-text-field
-                    name="ref"
-                    @change="calTotal(article.index)"
-                    v-model="article.ref"
-                    style="width: 50px"
-                  ></v-text-field>
-                </td>
-                <td rowspan="2">
-                  <v-textarea
-                    name="description"
-                    @change="calTotal(article.index)"
-                    v-model="article.description"
-                    label="Description"
-                  ></v-textarea>
+                  {{ "SR00" + article.id }}
                 </td>
                 <td>
-                  <v-text-field
-                    name="qte"
-                    @change="calTotal(article.index)"
-                    v-model="article.qte"
-                    style="width: 50px"
-                  ></v-text-field>
+                  {{ article.libelle.toUpperCase() }}
                 </td>
+
                 <td>
                   <v-text-field
+                    reverse
                     name="pu"
-                    @change="calTotal(article.index)"
-                    style="width: 50px"
+                    @input="calTotal(article.id)"
+                    style="width: 150px"
                     v-model="article.pu"
                   ></v-text-field>
                 </td>
-                <td>
+                <!-- <td>
                   <v-text-field
-                    name="remise"
-                    @change="calTotal(article.index)"
-                    v-model="article.remise"
-                    style="width: 50px"
-                  ></v-text-field>
-                </td>
-                <td>
-                  <v-text-field
+                    disabled
                     name="tva"
-                    @change="calTotal(article.index)"
                     v-model="article.tva"
                     style="width: 50px"
                   ></v-text-field>
-                </td>
+                </td> -->
                 <td>{{ article.total }} Dhs</td>
                 <td>
                   <v-btn
@@ -221,20 +195,10 @@
                     dark
                     icon
                     fab
-                    @click="removeRow(article.index)"
+                    @click="removeRow(article.id)"
                   >
                     <v-icon>mdi-close</v-icon>
                   </v-btn>
-                </td>
-              </tr>
-              <tr>
-                <td colspan="2"></td>
-                <td colspan="6">
-                  <v-select
-                    :items="items"
-                    v-model="article.class"
-                    label="Classifiacation"
-                  ></v-select>
                 </td>
               </tr>
             </tbody>
@@ -242,9 +206,76 @@
         </v-simple-table>
       </v-col>
       <v-col cols="8" ms="12">
-        <v-btn text color="primary" small @click="addRow">
+        <v-btn text color="primary" small @click="ajDialog = true">
           <v-icon>mdi-plus</v-icon> Ajouter Une Ligne
         </v-btn>
+        <v-dialog
+          v-model="ajDialog"
+          persistent
+          :overlay="false"
+          max-width="500px"
+          transition="dialog-transition"
+        >
+          <v-card>
+            <v-card-title primary-title> Ajouter Un service </v-card-title>
+            <v-card-text>
+              <v-tabs v-model="value" color="primary" slider-color="primary">
+                <v-tab ripple> Choix de service </v-tab>
+                <v-tab ripple> Autre </v-tab>
+                <v-tab-item>
+                  <v-card>
+                    <v-card-text>
+                      <v-row>
+                        <v-col cols="12">
+                          <v-select
+                            :items="items"
+                            item-text="libelle"
+                            item-value="id"
+                            v-model="fromItems"
+                            label="Service"
+                          ></v-select>
+                        </v-col>
+                      </v-row>
+                    </v-card-text>
+                    <v-card-actions class="d-flex justify-end">
+                      <v-btn color="error lighten-2" @click="ajDialog = false"
+                        >Anuller</v-btn
+                      >
+                      <v-btn color="primary" @click="addRow">Ajouter</v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </v-tab-item>
+                <v-tab-item>
+                  <v-card>
+                    <v-card-text>
+                      <v-row>
+                        <v-col cols="12" md="6">
+                          <v-text-field
+                            v-model="serviceToAdd.libelle"
+                            label="Libelle"
+                          ></v-text-field>
+                        </v-col>
+                        <v-col cols="12" md="6">
+                          <v-text-field
+                            v-model="serviceToAdd.tva"
+                            label="TVA(%)"
+                          ></v-text-field>
+                        </v-col>
+                      </v-row>
+                    </v-card-text>
+                    <v-card-actions class="d-flex justify-end">
+                      <v-btn color="error lighten-2" @click="ajDialog = false"
+                        >Anuller</v-btn
+                      >
+                      <v-btn color="primary" @click="addRow">Ajouter</v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </v-tab-item>
+              </v-tabs>
+            </v-card-text>
+            <v-spacer></v-spacer>
+          </v-card>
+        </v-dialog>
       </v-col>
       <v-col cols="4" ms="12">
         <v-simple-table>
@@ -264,9 +295,7 @@
               </tr>
               <tr>
                 <td>Total TTC</td>
-                <td class="text-right">
-                  {{ total - remisG + (total - remisG) * 0.2 }} HDS
-                </td>
+                <td class="text-right">{{ total - remisG }} HDS</td>
               </tr>
             </tbody>
           </template>
@@ -283,6 +312,7 @@
 <script>
 import Axios from 'axios';
 import DevisStore from '~/assets/store/devisStore'
+import comptabiliteStore from './../../../assets/store/comptabiliteStore'
 export default {
   data() {
     return {
@@ -295,30 +325,55 @@ export default {
       remisG: 0,
       maitre: '',
       payment: '',
-      reference: '',
+      reference: '1',
       snackbar: false,
       error: '',
       client: { nom: '', address: '' },
-      articles: [
-        { index: 0, ref: '', description: '', remise: 0, qte: 0, pu: 0, tva: 0, total: 0, class: '' }
-      ],
+      articles: [],
+      ajDialog: false,
+      items: [],
+      serviceToAdd: {
+        libelle: '',
+        tva: 0
+      },
+      fromItems: '',
     }
+  },
+  created() {
+    this.articles = comptabiliteStore.services;
+    Axios.get('http://localhost:1337/devis/count').then(resp => {
+      const ref = (resp.data + 1) / 10000;
+      this.reference = new Date().getFullYear() + ref.toString().replace('0.', '/');
+    }).catch(err => console.log(err));
+    Axios.get('http://localhost:1337/service').then(resp => {
+      this.items = resp.data;
+    }).catch(err => console.log(err));
   },
   methods: {
     addRow() {
-      const row = { index: this.articles.length, ref: '', description: '', remise: 0, qte: 0, pu: 0, tva: 0, total: 0, class: '' };
-      this.articles.push(row)
+      if (this.serviceToAdd.libelle === '' && this.fromItems !== '') {
+        const row = this.items.find(item => item.id === this.fromItems);
+        this.articles.push(row);
+      } else {
+        const row = { id: 'AJ' + this.articles.length, libelle: this.serviceToAdd.libelle, pu: 0, tva: this.serviceToAdd.tva, total: 0, class: '' };
+        this.articles.push(row);
+      }
+      this.fromItems = '';
+      this.serviceToAdd = {
+        libelle: '',
+        tva: 0
+      };
+      this.ajDialog = false;
     },
-    removeRow(index) {
-      this.articles = this.articles.filter(art => art.index !== index)
+    removeRow(id) {
+      this.articles = this.articles.filter(art => art.id !== id)
     },
-    calTotal(index) {
-      const article = this.articles.find(art => art.index === index);
-      article.total = article.pu * article.qte - article.remise + (article.tva / 100) * (article.pu * article.qte - article.remise)
-      console.log(article.total);
+    calTotal(id) {
+      const article = this.articles.find(art => art.id === id);
+      article.total = parseFloat(article.pu) + (parseFloat(article.pu) * parseFloat(article.tva) / 100);
       this.total = 0;
       this.articles.forEach(article => {
-        this.total += article.total
+        this.total += parseFloat(article.total)
       });
     },
     enregistrer() {
@@ -333,7 +388,6 @@ export default {
         payment: this.payment,
         client: this.client
       }).then(resp => {
-        console.log(resp);
         this.$router.push("/devis")
       }).catch((err) => {
         this.error = err;

@@ -128,9 +128,9 @@
   {
     "name": "devis-ajouter",
     "path": "/devis/ajouter",
-    "component": "/Users/zakariae/notaire-app/pages/devis/ajouter.vue",
-    "chunkName": "pages/devis/ajouter",
-    "_name": "_9fb54faa"
+    "component": "/Users/zakariae/notaire-app/pages/devis/ajouter/index.vue",
+    "chunkName": "pages/devis/ajouter/index",
+    "_name": "_5b3bd26e"
   },
   {
     "name": "devis-devi",
@@ -149,9 +149,9 @@
   {
     "name": "factures-ajouter",
     "path": "/factures/ajouter",
-    "component": "/Users/zakariae/notaire-app/pages/factures/ajouter.vue",
-    "chunkName": "pages/factures/ajouter",
-    "_name": "_375f7da1"
+    "component": "/Users/zakariae/notaire-app/pages/factures/ajouter/index.vue",
+    "chunkName": "pages/factures/ajouter/index",
+    "_name": "_90b4f138"
   },
   {
     "name": "modeles-ajouter",
@@ -159,6 +159,20 @@
     "component": "/Users/zakariae/notaire-app/pages/modeles/ajouter.vue",
     "chunkName": "pages/modeles/ajouter",
     "_name": "_43d264fa"
+  },
+  {
+    "name": "devis-ajouter-terminer",
+    "path": "/devis/ajouter/terminer",
+    "component": "/Users/zakariae/notaire-app/pages/devis/ajouter/terminer.vue",
+    "chunkName": "pages/devis/ajouter/terminer",
+    "_name": "_1365b812"
+  },
+  {
+    "name": "factures-ajouter-terminer",
+    "path": "/factures/ajouter/terminer",
+    "component": "/Users/zakariae/notaire-app/pages/factures/ajouter/terminer.vue",
+    "chunkName": "pages/factures/ajouter/terminer",
+    "_name": "_449f575c"
   },
   {
     "name": "actes-modifier-acte",

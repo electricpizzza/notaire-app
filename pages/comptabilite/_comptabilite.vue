@@ -34,18 +34,21 @@
             <v-card-text>
               <v-row>
                 <v-col cols="12">
-                  <v-text-field
-                    v-model="libelle"
-                    label="Libelle"
-                  ></v-text-field>
+                  <v-select
+                    :items="services"
+                    v-model="service.id"
+                    label="Services"
+                    item-text="libelle"
+                    item-value="id"
+                  ></v-select>
                 </v-col>
-                <v-col cols="12" sm="6">
+                <!-- <v-col cols="12" sm="6">
                   <v-select
                     :items="['Entrée', 'Sortie']"
                     v-model="typeTrans"
                     label="Type de Transaction"
                   ></v-select>
-                </v-col>
+                </v-col> -->
                 <v-col cols="12" sm="6">
                   <v-select
                     :items="[
@@ -86,7 +89,7 @@
       </div>
     </v-card>
     <v-card>
-      <v-card-text class="py-0">
+      <!-- <v-card-text class="py-0">
         <v-row>
           <v-col cols="12" sm="6">
             <h3 class="text-center ma-5" style="color: #17a66d">
@@ -111,8 +114,108 @@
             ></v-data-table>
           </v-col>
         </v-row>
+      </v-card-text> -->
+      <v-card-text class="py-3">
+        <v-simple-table fixed-header height="420px" dense>
+          <template v-slot:default>
+            <thead>
+              <tr class="text-center">
+                <th class="text-center" rowspan="2">Date</th>
+                <th class="text-center" rowspan="2">Libelle</th>
+                <th class="text-center" colspan="3">Etude</th>
+                <th class="text-center" colspan="3">Client</th>
+              </tr>
+              <tr>
+                <th>Recette</th>
+                <th>Dépense</th>
+                <th>Solde</th>
+                <th>Recette</th>
+                <th>Dépense</th>
+                <th>Solde</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="trans in transactions" :key="trans.id">
+                <td>{{ trans.dateTrans }}</td>
+                <td>{{ trans.libelle }}</td>
+                <td v-if="trans.service.partie === 'etude'">
+                  {{ trans.service.type === "recette" ? trans.valeur : "" }}
+                </td>
+                <td v-else></td>
+                <td v-if="trans.service.partie === 'etude'">
+                  {{ trans.service.type === "depense" ? trans.valeur : "" }}
+                </td>
+                <td v-else></td>
+                <td v-if="trans.service.partie === 'etude'">
+                  {{
+                    trans.service.type === "depense"
+                      ? -trans.valeur
+                      : trans.valeur
+                  }}
+                </td>
+                <td v-else></td>
+                <td v-if="trans.service.partie === 'client'">
+                  {{ trans.service.type === "recette" ? trans.valeur : "" }}
+                </td>
+                <td v-else></td>
+                <td v-if="trans.service.partie === 'client'">
+                  {{ trans.service.type === "depense" ? trans.valeur : "" }}
+                </td>
+                <td v-else></td>
+                <td v-if="trans.service.partie === 'client'">
+                  {{
+                    trans.service.type === "depense"
+                      ? -trans.valeur
+                      : trans.valeur
+                  }}
+                </td>
+                <td v-else></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td>TVA</td>
+                <td></td>
+                <td>{{ tva }}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td colspan="2"></td>
+                <td class="bordered">{{ totalEtudeRecette }} DHs</td>
+                <td class="bordered">{{ totalEtudeDepense }} DHs</td>
+                <td class="bordered">
+                  {{ totalEtudeRecette - totalEtudeDepense }} DHs
+                </td>
+                <td class="bordered">{{ totalClientRecette }} DHs</td>
+                <td class="bordered">{{ totalClientDepense }} DHs</td>
+                <td class="bordered">
+                  {{ totalClientRecette - totalClientDepense }} DHs
+                </td>
+              </tr>
+            </tbody>
+          </template>
+        </v-simple-table>
       </v-card-text>
     </v-card>
+    <v-dialog
+      v-model="recuDialog"
+      max-width="500px"
+      transition="dialog-transition"
+    >
+      <v-card>
+        <v-card-title primary-title> Imprimer le Reçu </v-card-title>
+        <v-card-actions class="d-flex justify-lg-space-around">
+          <v-btn color="primary" dark @click="recuDialog = false"
+            >Anuller</v-btn
+          >
+          <v-btn color="primary" dark :href="recuLink" target="_blank"
+            >Imprimer le Reçu</v-btn
+          >
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
 <script>
@@ -138,6 +241,7 @@ export default {
         { text: 'Date de Transaction', value: 'dateTrans' },
       ],
       transactions: [],
+      service: {},
       libelle: '',
       typeTrans: '',
       typePay: '',
@@ -148,11 +252,38 @@ export default {
       error: '',
       loading: false,
       snackbar: false,
+      services: [],
+      totalEtudeRecette: 0,
+      totalEtudeDepense: 0,
+      totalClientRecette: 0,
+      totalClientDepense: 0,
+      tva: 0,
+      recuDialog: false,
+      recuLink: '',
     }
   },
   created() {
     Axios.get('http://localhost:1337/transaction/comptabilite/' + this.comp).then(resp => {
       this.transactions = resp.data;
+      const transetude = resp.data.filter(trans => trans.service.partie === 'etude');
+      const transClient = resp.data.filter(trans => trans.service.partie === 'client');
+
+      transetude.forEach(trans => {
+        if (trans.service.type === 'recette')
+          this.totalEtudeRecette += trans.valeur;
+        if (trans.service.type === 'depense') {
+          this.tva += (trans.valeur * trans.service.tva) / 100;
+          this.totalEtudeDepense += trans.valeur;
+        }
+      });
+
+      transClient.forEach(trans => {
+        if (trans.service.type === 'recette')
+          this.totalClientRecette += trans.valeur;
+        if (trans.service.type === 'depense')
+          this.totalClientDepense += trans.valeur;
+      });
+      this.totalEtudeDepense += this.tva;
     }).catch((err) => {
       this.error = err;
       this.snackbar = true;
@@ -161,7 +292,6 @@ export default {
       JSON.parse(resp.data.comparents).forEach(element => {
         Axios.get('http://localhost:1337/comparent/' + element).then(c => {
           this.comparentList.push(c.data.comparent[0]);
-          console.log(this.comparentList);
         }).catch((err) => {
           this.error = err;
           this.snackbar = true;
@@ -171,28 +301,41 @@ export default {
       this.error = err;
       this.snackbar = true;
     });
+    Axios.get('http://localhost:1337/service').then(resp => {
+      this.services = resp.data;
+    }).catch((err) => {
+      this.error = err;
+      this.snackbar = true;
+    });
   },
   methods: {
     ajouter() {
       this.dialog = false;
       this.loading = false;
+      this.service = this.services.find(ser => ser.id === this.service.id);
       Axios.post('http://localhost:1337/transaction/', {
         comptabilite: this.comp,
-        libelle: this.libelle,
+        libelle: this.service.libelle,
         typeTrans: this.typeTrans,
         typePay: this.typePay,
         comparent: this.comparents,
         valeur: this.valeur,
+        service: this.service,
       }).then(resp => {
+        if (resp.data.recu !== null) {
+          this.recuDialog = true;
+          this.recuLink = `http://localhost:1337/${resp.data.recu}`;
+        }
         const today = new Date();
         this.transactions.push({
-          id: resp.data.identifiers[0].id,
+          id: resp.data.transaction.identifiers[0].id,
           comptabilite: this.comp,
-          libelle: this.libelle,
+          libelle: this.service.libelle,
           typeTrans: this.typeTrans,
           typePay: this.typePay,
           comparent: this.comp,
           valeur: this.valeur,
+          service: this.service,
           dateTrans: `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`,
         });
       }).catch((err) => {
@@ -204,3 +347,19 @@ export default {
   },
 }
 </script>
+<style scoped>
+  th{
+    text-transform: uppercase;
+    border: 1px solid black;
+  }
+  thead{
+    border: 1px solid black;
+  }
+  td{
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+  }
+  .bordered, table{
+    border: 1px solid black;
+  }
+</style>

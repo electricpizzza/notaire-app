@@ -21,11 +21,13 @@ const _6627a61b = () => interopDefault(import('../pages/archives/ajouter.vue' /*
 const _06dbf56f = () => interopDefault(import('../pages/biens/ajouter.vue' /* webpackChunkName: "pages/biens/ajouter" */))
 const _35bc9b17 = () => interopDefault(import('../pages/comparent/ajouter.vue' /* webpackChunkName: "pages/comparent/ajouter" */))
 const _88504e4a = () => interopDefault(import('../pages/comptabilite/ajouter.vue' /* webpackChunkName: "pages/comptabilite/ajouter" */))
-const _9fb54faa = () => interopDefault(import('../pages/devis/ajouter.vue' /* webpackChunkName: "pages/devis/ajouter" */))
+const _5b3bd26e = () => interopDefault(import('../pages/devis/ajouter/index.vue' /* webpackChunkName: "pages/devis/ajouter/index" */))
 const _dce7caea = () => interopDefault(import('../pages/devis/devi.vue' /* webpackChunkName: "pages/devis/devi" */))
 const _15ac429c = () => interopDefault(import('../pages/dossiers/ajouter.vue' /* webpackChunkName: "pages/dossiers/ajouter" */))
-const _375f7da1 = () => interopDefault(import('../pages/factures/ajouter.vue' /* webpackChunkName: "pages/factures/ajouter" */))
+const _90b4f138 = () => interopDefault(import('../pages/factures/ajouter/index.vue' /* webpackChunkName: "pages/factures/ajouter/index" */))
 const _43d264fa = () => interopDefault(import('../pages/modeles/ajouter.vue' /* webpackChunkName: "pages/modeles/ajouter" */))
+const _1365b812 = () => interopDefault(import('../pages/devis/ajouter/terminer.vue' /* webpackChunkName: "pages/devis/ajouter/terminer" */))
+const _449f575c = () => interopDefault(import('../pages/factures/ajouter/terminer.vue' /* webpackChunkName: "pages/factures/ajouter/terminer" */))
 const _6cbf0930 = () => interopDefault(import('../pages/actes/modifier/_acte.vue' /* webpackChunkName: "pages/actes/modifier/_acte" */))
 const _41a1946a = () => interopDefault(import('../pages/biens/modifier/_bien.vue' /* webpackChunkName: "pages/biens/modifier/_bien" */))
 const _131e12c9 = () => interopDefault(import('../pages/comparent/modifier/_comparent.vue' /* webpackChunkName: "pages/comparent/modifier/_comparent" */))
@@ -130,7 +132,7 @@ export const routerOptions = {
     name: "comptabilite-ajouter"
   }, {
     path: "/devis/ajouter",
-    component: _9fb54faa,
+    component: _5b3bd26e,
     name: "devis-ajouter"
   }, {
     path: "/devis/devi",
@@ -142,12 +144,20 @@ export const routerOptions = {
     name: "dossiers-ajouter"
   }, {
     path: "/factures/ajouter",
-    component: _375f7da1,
+    component: _90b4f138,
     name: "factures-ajouter"
   }, {
     path: "/modeles/ajouter",
     component: _43d264fa,
     name: "modeles-ajouter"
+  }, {
+    path: "/devis/ajouter/terminer",
+    component: _1365b812,
+    name: "devis-ajouter-terminer"
+  }, {
+    path: "/factures/ajouter/terminer",
+    component: _449f575c,
+    name: "factures-ajouter-terminer"
   }, {
     path: "/actes/modifier/:acte?",
     component: _6cbf0930,

@@ -13,35 +13,6 @@ nature, libelle, date ouverture, date de fermeture, notaire
 
 
 
-Acte de Vente
-
-Je soussigné, [​VENDEUR​][NOM], le vendeur, vends à l’acheteur soussigné [​ACHETEUR​][NOM] pour la somme de ([​MONTANT], l’article suivant :
-
-MARQUE : ____________________ MODÈLE : ____________________ NUMÉRO DE SÉRIE : ___________ ANNÉE : _____________________ COULEUR : ____________________ [​AUTRES DÉTAILS SIGNIFICATIFS​]
-
-Le vendeur confirme que ces informations correspondent bien au bien vendu pour autant qu’il sache.
-
-L’acheteur accepte cet acte de vente et comprend que l’article est vendu “en état” et sans aucune garantie.
-
-Date : __________________
-
-    
-
-VENDEUR :
-
-[​VENDEUR​][NOM] [​VENDEUR​][PRENOM][​VENDEUR​][ADDRESS] [​VENDEUR​][VILLE]
-
-__________________
-
-ACHETEUR :
-
-[​ACHETEUR​][NOM] [​ACHETEUR​][PRENOM][​ACHETEUR​][ADDRESS] [​ACHETEUR​][VILLE]
-
-__________________ 
-
-
-
-
 Acte Vendre appartement 
 
 Je soussigné, <VENDEUR​><NOM> <VENDEUR​><PRENOM>, le vendeur, vends à l’acheteur soussigné <ACHETEUR​><NOM> <ACHETEUR​><PRENOM> pour la somme de ​<MONTANT> DHS, l’article suivant :

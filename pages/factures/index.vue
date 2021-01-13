@@ -39,19 +39,15 @@
                   <thead>
                     <tr>
                       <th class="text-left">Ref</th>
-                      <th class="text-left">Description</th>
-                      <th class="text-left">Remise</th>
-                      <th class="text-left">Tva</th>
+                      <th class="text-left">Libelle</th>
                       <th class="text-left">Total</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr v-for="article in item.articles" :key="article.ref">
-                      <td>{{ article.ref }}</td>
-                      <td>{{ article.description }}</td>
-                      <td>{{ article.remise }}</td>
-                      <td>{{ article.tva }}</td>
-                      <td>{{ article.total }}</td>
+                      <td>SERV0{{ article.id }}</td>
+                      <td>{{ article.libelle }}</td>
+                      <td>{{ article.total }} DHS</td>
                     </tr>
                   </tbody>
                 </template>
