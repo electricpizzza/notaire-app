@@ -15,7 +15,7 @@
         <v-text-field
           v-model="search"
           clearable
-          flat
+          text
           solo-inverted
           hide-details
           prepend-inner-icon="mdi-magnify"
@@ -25,7 +25,7 @@
           <v-spacer></v-spacer>
           <v-select
             v-model="sortBy"
-            flat
+            text
             solo-inverted
             hide-details
             :items="keys"

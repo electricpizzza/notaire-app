@@ -47,36 +47,6 @@
   "LazyCreateMenu": {
     "description": "Auto imported from components/createMenu.vue"
   },
-  "Dossier": {
-    "description": "Auto imported from components/dossiers/Dossier.vue"
-  },
-  "LazyDossier": {
-    "description": "Auto imported from components/dossiers/Dossier.vue"
-  },
-  "DossierCard": {
-    "description": "Auto imported from components/dossiers/DossierCard.vue"
-  },
-  "LazyDossierCard": {
-    "description": "Auto imported from components/dossiers/DossierCard.vue"
-  },
-  "DossierForm": {
-    "description": "Auto imported from components/dossiers/DossierForm.vue"
-  },
-  "LazyDossierForm": {
-    "description": "Auto imported from components/dossiers/DossierForm.vue"
-  },
-  "ActeDocument": {
-    "description": "Auto imported from components/actesComponents/ActeDocument.vue"
-  },
-  "LazyActeDocument": {
-    "description": "Auto imported from components/actesComponents/ActeDocument.vue"
-  },
-  "Acteform": {
-    "description": "Auto imported from components/actesComponents/Acteform.vue"
-  },
-  "LazyActeform": {
-    "description": "Auto imported from components/actesComponents/Acteform.vue"
-  },
   "AjouterArchive": {
     "description": "Auto imported from components/archives/AjouterArchive.vue"
   },
@@ -106,5 +76,35 @@
   },
   "LazyPersonForm": {
     "description": "Auto imported from components/comparentComponents/PersonForm.vue"
+  },
+  "Dossier": {
+    "description": "Auto imported from components/dossiers/Dossier.vue"
+  },
+  "LazyDossier": {
+    "description": "Auto imported from components/dossiers/Dossier.vue"
+  },
+  "DossierCard": {
+    "description": "Auto imported from components/dossiers/DossierCard.vue"
+  },
+  "LazyDossierCard": {
+    "description": "Auto imported from components/dossiers/DossierCard.vue"
+  },
+  "DossierForm": {
+    "description": "Auto imported from components/dossiers/DossierForm.vue"
+  },
+  "LazyDossierForm": {
+    "description": "Auto imported from components/dossiers/DossierForm.vue"
+  },
+  "ActeDocument": {
+    "description": "Auto imported from components/actesComponents/ActeDocument.vue"
+  },
+  "LazyActeDocument": {
+    "description": "Auto imported from components/actesComponents/ActeDocument.vue"
+  },
+  "Acteform": {
+    "description": "Auto imported from components/actesComponents/Acteform.vue"
+  },
+  "LazyActeform": {
+    "description": "Auto imported from components/actesComponents/Acteform.vue"
   }
 }

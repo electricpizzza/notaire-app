@@ -16,7 +16,7 @@
         scrollable
       >
         <v-card tile>
-          <!-- <v-toolbar flat dark color="primary">
+          <!-- <v-toolbar text dark color="primary">
             <v-btn icon dark @click="this.dialogForm = false">
               <v-icon>mdi-close</v-icon>
             </v-btn>

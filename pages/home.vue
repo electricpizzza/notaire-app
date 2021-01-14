@@ -180,7 +180,7 @@
         >
       </v-container>
       <v-tab-item v-for="doc in docs" :key="doc.id">
-        <v-card color="basil" flat class="pa-2">
+        <v-card color="basil" text class="pa-2">
           <v-card-text>
             <v-btn
               elevation="2"

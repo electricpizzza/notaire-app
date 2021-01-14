@@ -114,12 +114,12 @@ export default {
       items: [
         {
           icon: 'mdi-apps',
-          title: 'Notary',
+          title: 'Accueil',
           to: '/',
         },
         {
           icon: 'mdi-folder-network',
-          title: 'Workshop',
+          title: 'Atelier',
           to: '/home'
         },
         {
@@ -144,7 +144,7 @@ export default {
         },
         {
           icon: 'mdi-pencil',
-          title: 'Models',
+          title: 'Modeles',
           to: '/modeles',
         },
         {

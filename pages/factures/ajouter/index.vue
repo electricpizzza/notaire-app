@@ -28,7 +28,7 @@
         <v-btn color="primary" nuxt to="/devis">
           <v-icon>mdi-chevron-left</v-icon> Retour
         </v-btn>
-        <v-btn flat color="primary" @click="continuer">
+        <v-btn text color="primary" @click="continuer">
           Continuer <v-icon>mdi-chevron-right</v-icon>
         </v-btn>
       </v-card-actions>
@@ -47,7 +47,7 @@ export default {
   },
   created() {
     Axios.get('http://localhost:1337/service').then(resp => {
-      this.services = resp.data;
+      this.services = resp.data.filter(ser => ser.partie === 'etude');
     }).catch(err => console.log(err));
   },
   methods: {

@@ -69,7 +69,7 @@
           <v-select
             :items="['Espece', 'Cheque', 'Virment']"
             v-model="payment"
-            label="Mode de Payment"
+            label="Mode de Paiement"
             prepend-icon="mdi-cash-multiple"
           ></v-select>
         </div>

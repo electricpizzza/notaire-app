@@ -10,7 +10,12 @@
       </v-card-title>
       <v-card-text style="min-height: 65vh">
         <v-row>
-          <v-col class="flex justify-center" cols="6" v-for="service in services" :key="service.id">
+          <v-col
+            class="flex justify-center"
+            cols="6"
+            v-for="service in services"
+            :key="service.id"
+          >
             <v-checkbox
               :label="service.libelle"
               v-model="servicesChoix"
@@ -23,7 +28,7 @@
         <v-btn color="primary" nuxt to="/devis">
           <v-icon>mdi-chevron-left</v-icon> Retour
         </v-btn>
-        <v-btn flat color="primary" @click="continuer">
+        <v-btn text color="primary" @click="continuer">
           Continuer <v-icon>mdi-chevron-right</v-icon>
         </v-btn>
       </v-card-actions>
@@ -42,7 +47,7 @@ export default {
   },
   created() {
     Axios.get('http://localhost:1337/service').then(resp => {
-      this.services = resp.data;
+      this.services = resp.data.filter(ser => ser.partie === 'etude');
     }).catch(err => console.log(err));
   },
   methods: {

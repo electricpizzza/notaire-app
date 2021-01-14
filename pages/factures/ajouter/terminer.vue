@@ -69,7 +69,7 @@
           <v-select
             :items="['Espece', 'Cheque', 'Virment']"
             v-model="payment"
-            label="Mode de Payment"
+            label="Mode de Paiement"
             prepend-icon="mdi-cash-multiple"
           ></v-select>
         </div>
@@ -388,7 +388,7 @@ export default {
         payment: this.payment,
         client: this.client
       }).then(resp => {
-        this.$router.push("/devis")
+        this.$router.push("/factures")
       }).catch((err) => {
         this.error = err;
         this.snackbar = true;

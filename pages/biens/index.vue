@@ -44,7 +44,7 @@
       <template v-slot:expanded-item="{ headers, item }">
         <td :colspan="headers.length">
           <v-row class="mx-4">
-            <v-col cols="12" md="6"><b>Libelle: </b>{{ item.libelle }}</v-col>
+            <v-col cols="12" md="6"><b>Titre Foncier: </b>{{ item.libelle }}</v-col>
             <v-col cols="12" md="6"><b>Type: </b>{{ item.type }}</v-col>
             <v-col cols="12" md="6">
               <b>Superfacie: </b>{{ item.Superficie }}

@@ -13,7 +13,7 @@
     </v-snackbar>
     <v-card>
       <h1 style="color: #295075; padding: 30px">
-        Comptabiliée du dossier Hamid Idrissi
+        Comptabilié du Dossier: {{ titre }}
       </h1>
       <div class="d-flex justify-space-between">
         <v-btn color="primary" nuxt to="/comptabilite">
@@ -53,13 +53,12 @@
                   <v-select
                     :items="[
                       { label: 'Espece', value: 'Espece' },
-                      { label: 'Cheque', value: 'Cheque' },
-                      { label: 'Virment Bancaire', value: 'Virment' },
+                      { label: 'Chèque', value: 'Cheque' },
                     ]"
                     item-text="label"
                     item-value="value"
                     v-model="typePay"
-                    label="Method de Payment"
+                    label="Mode de paiement"
                   ></v-select>
                 </v-col>
                 <v-col cols="12" sm="6">
@@ -73,6 +72,12 @@
                     item-value="id"
                     label="Comparant"
                   ></v-select>
+                </v-col>
+                <v-col cols="12" md="6" v-if="typePay === 'Cheque'">
+                  <v-text-field
+                    v-model="numCheque"
+                    label="Chèque N˚"
+                  ></v-text-field>
                 </v-col>
               </v-row>
             </v-card-text>
@@ -137,7 +142,17 @@
             <tbody>
               <tr v-for="trans in transactions" :key="trans.id">
                 <td>{{ trans.dateTrans }}</td>
-                <td>{{ trans.libelle }}</td>
+                <td class="d-flex justify-lg-space-between">
+                  {{ trans.libelle }}
+                  <v-btn
+                    v-if="trans.service.type === 'recette'"
+                    icon
+                    small
+                    color="primary"
+                    @click="printRecu(trans.id)"
+                    ><v-icon>mdi-file-document</v-icon></v-btn
+                  >
+                </td>
                 <td v-if="trans.service.partie === 'etude'">
                   {{ trans.service.type === "recette" ? trans.valeur : "" }}
                 </td>
@@ -206,11 +221,14 @@
     >
       <v-card>
         <v-card-title primary-title> Imprimer le Reçu </v-card-title>
+        <v-card-text> </v-card-text>
         <v-card-actions class="d-flex justify-lg-space-around">
-          <v-btn color="primary" dark @click="recuDialog = false"
-            >Anuller</v-btn
-          >
-          <v-btn color="primary" dark :href="recuLink" target="_blank"
+          <v-btn color="primary" @click="recuDialog = false">Anuller</v-btn>
+          <v-btn
+            color="primary"
+            :href="recuLink"
+            target="_blank"
+            @click="recuDialog = false"
             >Imprimer le Reçu</v-btn
           >
         </v-card-actions>
@@ -245,6 +263,7 @@ export default {
       libelle: '',
       typeTrans: '',
       typePay: '',
+      numCheque: '',
       comparent: null,
       valeur: null,
       comparentList: [],
@@ -260,6 +279,7 @@ export default {
       tva: 0,
       recuDialog: false,
       recuLink: '',
+      titre: '',
     }
   },
   created() {
@@ -289,6 +309,7 @@ export default {
       this.snackbar = true;
     });
     Axios.get('http://localhost:1337/dossiers/' + this.comp).then(resp => {
+      this.titre = resp.data.identifiant + " / " + resp.data.libelle
       JSON.parse(resp.data.comparents).forEach(element => {
         Axios.get('http://localhost:1337/comparent/' + element).then(c => {
           this.comparentList.push(c.data.comparent[0]);
@@ -311,7 +332,7 @@ export default {
   methods: {
     ajouter() {
       this.dialog = false;
-      this.loading = false;
+      this.loading = true;
       this.service = this.services.find(ser => ser.id === this.service.id);
       Axios.post('http://localhost:1337/transaction/', {
         comptabilite: this.comp,
@@ -320,11 +341,13 @@ export default {
         typePay: this.typePay,
         comparent: this.comparents,
         valeur: this.valeur,
+        numCheque: this.numCheque,
         service: this.service,
       }).then(resp => {
         if (resp.data.recu !== null) {
           this.recuDialog = true;
           this.recuLink = `http://localhost:1337/${resp.data.recu}`;
+
         }
         const today = new Date();
         this.transactions.push({
@@ -338,13 +361,56 @@ export default {
           service: this.service,
           dateTrans: `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`,
         });
+        //this.calcule();
+        this.loading = false;
       }).catch((err) => {
         this.loading = false;
         this.error = err;
         this.snackbar = true;
       });
+    },
+    printRecu(id) {
+      const trans = this.transactions.find(tra => tra.id === id);
+      this.loading = true;
+      Axios.post('http://localhost:1337/recu', {
+        somme: trans.valeur,
+        libelle: trans.libelle,
+        dateTrans: trans.dateTrans,
+        client: trans.comparent
+      }).then(resp => {
+        console.log(resp.data);
+        this.loading = false;
+        this.recuDialog = true;
+        this.recuLink = `http://localhost:1337/${resp.data}`;
+      }).catch((err) => {
+        this.loading = false;
+        this.error = err;
+        this.snackbar = true;
+      });
+    },
+    calcule() {
+      const transetude = resp.data.filter(trans => trans.service.partie === 'etude');
+      const transClient = resp.data.filter(trans => trans.service.partie === 'client');
+
+      transetude.forEach(trans => {
+        if (trans.service.type === 'recette')
+          this.totalEtudeRecette += trans.valeur;
+        if (trans.service.type === 'depense') {
+          this.tva += (trans.valeur * trans.service.tva) / 100;
+          this.totalEtudeDepense += trans.valeur;
+        }
+      });
+
+      transClient.forEach(trans => {
+        if (trans.service.type === 'recette')
+          this.totalClientRecette += trans.valeur;
+        if (trans.service.type === 'depense')
+          this.totalClientDepense += trans.valeur;
+      });
+      this.totalEtudeDepense += this.tva;
     }
   },
+
 }
 </script>
 <style scoped>
