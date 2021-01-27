@@ -17,23 +17,21 @@ export default class ComparentService {
             nom,type
           })
   }
-  async saveEntreprise(comparent,raison,ice,rc,If,cnss,representant,Adresse) {
-    return await axios.post('http://localhost:1337/comparent/entreprise', {comparent, representant, raisonSociale: raison, ice, rc, If, cnss, Adresse,});
+  async saveEntreprise(comparent,raison,raisonSocialeAr,ice,rc,IDF,cnss,representant,Adresse,AdresseAr,RS,tel,capital) {
+    return await axios.post('http://localhost:1337/comparent/entreprise', {comparent, representant, raisonSociale: raison, raisonSocialeAr, ice, rc, cnss, Adresse,AdresseAr,IDF,RS,tel,capital});
   }
 
-  async editEntreprise(comparent,raison,ice,rc,If,cnss,representant,Adresse){
-    return await axios.put(`http://localhost:1337/comparent/entreprise/${comparent}`,{representant, raisonSociale: raison, ice, rc, If, cnss, Adresse})
+  async editEntreprise(comparent,raison,raisonSocialeAr,ice,rc,IDF,cnss,representant,Adresse,AdresseAr,RS,tel,capital){
+    return await axios.put(`http://localhost:1337/comparent/entreprise/${comparent}`,{representant, raisonSociale: raison,raisonSocialeAr, ice, rc, cnss, Adresse,AdresseAr,IDF,RS,tel,capital})
   }
 
-  async createPerson(comparent,nomFr,nomAr,prenomFr,prenomAr,nationalite,fonction,nomPereFr,nomPereAr,nomMereFr,nomMereAr,situation,nomCompanionFr,nomCompanionAr,typeIdentification,Identification,IdentificationValable,dateNaissance){
-      return await axios.post('http://localhost:1337/comparent/person',{comparent,nomFr,nomAr,prenomFr,prenomAr,nationalite,fonction,nomPereFr,nomPereAr,nomMereFr,nomMereAr,situation,nomCompanionFr,nomCompanionAr,typeIdentification,Identification,IdentificationValable,dateNaissance});
-  }
-    async editPerson(comparent,nomFr,nomAr,prenomFr,prenomAr,nationalite,fonction,nomPereFr,nomPereAr,nomMereFr,nomMereAr,situation,nomCompanionFr,nomCompanionAr,typeIdentification,Identification,IdentificationValable,dateNaissance){
-      return await axios.post('http://localhost:1337/comparent/person',{comparent,nomFr,nomAr,prenomFr,prenomAr,nationalite,fonction,nomPereFr,nomPereAr,nomMereFr,nomMereAr,situation,nomCompanionFr,nomCompanionAr,typeIdentification,Identification,IdentificationValable,dateNaissance});
+  async createPerson(comparent,nomFr,nomAr,prenomFr,prenomAr,nationalite,nationaliteAr,fonction,fonctionAr,nomPereFr,nomPereAr,nomMereFr,nomMereAr,situation,nomCompanionFr,nomCompanionAr,typeIdentification,Identification,IdentificationValable,dateNaissance,lieuxNaissance,lieuxNaissanceAr,tel,Adresse,AdresseAr){
+      return await axios.post('http://localhost:1337/comparent/person',{comparent,nomFr,nomAr,prenomFr,prenomAr,nationalite,nationaliteAr,fonction,fonctionAr,Adresse,AdresseAr,nomPereFr,nomPereAr,nomMereFr,nomMereAr,situation,nomCompanionFr,nomCompanionAr,typeIdentification,Identification,IdentificationValable,dateNaissance,lieuxNaissance,lieuxNaissanceAr,tel});
   }
 
-  async editPerson(comparent,nomFr,nomAr,prenomFr,prenomAr,nationalite,fonction,nomPereFr,nomPereAr,nomMereFr,nomMereAr,situation,nomCompanionFr,nomCompanionAr,typeIdentification,Identification,IdentificationValable,dateNaissance){
-    return await axios.put(`http://localhost:1337/comparent/person/${comparent.comparent}`,{nomFr,nomAr,prenomFr,prenomAr,nationalite,fonction,nomPereFr,nomPereAr,nomMereFr,nomMereAr,situation,nomCompanionFr,nomCompanionAr,typeIdentification,Identification,IdentificationValable,dateNaissance});
+
+  async editPerson(comparent,nomFr,nomAr,prenomFr,prenomAr,nationalite,nationaliteAr,fonction,fonctionAr,nomPereFr,nomPereAr,nomMereFr,nomMereAr,situation,nomCompanionFr,nomCompanionAr,typeIdentification,Identification,IdentificationValable,dateNaissance,lieuxNaissance,lieuxNaissanceAr,tel,Adresse,AdresseAr){
+    return await axios.put(`http://localhost:1337/comparent/person/${comparent.comparent}`,{nomFr,nomAr,prenomFr,prenomAr,nationalite,nationaliteAr,fonction,fonctionAr,Adresse,AdresseAr,nomPereFr,nomPereAr,nomMereFr,nomMereAr,situation,nomCompanionFr,nomCompanionAr,typeIdentification,Identification,IdentificationValable,dateNaissance,lieuxNaissance,lieuxNaissanceAr,tel});
   }
 
 

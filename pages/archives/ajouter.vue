@@ -71,7 +71,7 @@ export default {
     enregistrer() {
       let formData = new FormData();
       this.files.forEach(file => {
-        formData.append('files', file, name.name);
+        formData.append('files', file, file.name);
       });
       formData.append('titre', this.titre);
       formData.append('dossier', this.dossier);

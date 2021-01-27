@@ -32,8 +32,16 @@
           ></v-select>
         </v-col>
         <v-col cols="12" md="6">
+          <v-text-field
+            v-model="typeAr"
+            label="نوع العقار"
+            reverse
+          ></v-text-field>
+        </v-col>
+        <v-col cols="12" md="6">
           <v-text-field v-model="valeur" label="Valeur(DHs)"></v-text-field>
         </v-col>
+        <v-col cols="12" md="6"></v-col>
         <v-col cols="12" md="6">
           <v-text-field
             v-model="nb_piece"
@@ -48,29 +56,81 @@
             label="Superficie(m2)"
           ></v-text-field>
         </v-col>
+        <v-col cols="12" md="6">
+          <v-text-field
+            v-model="detailSuperficie"
+            type="text"
+            label="Details de la Superficie"
+          ></v-text-field>
+        </v-col>
+        <v-col cols="12" md="6">
+          <v-text-field
+            v-model="detailSuperficieAr"
+            type="text"
+            label="تفصيل المساحة"
+            reverse
+          ></v-text-field>
+        </v-col>
+        <v-col cols="12" v-if="type !== null">
+          <v-card class="rounded-lg">
+            <v-row>
+              <v-col
+                cols="12"
+                md="6"
+                v-for="detail in details"
+                :key="detail"
+                class="d-flex justify-center"
+              >
+                <v-text-field
+                  v-model="detail.nb"
+                  type="number"
+                  style="width: 50px"
+                  class="mx-5"
+                ></v-text-field>
+                <span class="mt-5 px-10">{{ detail.lib }}</span>
+              </v-col>
+            </v-row>
+          </v-card>
+        </v-col>
         <v-col cols="12">
-          <v-text-field v-model="address" label="Address"></v-text-field>
+          <v-text-field v-model="address" label="Addresse"></v-text-field>
         </v-col>
         <v-col cols="12">
           <v-text-field
-            v-model="address1"
-            label="Address (Facultative)"
+            v-model="addressAr"
+            label="العنوان"
+            reverse
           ></v-text-field>
         </v-col>
-        <v-col cols="12" md="4">
+        <v-col cols="12" md="6">
           <v-text-field v-model="ville" label="Ville"></v-text-field>
         </v-col>
-        <v-col cols="12" md="4">
+        <v-col cols="12" md="6">
+          <v-text-field
+            v-model="villeAr"
+            label="المدينة"
+            reverse
+          ></v-text-field>
+        </v-col>
+        <!-- <v-col cols="12" md="4">
           <v-text-field v-model="Immeuble" label="Immeuble"></v-text-field>
         </v-col>
         <v-col cols="12" md="4">
           <v-text-field v-model="etage" label="Etage"></v-text-field>
-        </v-col>
+        </v-col> -->
 
         <v-col cols="12">
           <v-text-field
             v-model="description"
             label="Description"
+            textarea
+          ></v-text-field>
+        </v-col>
+        <v-col cols="12">
+          <v-text-field
+            v-model="descriptionAr"
+            label="وصف"
+            reverse
             textarea
           ></v-text-field>
         </v-col>
@@ -90,7 +150,7 @@ export default {
   data() {
     return {
       libelle: '',
-      type: '',
+      type: null,
       ville: "",
       Superficie: 0,
       address: '',
@@ -105,11 +165,19 @@ export default {
       terrainType: '',
       bineTypes: [],
       loading: false,
+      details: [],
+      detailSuperficie: '',
+      typeAr: '',
+      descriptionAr: '',
+      addressAr: '',
+      villeAr: '',
+      detailSuperficieAr: '',
     }
   },
   methods: {
     enregistrer() {
       this.loading = true;
+      console.log(this.details);
       Axios.post('http://localhost:1337/bien', {
         libelle: this.libelle,
         type: this.type,
@@ -124,8 +192,14 @@ export default {
         ancfcc: this.ancfcc,
         Immeuble: this.Immeuble,
         terrainType: this.terrainType,
-        snackbar: false,
-        error: '',
+        details: this.details,
+        detailSuperficie: this.detailSuperficie,
+        typeAr: this.typeAr,
+        descriptionAr: this.descriptionAr,
+        addressAr: this.addressAr,
+        villeAr: this.villeAr,
+        detailSuperficieAr: this.detailSuperficieAr,
+
       }).then(resp => {
         this.loading = false;
         this.$router.push(
@@ -142,6 +216,12 @@ export default {
     Axios.get('http://localhost:1337/data').then(resp => {
       this.bineTypes = resp.data.typeBien;
     })
+  },
+  watch: {
+    type(newval) {
+      this.details = this.bineTypes.find(type => type.value === newval).details
+      this.typeAr = this.bineTypes.find(type => type.value === newval).libelleAr
+    }
   }
 }
 </script>

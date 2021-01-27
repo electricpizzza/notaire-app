@@ -162,7 +162,11 @@ export default {
           title: 'Archives',
           to: '/archives'
         },
-
+        {
+          icon: 'mdi-bank',
+          title: 'Banques',
+          to: '/banque'
+        },
       ],
       miniVariant: false,
       right: true,

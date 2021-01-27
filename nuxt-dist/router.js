@@ -5,6 +5,8 @@ import scrollBehavior from './router.scrollBehavior.js'
 
 const _b7e7ea68 = () => interopDefault(import('../pages/actes/index.vue' /* webpackChunkName: "pages/actes/index" */))
 const _0b78ed8a = () => interopDefault(import('../pages/archives/index.vue' /* webpackChunkName: "pages/archives/index" */))
+const _a76fa122 = () => interopDefault(import('../pages/aveu/index.vue' /* webpackChunkName: "pages/aveu/index" */))
+const _3556afc8 = () => interopDefault(import('../pages/banque/index.vue' /* webpackChunkName: "pages/banque/index" */))
 const _d6a8c4e2 = () => interopDefault(import('../pages/biens/index.vue' /* webpackChunkName: "pages/biens/index" */))
 const _196ce592 = () => interopDefault(import('../pages/comparent/index.vue' /* webpackChunkName: "pages/comparent/index" */))
 const _3fe16bfb = () => interopDefault(import('../pages/comptabilite/index.vue' /* webpackChunkName: "pages/comptabilite/index" */))
@@ -18,6 +20,8 @@ const _23256aa3 = () => interopDefault(import('../pages/modeles/index.vue' /* we
 const _2f39f059 = () => interopDefault(import('../pages/test.vue' /* webpackChunkName: "pages/test" */))
 const _8053f128 = () => interopDefault(import('../pages/actes/ajouter.vue' /* webpackChunkName: "pages/actes/ajouter" */))
 const _6627a61b = () => interopDefault(import('../pages/archives/ajouter.vue' /* webpackChunkName: "pages/archives/ajouter" */))
+const _acc8e162 = () => interopDefault(import('../pages/aveu/ajouter.vue' /* webpackChunkName: "pages/aveu/ajouter" */))
+const _5d26de88 = () => interopDefault(import('../pages/banque/ajouter.vue' /* webpackChunkName: "pages/banque/ajouter" */))
 const _06dbf56f = () => interopDefault(import('../pages/biens/ajouter.vue' /* webpackChunkName: "pages/biens/ajouter" */))
 const _35bc9b17 = () => interopDefault(import('../pages/comparent/ajouter.vue' /* webpackChunkName: "pages/comparent/ajouter" */))
 const _88504e4a = () => interopDefault(import('../pages/comptabilite/ajouter.vue' /* webpackChunkName: "pages/comptabilite/ajouter" */))
@@ -26,9 +30,11 @@ const _dce7caea = () => interopDefault(import('../pages/devis/devi.vue' /* webpa
 const _15ac429c = () => interopDefault(import('../pages/dossiers/ajouter.vue' /* webpackChunkName: "pages/dossiers/ajouter" */))
 const _90b4f138 = () => interopDefault(import('../pages/factures/ajouter/index.vue' /* webpackChunkName: "pages/factures/ajouter/index" */))
 const _43d264fa = () => interopDefault(import('../pages/modeles/ajouter.vue' /* webpackChunkName: "pages/modeles/ajouter" */))
+const _54d1e00c = () => interopDefault(import('../pages/aveu/modifier/aveu.vue' /* webpackChunkName: "pages/aveu/modifier/aveu" */))
 const _1365b812 = () => interopDefault(import('../pages/devis/ajouter/terminer.vue' /* webpackChunkName: "pages/devis/ajouter/terminer" */))
 const _449f575c = () => interopDefault(import('../pages/factures/ajouter/terminer.vue' /* webpackChunkName: "pages/factures/ajouter/terminer" */))
 const _6cbf0930 = () => interopDefault(import('../pages/actes/modifier/_acte.vue' /* webpackChunkName: "pages/actes/modifier/_acte" */))
+const _f7b57142 = () => interopDefault(import('../pages/banque/modifier/_banque.vue' /* webpackChunkName: "pages/banque/modifier/_banque" */))
 const _41a1946a = () => interopDefault(import('../pages/biens/modifier/_bien.vue' /* webpackChunkName: "pages/biens/modifier/_bien" */))
 const _131e12c9 = () => interopDefault(import('../pages/comparent/modifier/_comparent.vue' /* webpackChunkName: "pages/comparent/modifier/_comparent" */))
 const _292dd7ff = () => interopDefault(import('../pages/comptabilite/modifier/_comptabilite.vue' /* webpackChunkName: "pages/comptabilite/modifier/_comptabilite" */))
@@ -66,6 +72,14 @@ export const routerOptions = {
     path: "/archives",
     component: _0b78ed8a,
     name: "archives"
+  }, {
+    path: "/aveu",
+    component: _a76fa122,
+    name: "aveu"
+  }, {
+    path: "/banque",
+    component: _3556afc8,
+    name: "banque"
   }, {
     path: "/biens",
     component: _d6a8c4e2,
@@ -119,6 +133,14 @@ export const routerOptions = {
     component: _6627a61b,
     name: "archives-ajouter"
   }, {
+    path: "/aveu/ajouter",
+    component: _acc8e162,
+    name: "aveu-ajouter"
+  }, {
+    path: "/banque/ajouter",
+    component: _5d26de88,
+    name: "banque-ajouter"
+  }, {
     path: "/biens/ajouter",
     component: _06dbf56f,
     name: "biens-ajouter"
@@ -151,6 +173,10 @@ export const routerOptions = {
     component: _43d264fa,
     name: "modeles-ajouter"
   }, {
+    path: "/aveu/modifier/aveu",
+    component: _54d1e00c,
+    name: "aveu-modifier-aveu"
+  }, {
     path: "/devis/ajouter/terminer",
     component: _1365b812,
     name: "devis-ajouter-terminer"
@@ -162,6 +188,10 @@ export const routerOptions = {
     path: "/actes/modifier/:acte?",
     component: _6cbf0930,
     name: "actes-modifier-acte"
+  }, {
+    path: "/banque/modifier/:banque?",
+    component: _f7b57142,
+    name: "banque-modifier-banque"
   }, {
     path: "/biens/modifier/:bien?",
     component: _41a1946a,

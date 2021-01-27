@@ -62,11 +62,7 @@
                       label="Nom / Raison Social"
                     ></v-text-field>
                   </v-col>
-                  <v-col
-                    v-if="editedItem.type === 'PP' || editedItem.mineur"
-                    cols="12"
-                    sm="6"
-                  >
+                  <v-col v-if="false" cols="12" sm="6">
                     <v-checkbox
                       v-model="editedItem.mineur"
                       label="Mineur"

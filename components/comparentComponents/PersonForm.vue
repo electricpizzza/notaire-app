@@ -1,5 +1,8 @@
 <template>
   <v-form ref="form" v-model="valid" lazy-validation>
+    <v-overlay :value="loading">
+      <v-progress-circular indeterminate color="primary"></v-progress-circular>
+    </v-overlay>
     <v-snackbar v-model="snackbar" color="error lighten-1" top>
       {{ error }}
       <template v-slot:action="{ attrs }">
@@ -38,19 +41,30 @@
           reverse
         ></v-text-field>
       </v-col>
-      <v-col cols="12">
+      <v-col cols="6">
+        <v-text-field v-model="nationalite" label="Nationalité"></v-text-field>
+      </v-col>
+      <v-col cols="6">
         <v-text-field
-          name="nationalite"
-          v-model="nationalite"
-          label="Nationalite"
+          v-model="nationaliteAr"
+          label="الجنسية"
+          reverse
         ></v-text-field>
       </v-col>
       <v-col cols="12">
-        <v-text-field
-          name="fonction"
-          v-model="fonction"
-          label="Fonction"
-        ></v-text-field>
+        <v-text-field v-model="Adresse" label="Adresse"></v-text-field>
+      </v-col>
+      <v-col cols="12">
+        <v-text-field v-model="AdresseAr" label="عنوان" reverse></v-text-field>
+      </v-col>
+      <v-col cols="12" md="6">
+        <v-text-field v-model="fonction" label="Profession"></v-text-field>
+      </v-col>
+      <v-col cols="12" md="6">
+        <v-text-field v-model="fonctionAr" label="مهنة" reverse></v-text-field>
+      </v-col>
+      <v-col cols="12">
+        <v-text-field v-model="tel" label="Telephone"></v-text-field>
       </v-col>
       <v-col cols="12" sm="6">
         <v-text-field
@@ -124,14 +138,20 @@
           </v-date-picker>
         </v-menu>
       </v-col>
-      <v-col
-        cols="12"
-        sm="6"
-        v-if="
-          situation &&
-          (situation === 'mariAvecEnf' || situation === 'mariSansEnf')
-        "
-      >
+      <v-col cols="12" sm="6">
+        <v-text-field
+          v-model="lieuxNaissance"
+          label="Lieux de Naissance"
+        ></v-text-field>
+      </v-col>
+      <v-col cols="12" sm="6">
+        <v-text-field
+          v-model="lieuxNaissanceAr"
+          label="مكان الولادة"
+          reverse
+        ></v-text-field>
+      </v-col>
+      <v-col cols="12" sm="6" v-if="situation && situation === 'marie'">
         <v-text-field
           name="nomCompanionFr"
           v-model="nomCompanionFr"
@@ -147,14 +167,14 @@
           reverse
         ></v-text-field>
       </v-col>
-      <v-col cols="12" sm="6">
+      <v-col cols="12" sm="4">
         <v-select
           :items="idTypes"
           v-model="typeIdentification"
           label="Type Identification"
         ></v-select>
       </v-col>
-      <v-col cols="12" sm="6">
+      <v-col cols="12" sm="4">
         <v-text-field
           name="Identification"
           v-model="Identification"
@@ -162,7 +182,7 @@
           id="Identification"
         ></v-text-field>
       </v-col>
-      <v-col cols="12" sm="6">
+      <v-col cols="12" sm="4">
         <v-menu
           ref="menu1"
           v-model="menu1"
@@ -227,16 +247,23 @@ export default {
     prenomFr: '',
     prenomAr: '',
     nationalite: '',
+    nationaliteAr: '',
     fonction: '',
+    fonctionAr: '',
     nomPereFr: '',
     nomPereAr: '',
     nomMereFr: '',
     nomMereAr: '',
     situation: '',
+    tel: '',
     nomCompanionFr: '',
     nomCompanionAr: '',
     typeIdentification: '',
     Identification: '',
+    lieuxNaissance: '',
+    lieuxNaissanceAr: '',
+    Adresse: '',
+    AdresseAr: '',
     IdentificationValable: new Date().toISOString().substr(0, 0),
     dateNaissance: new Date().toISOString().substr(0, 0),
     situations: [
@@ -246,9 +273,10 @@ export default {
       { situ: "veuf", lib: "Veuf(ve)" },
 
     ],
-    idTypes: ['CIN', 'Acte de naissance', 'Permis de conduire'],
+    idTypes: ['CIN', 'Carte de séjour', 'Acte de naissance', 'Permis de conduire'],
     snackbar: false,
     error: '',
+    loading: false,
   }),
   created() {
     if (this.modifier) {
@@ -257,7 +285,9 @@ export default {
       this.prenomFr = this.comparent.prenomFr
       this.prenomAr = this.comparent.prenomAr
       this.nationalite = this.comparent.nationalite
+      this.nationaliteAr = this.comparent.nationaliteAr
       this.fonction = this.comparent.fonction
+      this.fonctionAr = this.comparent.fonctionAr
       this.nomPereFr = this.comparent.nomPereFr
       this.nomPereAr = this.comparent.nomPereAr
       this.nomMereFr = this.comparent.nomMereFr
@@ -269,10 +299,16 @@ export default {
       this.Identification = this.comparent.Identification
       this.IdentificationValable = this.comparent.IdentificationValable
       this.dateNaissance = this.comparent.dateNaissance
+      this.lieuxNaissance = this.comparent.lieuxNaissance
+      this.lieuxNaissanceAr = this.comparent.lieuxNaissanceAr
+      this.tel = this.comparent.tel
+      this.Adresse = this.comparent.Adresse;
+      this.AdresseAr = this.comparent.AdresseAr;
     }
   },
   methods: {
     enregistrer() {
+      this.loading = true;
       if (this.modifier) {
         this.edit();
       } else
@@ -283,7 +319,9 @@ export default {
           this.prenomFr,
           this.prenomAr,
           this.nationalite,
+          this.nationaliteAr,
           this.fonction,
+          this.fonctionAr,
           this.nomPereFr,
           this.nomPereAr,
           this.nomMereFr,
@@ -294,13 +332,20 @@ export default {
           this.typeIdentification,
           this.Identification,
           this.IdentificationValable,
-          this.dateNaissance
+          this.dateNaissance,
+          this.lieuxNaissance,
+          this.lieuxNaissanceAr,
+          this.tel,
+          this.Adresse,
+          this.AdresseAr
         ).then(resp => {
           console.log(resp)
+          this.loading = false;
           this.$router.push(
             `/comparent?success=Comparent était bien enregistré`
           )
         }).catch((err) => {
+          this.loading = false;
           this.error = err;
           this.snackbar = true;
         });
@@ -313,7 +358,9 @@ export default {
         this.prenomFr,
         this.prenomAr,
         this.nationalite,
+        this.nationaliteAr,
         this.fonction,
+        this.fonctionAr,
         this.nomPereFr,
         this.nomPereAr,
         this.nomMereFr,
@@ -324,13 +371,20 @@ export default {
         this.typeIdentification,
         this.Identification,
         this.IdentificationValable,
-        this.dateNaissance
+        this.dateNaissance,
+        this.lieuxNaissance,
+        this.lieuxNaissanceAr,
+        this.tel,
+        this.Adresse,
+        this.AdresseAr
       ).then(resp => {
+        this.loading = false;
         this.$router.push(
           `/comparent?success=Comparent était bien Modifié`
         )
       }).catch((err) => {
         this.error = err;
+        this.loading = false;
         this.snackbar = true;
       });
     }

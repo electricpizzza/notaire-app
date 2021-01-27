@@ -395,19 +395,15 @@ export default {
       nature: '',
       libelle: '',
       description: '',
-      dateOuverture: null,
+      dateOuverture: new Date().toISOString().split('T')[0],
       dateFermeture: null,
       Bien: [],
       Comparant: [],
       notaire: '',
       dialogBien: false,
       dialogComp: false,
-      compList: [
-
-      ],
-      bienList: [
-
-      ],
+      compList: [],
+      bienList: [],
       selectedItems: [],
       NatureDossiers: [],
       attachmentList: [],

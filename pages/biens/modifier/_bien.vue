@@ -21,11 +21,20 @@
             label="Type"
             item-text="libelle"
             item-value="value"
+            @change="typeChanged"
           ></v-select>
+        </v-col>
+        <v-col cols="12" md="6">
+          <v-text-field
+            v-model="typeAr"
+            label="نوع العقار"
+            reverse
+          ></v-text-field>
         </v-col>
         <v-col cols="12" md="6">
           <v-text-field v-model="valeur" label="Valeur(DHs)"></v-text-field>
         </v-col>
+        <v-col cols="12" md="6"></v-col>
         <v-col cols="12" md="6">
           <v-text-field
             v-model="nb_piece"
@@ -40,24 +49,68 @@
             label="Superficie(m2)"
           ></v-text-field>
         </v-col>
+        <v-col cols="12" md="6">
+          <v-text-field
+            v-model="detailSuperficie"
+            type="text"
+            label="Details de la Superficie"
+          ></v-text-field>
+        </v-col>
+        <v-col cols="12" md="6">
+          <v-text-field
+            v-model="detailSuperficieAr"
+            type="text"
+            label="تفصيل المساحة"
+            reverse
+          ></v-text-field>
+        </v-col>
+        <v-col cols="12" v-if="type !== null">
+          <v-card class="rounded-lg">
+            <v-row>
+              <v-col
+                cols="12"
+                md="6"
+                v-for="detail in details"
+                :key="detail"
+                class="d-flex justify-center"
+              >
+                <v-text-field
+                  v-model="detail.nb"
+                  type="number"
+                  style="width: 50px"
+                  class="mx-5"
+                ></v-text-field>
+                <span class="mt-5 px-10">{{ detail.lib }}</span>
+              </v-col>
+            </v-row>
+          </v-card>
+        </v-col>
         <v-col cols="12">
-          <v-text-field v-model="address" label="Address"></v-text-field>
+          <v-text-field v-model="address" label="Addresse"></v-text-field>
         </v-col>
         <v-col cols="12">
           <v-text-field
-            v-model="address1"
-            label="Address (Facultative)"
+            v-model="addressAr"
+            label="العنوان"
+            reverse
           ></v-text-field>
         </v-col>
-        <v-col cols="12" md="4">
+        <v-col cols="12" md="6">
           <v-text-field v-model="ville" label="Ville"></v-text-field>
         </v-col>
-        <v-col cols="12" md="4">
+        <v-col cols="12" md="6">
+          <v-text-field
+            v-model="villeAr"
+            label="المدينة"
+            reverse
+          ></v-text-field>
+        </v-col>
+        <!-- <v-col cols="12" md="4">
           <v-text-field v-model="Immeuble" label="Immeuble"></v-text-field>
         </v-col>
         <v-col cols="12" md="4">
           <v-text-field v-model="etage" label="Etage"></v-text-field>
-        </v-col>
+        </v-col> -->
 
         <v-col cols="12">
           <v-text-field
@@ -66,11 +119,19 @@
             textarea
           ></v-text-field>
         </v-col>
+        <v-col cols="12">
+          <v-text-field
+            v-model="descriptionAr"
+            label="وصف"
+            reverse
+            textarea
+          ></v-text-field>
+        </v-col>
         <!-- <v-col cols="12" md="6">
           <v-text-field v-model="ancfcc" label="ANCFCC"></v-text-field>
         </v-col> -->
       </v-row>
-      <v-btn color="primary" class="offset-10" dark @click="enregistrer"
+      <v-btn color="primary" class="offset-10" @click="enregistrer"
         >Enregistrer</v-btn
       >
     </form>
@@ -101,6 +162,13 @@ export default {
       terrainType: '',
       snackbar: false,
       error: '',
+      details: [],
+      detailSuperficie: '',
+      typeAr: '',
+      descriptionAr: '',
+      addressAr: '',
+      villeAr: '',
+      detailSuperficieAr: '',
     }
   },
   methods: {
@@ -119,6 +187,13 @@ export default {
         ancfcc: this.ancfcc,
         Immeuble: this.Immeuble,
         terrainType: this.terrainType,
+        details: this.details,
+        detailSuperficie: this.detailSuperficie,
+        typeAr: this.typeAr,
+        descriptionAr: this.descriptionAr,
+        addressAr: this.addressAr,
+        villeAr: this.villeAr,
+        detailSuperficieAr: this.detailSuperficieAr,
       }).then(resp => {
         this.$router.push(
           '/biens?success=Bien est bien modifié'
@@ -127,26 +202,37 @@ export default {
         this.error = err;
         this.snackbar = true;
       });
+    },
+    typeChanged() {
+      this.details = this.bineTypes.find(type => type.value === this.type).details;
+      this.typeAr = this.bineTypes.find(type => type.value === newval).libelleAr
     }
   },
   created() {
     Axios.get('http://localhost:1337/data').then(resp => {
       this.bineTypes = resp.data.typeBien;
     })
-    Axios.get('http://localhost:1337/bien/').then(resp => {
-      this.libelle = resp.data[0].libelle;
-      this.type = resp.data[0].type;
-      this.ville = resp.data[0].ville;
-      this.Superficie = resp.data[0].Superficie;
-      this.address = resp.data[0].address;
-      this.ville = resp.data[0].ville;
-      this.description = resp.data[0].description;
-      this.etage = resp.data[0].etage;
-      this.nb_piece = resp.data[0].nb_piece;
-      this.valeur = resp.data[0].valeur;
-      this.ancfcc = resp.data[0].ancfcc;
-      this.Immeuble = resp.data[0].Immeuble;
-      this.terrainType = resp.data[0].terrainType;
+    Axios.get('http://localhost:1337/bien/' + this.slug).then(resp => {
+      this.libelle = resp.data.libelle;
+      this.type = resp.data.type;
+      this.ville = resp.data.ville;
+      this.Superficie = resp.data.Superficie;
+      this.address = resp.data.address;
+      this.ville = resp.data.ville;
+      this.description = resp.data.description;
+      this.etage = resp.data.etage;
+      this.nb_piece = resp.data.nb_piece;
+      this.valeur = resp.data.valeur;
+      this.ancfcc = resp.data.ancfcc;
+      this.Immeuble = resp.data.Immeuble;
+      this.terrainType = resp.data.terrainType;
+      this.detailSuperficie = resp.data.detailSuperficie;
+      this.typeAr = resp.data.typeAr;
+      this.descriptionAr = resp.data.descriptionAr;
+      this.addressAr = resp.data.addressAr;
+      this.villeAr = resp.data.villeAr;
+      this.detailSuperficieAr = resp.data.detailSuperficieAr;
+      this.details = JSON.parse(resp.data.details);
     });
   },
 }

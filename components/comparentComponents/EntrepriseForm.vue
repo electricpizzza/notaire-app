@@ -13,13 +13,19 @@
     </h1>
     <v-container>
       <v-row>
-        <v-col cols="12">
+        <v-col cols="12" md="6">
           <v-text-field
             v-model="raisonSociale"
             name="raisonSociale"
             label="Raison Sociale"
-            value="id"
-            text="nom"
+          ></v-text-field>
+        </v-col>
+        <v-col cols="12" md="6">
+          <v-text-field
+            v-model="raisonSocialeAr"
+            name="raisonSociale"
+            label="اسم الشركة"
+            reverse
           ></v-text-field>
         </v-col>
         <v-col cols="12" sm="6">
@@ -47,114 +53,97 @@
           ></v-text-field>
         </v-col>
         <v-col cols="12" sm="6">
-          <v-select
-            v-model="representant"
-            name="representant"
-            :items="representants"
-            label="Representant"
-            item-value="id"
-            item-text="nom"
-            multiple
-          ></v-select>
+          <v-text-field v-model="IDF" label="I.F"></v-text-field>
         </v-col>
-        <!-- <v-col cols="12">
-          <v-dialog v-model="dialogComp" width="500">
-            <v-card>
-              <v-card-title class="headline grey lighten-2">
-                Choix de(s) Comparant(s)
-              </v-card-title>
-              <v-card-text>
-                <v-list shaped>
-                  <v-row>
-                    <v-col cols="9">
-                      <v-text-field
-                        v-model="search"
-                        append-icon="mdi-magnify"
-                        label="Chercher"
-                        single-line
-                        hide-details
-                      ></v-text-field>
-                    </v-col>
-                    <v-col cols="3">
-                      <v-btn dark small color="primary">
-                        <v-icon>mdi-plus</v-icon> Nouveau
-                      </v-btn>
-                    </v-col>
-                  </v-row>
-                  <v-data-table
-                    v-model="selectedItems"
-                    :headers="headersComp"
-                    :items="representants"
-                    item-key="id"
-                    show-select
-                    :search="search"
-                    class="elevation-1"
-                  >
-                  </v-data-table>
-                </v-list>
-              </v-card-text>
-              <v-divider></v-divider>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="primary" text @click="selectComparant">
-                  Selectionner
-                </v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
-          <v-sheet elevation="10" rounded="xl">
-            <v-sheet class="pa-3 primary" dark rounded="t-xl">
-              <v-row>
-                <v-col cols="9">
-                  <h3>
-                    <v-icon>mdi-account-outline</v-icon>
-                    Comparant(s)
-                  </h3>
-                </v-col>
-                <v-col cols="3" class="text-right">
-                  <v-btn disabled icon>
-                    <v-icon>mdi-account-outline</v-icon>
-                  </v-btn>
-                  <v-btn class="ml-2" icon @click="dialogComp = true">
-                    <v-icon>mdi-plus</v-icon>
-                  </v-btn>
-                </v-col>
-              </v-row>
-            </v-sheet>
-
-            <div class="pa-4">
-              <v-simple-table rounded="t-xl" v-if="representant.length != 0">
-                <template v-slot:default>
-                  <thead>
-                    <tr>
-                      <th class="text-left">ID</th>
-                      <th class="text-left">Type</th>
-                      <th class="text-left">Nom de Representant</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr v-for="comp in representant" :key="comp.id">
-                      <td>{{ comp.id }}</td>
-                      <td>{{ comp.type }}</td>
-                      <td>{{ comp.nom }}</td>
-                    </tr>
-                  </tbody>
-                </template>
-              </v-simple-table>
-            </div>
-          </v-sheet>
-        </v-col> -->
+        <v-col cols="12" sm="6">
+          <v-text-field v-model="RS" label="R.S"></v-text-field>
+        </v-col>
+        <v-col cols="12" sm="6">
+          <v-text-field v-model="capital" label="Capital"></v-text-field>
+        </v-col>
+        <v-col cols="12" sm="6">
+          <v-text-field v-model="tel" label="Telephone"></v-text-field>
+        </v-col>
         <v-col cols="12">
           <v-text-field
             v-model="Adresse"
-            v-bind="Address"
+            v-bind="Adresse"
             label="Adresse"
             name="Adresse"
             textarea
           ></v-text-field>
         </v-col>
-        <v-col cols="12" sm="6"> </v-col>
-        <v-col cols="12"> </v-col>
+        <v-col cols="12">
+          <v-text-field
+            v-model="AdresseAr"
+            v-bind="AdresseAr"
+            label="العنوان"
+            reverse
+            textarea
+          ></v-text-field>
+        </v-col>
+        <v-col cols="12">
+          <v-card>
+            <div
+              class="d-flex justify-md-space-between"
+              style="color: #295075; padding: 30px"
+            >
+              <h4 class="pa-5 text-primary">Représentant :</h4>
+              <h4 class="pa-5 text-primary">:المسؤول</h4>
+            </div>
+            <v-row class="pa-5">
+              <v-col cols="12" md="6">
+                <v-text-field
+                  v-model="representant.nom"
+                  label="Nom & Prenom"
+                  id="id"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" md="6">
+                <v-text-field
+                  v-model="representant.nomAr"
+                  label="الاسم الشخصي و العائلي"
+                  reverse
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" md="6">
+                <v-select
+                  :items="[
+                    'CIN',
+                    'Carte de séjour',
+                    'Acte de naissance',
+                    'Permis de conduire',
+                  ]"
+                  v-model="representant.typeId"
+                  label="Type d'identification"
+                ></v-select>
+              </v-col>
+              <v-col cols="12" md="6">
+                <v-text-field
+                  v-model="representant.identification"
+                  label="Identification du Representant"
+                  id="id"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <v-text-field
+                  v-model="representant.address"
+                  textarea
+                  label="Addresse du Representant"
+                  id="id"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <v-text-field
+                  v-model="representant.addressAr"
+                  textarea
+                  label="العنوان الشخصي"
+                  reverse
+                ></v-text-field>
+              </v-col>
+            </v-row>
+          </v-card>
+        </v-col>
       </v-row>
     </v-container>
     <div class="d-flex justify-space-between mx-8">
@@ -184,12 +173,25 @@ export default {
     dialogComp: false,
     comp: '',
     name: '',
-    representant: '',
+    representant: {
+      nom: '',
+      nomAR: '',
+      address: '',
+      addressAr: '',
+      typeId: '',
+      identification: ''
+    },
     raisonSociale: '',
+    raisonSocialeAr: '',
     ice: '',
     rc: '',
+    IDF: '',
+    RS: '',
+    capital: '',
+    tel: '',
     cnss: '',
     Adresse: '',
+    AdresseAr: '',
     representants: [],
     select: null,
     checkbox: false,
@@ -213,12 +215,17 @@ export default {
   created() {
     if (this.modifier) {
       this.raisonSociale = this.comparent.raisonSociale;
+      this.raisonSocialeAr = this.comparent.raisonSocialeAr;
       this.ice = this.comparent.ice;
       this.rc = this.comparent.rc;
-      this.If = this.comparent.If;
+      this.IDF = this.comparent.IDF;
       this.cnss = this.comparent.cnss;
       this.representant = this.comparent.representant;
       this.Adresse = this.comparent.Adresse;
+      this.AdresseAr = this.comparent.AdresseAr;
+      this.RS = this.comparent.RS;
+      this.tel = this.comparent.tel;
+      this.capital = this.comparent.capital;
     } else
       this.raisonSociale = this.comparent.nom
   },
@@ -246,12 +253,17 @@ export default {
           .saveEntreprise(
             this.comparent.id,
             this.raisonSociale,
+            this.raisonSocialeAr,
             this.ice,
             this.rc,
-            this.If,
+            this.IDF,
             this.cnss,
             this.representant,
-            this.Adresse
+            this.Adresse,
+            this.AdresseAr,
+            this.RS,
+            this.tel,
+            this.capital
           )
           .then((resp) => {
             this.$router.push(
@@ -266,12 +278,17 @@ export default {
       comparentService.editEntreprise(
         this.comparent.comparent,
         this.raisonSociale,
+        this.raisonSocialeAr,
         this.ice,
         this.rc,
-        this.If,
+        this.IDF,
         this.cnss,
         this.representant,
-        this.Adresse
+        this.Adresse,
+        this.AdresseAr,
+        this.RS,
+        this.tel,
+        this.capital
       ).then(resp => {
         this.$router.push(
           `/comparent?success=Comparent était bien Modifié`
