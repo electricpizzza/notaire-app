@@ -15,7 +15,7 @@
         </v-btn>
       </template>
     </v-snackbar>
-    <h1 class="text-center">Ajouter</h1>
+    <h1 class="px-10">Modefication</h1>
     <v-dialog
       v-model="dialog"
       persistent
@@ -24,7 +24,7 @@
       transition="dialog-transition"
     >
       <v-card>
-        <v-card-title primary-title> Ajouter un Aveu </v-card-title>
+        <v-card-title primary-title> </v-card-title>
         <v-card-text>
           <v-row>
             <v-col cols="12">
@@ -108,7 +108,7 @@
         </v-col>
         <v-col cols="12" class="d-flex justify-lg-space-around mt-10">
           <h4>Les Quotas Communes :</h4>
-          <h4>:الحصص المشاعة</h4>
+          <h4>:الحصة في الملكية المشاعة</h4>
         </v-col>
         <v-col cols="12" v-for="partie in partieChp" :key="partie.ref">
           <v-row>
@@ -146,11 +146,12 @@
         <v-col cols="12">
           <v-text-field
             v-model="partieStr"
-            label="Les Quotas Communes "
+            label="Partie "
+            id="id"
           ></v-text-field>
         </v-col>
         <h3>Les Reçu :</h3>
-        <v-col cols="12" v-for="recu in recus" :key="recu">
+        <v-col cols="12" v-for="recu in recus" :key="recu.num">
           <v-row>
             <v-col cols="12" md="4">
               <v-text-field v-model="recu.annee" label="Année"></v-text-field>
@@ -158,20 +159,20 @@
             <v-col cols="12" md="4">
               <v-text-field
                 v-model="recu.num"
-                label="Numero de quittance"
+                label="Numero de Reçu"
               ></v-text-field>
             </v-col>
             <v-col cols="12" md="4">
               <v-text-field
                 v-model="recu.date"
-                label="Date de quittance"
+                label="Date de Reçu"
               ></v-text-field>
             </v-col>
           </v-row>
         </v-col>
         <v-col cols="12" class="d-flex justify-lg-end">
           <v-btn outlined color="primary" small @click="addRecu"
-            >Ajouter un quittance</v-btn
+            >Ajouter un reçu</v-btn
           >
         </v-col>
 
@@ -189,9 +190,13 @@
 <script>
 import Axios from 'axios';
 export default {
+  async asyncData({ params }) {
+    const slug = params.aveu
+    return { slug };
+  },
   data() {
     return {
-      dialog: true,
+      dialog: false,
       loading: false,
       error: '',
       snackbar: false,
@@ -204,26 +209,31 @@ export default {
       dossiers: [],
       status: '',
       recus: [
-        { annee: new Date().getFullYear(), num: '', date: new Date().toLocaleString().split(',')[0] }
       ],
       partieChp: [
-        { superficie: '', accentuation: '', prix: '', montant: '' }
       ],
       partieStr: '',
       comparents: [],
-      biens: []
+      biens: [],
+      bien: '',
+      comparent: '',
 
     }
   },
   created() {
-    Axios.get('http://localhost:1337/data').then(resp => {
-      this.models = resp.data.modelAveu;
-    }).catch((err) => {
-
-    });
-    Axios.get('http://localhost:1337/dossiers').then(resp => {
-      this.dossiers = resp.data;
-      console.log(this.dossiers);
+    Axios.get('http://localhost:1337/comparent/').then(resp => {
+      this.comparents = resp.data;
+    })
+    Axios.get('http://localhost:1337/bien/').then(resp => {
+      this.biens = resp.data
+    })
+    Axios.get('http://localhost:1337/aveu/' + this.slug).then(resp => {
+      this.bien = resp.data.bien;
+      this.comparent = resp.data.comparent;
+      this.partieChp = resp.data.partieChp;
+      this.partieStr = resp.data.partieStr;
+      this.recus = resp.data.recu;
+      this.status = resp.data.status;
     })
   },
   methods: {
@@ -248,11 +258,11 @@ export default {
       this.recus.push({ annee: 2020, num: '', date: new Date().toLocaleString().split(',')[0] })
     },
     addPartie() {
-      this.partieChp.push({ feild1: '', feild2: '', feild3: '' })
+      // this.partieChp.push({ feild1: '', feild2: '', feild3: '' })
     },
     enregistrer() {
       this.loading = true;
-      Axios.post('http://localhost:1337/aveu', {
+      Axios.put('http://localhost:1337/aveu/' + this.slug, {
         comparent: this.comparent,
         bien: this.bien,
         status: this.status,
@@ -261,9 +271,9 @@ export default {
         recu: this.recus,
       }).then(resp => {
         this.loading = false;
-        this.$router.push('/aveu?success=Aveu était beien Ajouté')
+        this.$router.push('/aveu?success=Aveu était beien modifié')
       }).catch(err => {
-        this.loading = false
+        this.loading = false;
         this.error = err;
         this.snackbar = true;
       })

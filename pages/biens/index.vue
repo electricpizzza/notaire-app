@@ -44,7 +44,9 @@
       <template v-slot:expanded-item="{ headers, item }">
         <td :colspan="headers.length">
           <v-row class="mx-4">
-            <v-col cols="12" md="6"><b>Titre Foncier: </b>{{ item.libelle }}</v-col>
+            <v-col cols="12" md="6"
+              ><b>Titre Foncier: </b>{{ item.libelle }}</v-col
+            >
             <v-col cols="12" md="6"><b>Type: </b>{{ item.type }}</v-col>
             <v-col cols="12" md="6">
               <b>Superfacie: </b>{{ item.Superficie }}
@@ -60,7 +62,7 @@
             </v-col>
             <v-col cols="12">
               <div class="offset-9">
-                <v-btn color="success" nuxt :to="'./biens/modifier/' + item.id"
+                <v-btn color="success" nuxt :to="'/biens/modifier/' + item.id"
                   >Modifier</v-btn
                 >
                 <v-btn color="error lighten-1" @click="remove(item.id)"

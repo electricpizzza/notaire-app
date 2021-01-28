@@ -148,6 +148,11 @@ export default {
           to: '/modeles',
         },
         {
+          icon: 'mdi-file',
+          title: 'إقرار',
+          to: '/aveu',
+        },
+        {
           icon: 'mdi-file-document',
           title: 'Factures',
           to: '/factures',

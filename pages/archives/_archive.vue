@@ -1,5 +1,20 @@
 <template>
   <div>
+    <v-overlay :value="loading">
+      <v-progress-circular
+        color="primary"
+        indeterminate
+        v-model="loading"
+      ></v-progress-circular>
+    </v-overlay>
+    <v-snackbar v-model="snackbar" color="error lighten-1" top>
+      {{ error }}
+      <template v-slot:action="{ attrs }">
+        <v-btn icon v-bind="attrs" @click="snackbar = false">
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+      </template>
+    </v-snackbar>
     <v-card>
       <v-card-title primary-title>
         <h2>{{ "Archive : " + titre }}</h2>
@@ -118,6 +133,9 @@ export default {
       files: [],
       addFileDialog: false,
       newFiles: [],
+      loading: false,
+      error: '',
+      snackbar: false,
     }
   },
   created() {
@@ -134,9 +152,10 @@ export default {
       this.newFiles.push(...this.$refs.file.files);
     },
     addFile() {
+      this.loading = false;
       let formData = new FormData();
       this.newFiles.forEach(file => {
-        formData.append('files', file, name.name);
+        formData.append('files', file, file.name);
       });
 
       Axios.post(`http://localhost:1337/archive/addFiles/${this.archive}`, formData).then(resp => {
@@ -145,7 +164,11 @@ export default {
         this.addFileDialog = false;
         this.newFiles = [];
 
-      }).catch(err => console.error(err))
+      }).catch(err => {
+        this.loading = false;
+        this.error = err;
+        this.snackbar = true;
+      })
     },
 
   },

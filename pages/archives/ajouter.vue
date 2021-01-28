@@ -1,5 +1,20 @@
 <template>
   <v-container class="pa-10">
+    <v-overlay :value="loading">
+      <v-progress-circular
+        color="primary"
+        indeterminate
+        v-model="loading"
+      ></v-progress-circular>
+    </v-overlay>
+    <v-snackbar v-model="snackbar" color="error lighten-1" top>
+      {{ error }}
+      <template v-slot:action="{ attrs }">
+        <v-btn icon v-bind="attrs" @click="snackbar = false">
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+      </template>
+    </v-snackbar>
     <h2>Créer Un Nouveau Archive</h2>
     <form>
       <v-row>
@@ -58,6 +73,9 @@ export default {
       titre: '',
       description: '',
       testimage: '',
+      loading: false,
+      error: '',
+      snackbar: false,
     }
   },
   created() {
@@ -69,6 +87,7 @@ export default {
       this.files.push(...this.$refs.file.files);
     },
     enregistrer() {
+      this.loading = true;
       let formData = new FormData();
       this.files.forEach(file => {
         formData.append('files', file, file.name);
@@ -77,10 +96,15 @@ export default {
       formData.append('dossier', this.dossier);
       formData.append('description', this.description);
       Axios.post('http://localhost:1337/archive', formData).then(resp => {
+        this.loading = false;
         this.$router.push(
           `/archives?success=Archive est bien enregistré`
         )
-      }).catch(err => console.error(err))
+      }).catch(err => {
+        this.loading = false;
+        this.error = err;
+        this.snackbar = true;
+      })
     }
   },
 }
