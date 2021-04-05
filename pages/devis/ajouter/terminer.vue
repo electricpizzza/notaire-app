@@ -310,74 +310,88 @@
   </div>
 </template>
 <script>
-import Axios from 'axios';
-import DevisStore from '~/assets/store/devisStore'
-import comptabiliteStore from './../../../assets/store/comptabiliteStore'
+import Axios from "axios";
+import DevisStore from "~/assets/store/devisStore";
+import comptabiliteStore from "./../../../assets/store/comptabiliteStore";
 export default {
   data() {
     return {
       dateDevis: new Date().toISOString().substr(0, 0),
-      termes: '',
+      termes: "",
       Comparant: null,
-      search: '',
+      search: "",
       dialogComp: false,
       total: 0,
       remisG: 0,
-      maitre: '',
-      payment: '',
-      reference: '1',
+      maitre: "Mr Mohammed LOUTFI",
+      payment: "",
+      reference: "1",
       snackbar: false,
-      error: '',
-      client: { nom: '', address: '' },
+      error: "",
+      client: { nom: "", address: "" },
       articles: [],
       ajDialog: false,
       items: [],
       serviceToAdd: {
-        libelle: '',
+        libelle: "",
         tva: 0
       },
-      fromItems: '',
-    }
+      fromItems: ""
+    };
   },
   created() {
     this.articles = comptabiliteStore.services;
-    Axios.get('http://localhost:1337/devis/count').then(resp => {
-      const ref = (resp.data + 1) / 10000;
-      this.reference = new Date().getFullYear() + ref.toString().replace('0.', '/');
-    }).catch(err => console.log(err));
-    Axios.get('http://localhost:1337/service').then(resp => {
-      this.items = resp.data;
-    }).catch(err => console.log(err));
+    Axios.get("http://localhost:1337/devis/count")
+      .then(resp => {
+        const ref = (resp.data + 1) / 10000;
+        this.reference =
+          new Date().getFullYear() + ref.toString().replace("0.", "/");
+      })
+      .catch(err => console.log(err));
+    Axios.get("http://localhost:1337/service")
+      .then(resp => {
+        this.items = resp.data;
+      })
+      .catch(err => console.log(err));
   },
   methods: {
     addRow() {
-      if (this.serviceToAdd.libelle === '' && this.fromItems !== '') {
+      if (this.serviceToAdd.libelle === "" && this.fromItems !== "") {
         const row = this.items.find(item => item.id === this.fromItems);
         this.articles.push(row);
       } else {
-        const row = { id: 'AJ' + this.articles.length, libelle: this.serviceToAdd.libelle, pu: 0, tva: this.serviceToAdd.tva, total: 0, class: '' };
+        const row = {
+          id: "AJ" + this.articles.length,
+          libelle: this.serviceToAdd.libelle,
+          pu: 0,
+          tva: this.serviceToAdd.tva,
+          total: 0,
+          class: ""
+        };
         this.articles.push(row);
       }
-      this.fromItems = '';
+      this.fromItems = "";
       this.serviceToAdd = {
-        libelle: '',
+        libelle: "",
         tva: 0
       };
       this.ajDialog = false;
     },
     removeRow(id) {
-      this.articles = this.articles.filter(art => art.id !== id)
+      this.articles = this.articles.filter(art => art.id !== id);
     },
     calTotal(id) {
       const article = this.articles.find(art => art.id === id);
-      article.total = parseFloat(article.pu) + (parseFloat(article.pu) * parseFloat(article.tva) / 100);
+      article.total =
+        parseFloat(article.pu) +
+        (parseFloat(article.pu) * parseFloat(article.tva)) / 100;
       this.total = 0;
       this.articles.forEach(article => {
-        this.total += parseFloat(article.total)
+        this.total += parseFloat(article.total);
       });
     },
     enregistrer() {
-      Axios.post('http://localhost:1337/devis', {
+      Axios.post("http://localhost:1337/devis", {
         articles: this.articles,
         reference: this.reference,
         remisG: this.remisG,
@@ -387,18 +401,20 @@ export default {
         maitre: this.maitre,
         payment: this.payment,
         client: this.client
-      }).then(resp => {
-        this.$router.push("/devis")
-      }).catch((err) => {
-        this.error = err;
-        this.snackbar = true;
-      });
+      })
+        .then(resp => {
+          this.$router.push("/devis");
+        })
+        .catch(err => {
+          this.error = err;
+          this.snackbar = true;
+        });
     }
-  },
-}
+  }
+};
 </script>
 <style lang="css">
-  .tr:hover{
-    background-color: #fff;
-  }
+.tr:hover {
+  background-color: #fff;
+}
 </style>

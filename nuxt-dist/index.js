@@ -12,8 +12,8 @@ import { setContext, getLocation, getRouteData, normalizeError } from './utils'
 
 /* Plugins */
 
-import nuxt_plugin_plugin_2af998ee from 'nuxt_plugin_plugin_2af998ee' // Source: ./components/plugin.js (mode: 'all')
-import nuxt_plugin_plugin_676801c0 from 'nuxt_plugin_plugin_676801c0' // Source: ./vuetify/plugin.js (mode: 'all')
+import nuxt_plugin_plugin_1d06c26a from 'nuxt_plugin_plugin_1d06c26a' // Source: ./components/plugin.js (mode: 'all')
+import nuxt_plugin_plugin_68dba9c4 from 'nuxt_plugin_plugin_68dba9c4' // Source: ./vuetify/plugin.js (mode: 'all')
 import nuxt_plugin_TiptapVuetify_5e6e5270 from 'nuxt_plugin_TiptapVuetify_5e6e5270' // Source: ../plugins/TiptapVuetify (mode: 'all')
 
 // Component: <ClientOnly>
@@ -174,12 +174,12 @@ async function createApp(ssrContext, config = {}) {
   }
   // Plugin execution
 
-  if (typeof nuxt_plugin_plugin_2af998ee === 'function') {
-    await nuxt_plugin_plugin_2af998ee(app.context, inject)
+  if (typeof nuxt_plugin_plugin_1d06c26a === 'function') {
+    await nuxt_plugin_plugin_1d06c26a(app.context, inject)
   }
 
-  if (typeof nuxt_plugin_plugin_676801c0 === 'function') {
-    await nuxt_plugin_plugin_676801c0(app.context, inject)
+  if (typeof nuxt_plugin_plugin_68dba9c4 === 'function') {
+    await nuxt_plugin_plugin_68dba9c4(app.context, inject)
   }
 
   if (typeof nuxt_plugin_TiptapVuetify_5e6e5270 === 'function') {

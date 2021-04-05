@@ -119,134 +119,143 @@
   </v-data-table>
 </template>
 <script>
-import axios from 'axios'
-import ComparentService from './../../assets/sevices/comparentService'
-import Axios from 'axios'
-const comparentService = new ComparentService()
+import axios from "axios";
+import ComparentService from "./../../assets/sevices/comparentService";
+import Axios from "axios";
+const comparentService = new ComparentService();
 export default {
   data: () => ({
     dialog: false,
     snackbar: false,
-    search: '',
+    search: "",
     success: null,
-    types: { PP: "Personne Physique", PM: "Personne Morale", PPM: "Personne Physique Mineur" },
+    types: {
+      PP: "Personne Physique",
+      PM: "Personne Morale",
+      PPM: "Personne Physique Mineur"
+    },
     dialogForm: false,
     dialogDelete: false,
     headers: [
-      { text: 'ID', value: 'id', align: 'start', sortable: false },
-      { text: 'Type', value: 'type' },
-      { text: 'Nom / Raison social', value: 'nom' },
-      { text: "Date d'ajout", value: 'dateAjout' },
-      { text: 'Actions', value: 'actions', sortable: false },
+      { text: "ID", value: "id", align: "start", sortable: false },
+      { text: "Type", value: "type" },
+      { text: "Nom / Raison social", value: "nom" },
+      { text: "Date d'ajout", value: "dateAjout" },
+      { text: "Actions", value: "actions", sortable: false }
     ],
     comparents: [],
     editedIndex: -1,
     editedItem: {
       id: null,
-      type: '',
-      nom: '',
-      dateAjout: '',
+      type: "",
+      nom: "",
+      dateAjout: "",
       mineur: false
     },
     defaultItem: {
       id: null,
-      type: '',
-      nom: '',
-      dateAjout: '',
+      type: "",
+      nom: "",
+      dateAjout: "",
       mineur: false
-    },
+    }
   }),
 
   computed: {
     formTitle() {
-      return this.editedIndex === -1 ? 'Ajouter Nouveau Comparent' : 'Modifier Comparent'
-    },
+      return this.editedIndex === -1
+        ? "Ajouter Nouveau Comparent"
+        : "Modifier Comparent";
+    }
   },
 
   watch: {
     dialog(val) {
-      val || this.close()
+      val || this.close();
     },
     dialogDelete(val) {
-      val || this.closeDelete()
-    },
+      val || this.closeDelete();
+    }
   },
 
   created() {
-    this.initialize()
+    this.initialize();
   },
 
   methods: {
     initialize() {
-      this.success = this.$route.query.success
+      this.success = this.$route.query.success;
       if (this.success != null) {
         this.snackbar = true;
       }
       axios
-        .get('http://localhost:1337/comparent', { mode: 'cors' })
-        .then((resp) => {
-          this.comparents = resp.data
+        .get("http://localhost:1337/comparent", { mode: "cors" })
+        .then(resp => {
+          this.comparents = resp.data;
         })
-        .catch((err) => console.error(err))
+        .catch(err => console.error(err));
     },
     editItem(item) {
-      this.$router.push(
-        `/comparent/modifier/${item.id}`
-      )
+      this.$router.push(`/comparent/modifier/${item.id}`);
     },
 
     deleteItem(item) {
-      this.dialogDelete = true
+      this.dialogDelete = true;
       this.editedIndex = item.id;
     },
 
     deleteItemConfirm() {
-
-      console.log(this.editedIndex);
-      Axios.delete('http://localhost:1337/comparent/' + this.editedIndex).then(resp => {
-        this.comparents = this.comparents.filter(comp => comp.id !== this.editedIndex);
-        axios
-          .get('http://localhost:1337/comparent', { mode: 'cors' })
-          .then((resp) => {
-            this.comparents = resp.data
-          })
-          .catch((err) => console.error(err))
-        this.dialogDelete = false;
-      }).catch(err => console.error(err));
-      this.closeDelete()
+      Axios.delete("http://localhost:1337/comparent/" + this.editedIndex)
+        .then(resp => {
+          this.comparents = this.comparents.filter(
+            comp => comp.id !== this.editedIndex
+          );
+          axios
+            .get("http://localhost:1337/comparent", { mode: "cors" })
+            .then(resp => {
+              this.comparents = resp.data;
+            })
+            .catch(err => console.error(err));
+          this.dialogDelete = false;
+        })
+        .catch(err => console.error(err));
+      this.closeDelete();
     },
 
     close() {
-      this.dialog = false
+      this.dialog = false;
       this.$nextTick(() => {
-        this.editedItem = Object.assign({}, this.defaultItem)
-        this.editedIndex = -1
-      })
+        this.editedItem = Object.assign({}, this.defaultItem);
+        this.editedIndex = -1;
+      });
     },
 
     closeDelete() {
-      this.dialogDelete = false
+      this.dialogDelete = false;
       this.$nextTick(() => {
-        this.editedItem = Object.assign({}, this.defaultItem)
-        this.editedIndex = -1
-      })
+        this.editedItem = Object.assign({}, this.defaultItem);
+        this.editedIndex = -1;
+      });
     },
 
     save() {
       if (this.editedIndex > -1) {
-        Object.assign(this.comparents[this.editedIndex], this.editedItem)
+        Object.assign(this.comparents[this.editedIndex], this.editedItem);
       } else {
-        this.editedItem.type = this.editedItem.mineur ? 'PPM' : this.editedItem.type
-        comparentService.createComparent(this.editedItem.nom, this.editedItem.type)
-          .then((resp) => {
+        this.editedItem.type = this.editedItem.mineur
+          ? "PPM"
+          : this.editedItem.type;
+        comparentService
+          .createComparent(this.editedItem.nom, this.editedItem.type)
+          .then(resp => {
             this.$router.push(
               `/comparent/ajouter?id=${resp.data.identifiers[0].id}`
-            )
+            );
           })
-          .catch((err) => console.log(err))
+          .catch(err => console.log(err));
       }
-      this.close()
-    },
-  },
-}
+      this.close();
+    }
+  }
+};
 </script>

@@ -54,7 +54,7 @@
                   :to="'./dossiers/modifier/' + item.id"
                   >Modifier</v-btn
                 >
-                <v-btn color="error lighten-1">Suprimer</v-btn>
+                <!-- <v-btn color="error lighten-1">Suprimer</v-btn> -->
               </div>
             </v-col>
           </v-row>
@@ -64,30 +64,30 @@
   </v-card>
 </template>
 <script>
-import Axios from 'axios'
-import DossierService from './../../assets/sevices/dossierService.js'
-const dossierService = new DossierService()
+import Axios from "axios";
+import DossierService from "./../../assets/sevices/dossierService.js";
+const dossierService = new DossierService();
 
 export default {
   data() {
     return {
-      search: '',
+      search: "",
       expanded: [],
       headers: [
         {
-          text: 'ID',
-          align: 'start',
+          text: "ID",
+          align: "start",
           filterable: false,
-          value: 'identifiant',
+          value: "identifiant"
         },
-        { text: 'Titre', value: 'title' },
-        { text: 'Nature', value: 'nature' },
-        { text: 'Maitre', value: 'NomMaitre' },
-        { text: '', value: 'data-table-expand' },
+        { text: "Titre", value: "title" },
+        { text: "Nature", value: "nature" },
+        { text: "Maitre", value: "NomMaitre" },
+        { text: "", value: "data-table-expand" }
       ],
       dossiers: [],
-      snackbar: false,
-    }
+      snackbar: false
+    };
   },
 
   created() {
@@ -95,10 +95,10 @@ export default {
     if (this.success != null) {
       this.snackbar = true;
     }
-    Axios.get('http://localhost:1337/dossiers').then(resp => {
+    Axios.get("http://localhost:1337/dossiers").then(resp => {
       this.dossiers = resp.data;
       console.log(resp.data);
-    })
-  },
-}
+    });
+  }
+};
 </script>

@@ -45,7 +45,7 @@
                   :to="'./modeles/modifier/' + item.id"
                   >Modifier</v-btn
                 >
-                <v-btn color="error lighten-1">Suprimer</v-btn>
+                <!-- <v-btn color="error lighten-1">Suprimer</v-btn> -->
               </div>
             </v-col>
           </v-row>
@@ -55,36 +55,36 @@
   </v-card>
 </template>
 <script>
-import axios from 'axios'
+import axios from "axios";
 
 export default {
   data() {
     return {
-      search: '',
+      search: "",
       expanded: [],
       headers: [
         {
-          text: 'ID',
-          align: 'start',
+          text: "ID",
+          align: "start",
           filterable: false,
-          value: 'id',
+          value: "id"
         },
-        { text: 'Libelle', value: 'libelle' },
-        { text: 'type', value: 'type' },
-        { text: 'Language', value: 'language' },
-        { text: 'Redacteur', value: 'redacteur' },
-        { text: '', value: 'data-table-expand' },
+        { text: "Libelle", value: "libelle" },
+        { text: "type", value: "type" },
+        { text: "Language", value: "language" },
+        { text: "Redacteur", value: "redacteur" },
+        { text: "", value: "data-table-expand" }
       ],
-      modeles: [],
-    }
+      modeles: []
+    };
   },
   beforeCreate() {
-    axios.get('http://localhost:1337/model').then(resp => {
+    axios.get("http://localhost:1337/model").then(resp => {
       this.modeles = resp.data;
-    })
+    });
   },
   created() {
-    this.success = this.$route.query.success
-  },
-}
+    this.success = this.$route.query.success;
+  }
+};
 </script>

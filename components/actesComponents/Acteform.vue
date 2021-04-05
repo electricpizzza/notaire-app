@@ -20,7 +20,7 @@
             v-if="champ.type === 'comparent'"
           >
             <v-dialog
-              v-model="dynamicData.find((d) => d.nom == champ.name).dialogChoix"
+              v-model="dynamicData.find(d => d.nom == champ.name).dialogChoix"
               width="500"
             >
               <v-card>
@@ -117,7 +117,7 @@
                     icon
                     @click="
                       dynamicData.find(
-                        (d) => d.nom == champ.name
+                        d => d.nom == champ.name
                       ).dialogChoix = true
                     "
                   >
@@ -130,7 +130,7 @@
             <div class="pa-4">
               <v-chip-group active-class="primary--text" column>
                 <v-chip
-                  v-for="comp in dynamicData.find((d) => d.nom == champ.name)
+                  v-for="comp in dynamicData.find(d => d.nom == champ.name)
                     .data"
                   :key="comp.id"
                 >
@@ -174,77 +174,83 @@
   </v-container>
 </template>
 <script>
-import axios from 'axios'
-import ComparentService from './../../assets/sevices/comparentService'
-import RichEditor from '../RichEditor.vue'
-const comparentService = new ComparentService()
+import axios from "axios";
+import ComparentService from "./../../assets/sevices/comparentService";
+import RichEditor from "../RichEditor.vue";
+const comparentService = new ComparentService();
 export default {
   components: { RichEditor },
   name: "Acteform",
   data() {
     return {
-      search: '',
+      search: "",
       schema: [],
       champs: [],
-      modelActuel: '',
-      redacteur: '',
-      fichier: '',
-      dossier: '',
-      libelle: '',
+      modelActuel: "",
+      redacteur: "",
+      fichier: "",
+      dossier: "",
+      libelle: "",
       comparents: [],
       dossiers: [],
       dynamicData: [],
       dialogChoix: false,
-      document: '',
+      document: "",
       data: [],
-      items: [
-      ],
+      items: [],
       headersComp: [
-        { text: 'ID', value: 'id' },
-        { text: 'Nom de Comparant', value: 'type' },
-        { text: 'Nom de Comparant', value: 'nom' },
+        { text: "ID", value: "id" },
+        { text: "Nom de Comparant", value: "type" },
+        { text: "Nom de Comparant", value: "nom" }
       ],
       selectedItems: [],
       snackbar: false,
-      error: '',
-    }
+      error: ""
+    };
   },
-  props: ["model"],
+  props: ["model", "oldContenu"],
 
   beforeCreate() {
     comparentService.getAllComparents().then(resp => {
       this.items = resp.data;
     });
-    axios.get('http://localhost:1337/dossiers').then(res => {
-      this.dossiers = res.data;
-    }).catch((err) => {
-      this.error = err;
-      this.snackbar = true;
-    });
+    axios
+      .get("http://localhost:1337/dossiers")
+      .then(res => {
+        this.dossiers = res.data;
+      })
+      .catch(err => {
+        this.error = err;
+        this.snackbar = true;
+      });
   },
   created() {
-    this.schema = JSON.parse(this.model.champs);
+    if (this.model) {
+      this.schema = JSON.parse(this.model.champs);
+    } else {
+      this.schema = this.oldContenu;
+      this.oldContenu.forEach(element => {});
+    }
     var id = 0;
     const objs = [];
     this.schema.forEach(chmp => {
-      if (chmp.type === 'comparent') {
+      if (chmp.type === "comparent") {
         id++;
         objs.push({
           id,
           dialogChoix: false,
           nom: chmp.name,
           type: chmp.type,
-          data: [],
+          data: []
         });
       }
     });
     this.dynamicData = objs;
-    console.log(this.schema, objs);
   },
   watch: {
     model: () => {
       // this.schema = JSON.parse(this.model.champs)
-    },
+    }
   },
   methods: {
     changed() {
@@ -252,59 +258,60 @@ export default {
     },
     selectItems(name) {
       this.dynamicData.find(d => d.nom == name).data = [...this.selectedItems];
-      this.dynamicData.find(d => d.nom == name).dialogChoix = false
+      this.dynamicData.find(d => d.nom == name).dialogChoix = false;
       this.selectedItems = [];
     },
     enregistrer() {
-      const chmps = document.querySelectorAll('input');
+      const chmps = document.querySelectorAll("input");
       chmps.forEach(chmp => {
         if (chmp.name != "") {
           this.champs.push({
             name: chmp.name,
             type: chmp.type,
-            value: chmp.value,
+            value: chmp.value
           });
         }
       });
       this.dynamicData.forEach(chmp => {
         const objs = [];
         chmp.data.forEach(element => {
-          objs.push(element.id)
+          objs.push(element.id);
         });
         this.champs.push({
           name: chmp.nom,
           type: chmp.type,
-          value: [...objs],
+          value: [...objs]
         });
       });
 
-      console.log({
-        contenu: this.champs,
-        model: this.model.id,
-        redacteur: this.redacteur,
-        fichier: this.fichier,
-        dossierId: this.dossier,
-        libelle: this.libelle,
-        data: this.dynamicData,
-      });
-      axios.post('http://localhost:1337/actes', {
-        contenu: this.champs,
-        model: this.model.id,
-        redacteur: this.redacteur,
-        fichier: this.fichier,
-        dossierId: this.dossier,
-        libelle: this.libelle,
-        data: this.dynamicData,
-        dateRedaction: new Date().toDateString()
-      }).then(resp => {
-        this.$router.push(
-          `/actes?success=Acte est bien enregistré`
-        )
-      }).catch((err) => {
-        this.error = err;
-        this.snackbar = true;
-      });
+      // console.log({
+      //   contenu: this.champs,
+      //   model: this.model.id,
+      //   redacteur: this.redacteur,
+      //   fichier: this.fichier,
+      //   dossierId: this.dossier,
+      //   libelle: this.libelle,
+      //   data: this.dynamicData
+      // });
+      axios
+        .post("http://localhost:1337/actes", {
+          contenu: this.champs,
+          model: this.model.id,
+          redacteur: this.redacteur,
+          fichier: this.fichier,
+          dossierId: this.dossier,
+          libelle: this.libelle,
+          data: this.dynamicData,
+          dateRedaction: new Date().toDateString()
+        })
+        .then(resp => {
+          this.$router.push(`/actes?success=Acte est bien enregistré`);
+        })
+        .catch(err => {
+          this.error = err;
+          this.snackbar = true;
+        });
     }
   }
-}
+};
 </script>

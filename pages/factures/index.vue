@@ -1,5 +1,23 @@
 <template>
   <v-card>
+    <!-- Delete dialog -->
+    <v-dialog v-model="dialogDelete" max-width="650px">
+      <v-card>
+        <v-card-title class="headline">
+          Êtes-vous sûr de bien vouloir supprimer cette facture?
+        </v-card-title>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="blue darken-1" text @click="dialogDelete = false"
+            >Non</v-btn
+          >
+          <v-btn color="error darken-1" text @click="deleteItemConfirm"
+            >Oui, Supprimer</v-btn
+          >
+          <v-spacer></v-spacer>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
     <v-card-title>
       <h3 class="ma-5">
         <v-icon class="mr-4" color="primary" large>mdi-cash</v-icon> Factures
@@ -66,14 +84,16 @@
                   target="_blank"
                   >Telecharger</v-btn
                 >
-                <v-btn
+                <!-- <v-btn
                   color="success lighten-1"
                   nuxt
                   :to="'./factures/modifier/' + item.id"
                   disabled
                   >Modifier</v-btn
+                > -->
+                <v-btn color="error lighten-1" @click="openDelete(item.id)"
+                  >Suprimer</v-btn
                 >
-                <v-btn color="error lighten-1">Suprimer</v-btn>
               </div>
             </v-col>
           </v-row>
@@ -83,36 +103,52 @@
   </v-card>
 </template>
 <script>
-import Axios from 'axios'
+import Axios from "axios";
 export default {
   data() {
     return {
-      search: '',
+      dialogDelete: false,
+      search: "",
       expanded: [],
+      todelete: null,
       headers: [
         {
-          text: 'ID',
-          align: 'start',
-          value: 'id',
+          text: "ID",
+          align: "start",
+          value: "id"
         },
-        { text: 'maitre', value: 'maitre' },
-        { text: 'Date de création', value: 'dateFacture' },
-        { text: '', value: 'data-table-expand' },
+        { text: "maitre", value: "maitre" },
+        { text: "Date de création", value: "dateFacture" },
+        { text: "", value: "data-table-expand" }
       ],
-      factures: [],
-    }
+      factures: []
+    };
   },
   beforeCreate() {
-    Axios.get('http://localhost:1337/facture').then(resp => {
+    Axios.get("http://localhost:1337/facture").then(resp => {
       this.factures = resp.data;
       console.log(this.factures);
-    })
+    });
   },
-}
+  methods: {
+    openDelete(id) {
+      this.todelete = id;
+      this.dialogDelete = true;
+    },
+    deleteItemConfirm() {
+      Axios.delete(`http://localhost:1337/facture/${this.todelete}`)
+        .then(resp => {
+          this.factures = this.factures.filter(fac => fac.id !== this.todelete);
+          this.dialogDelete = false;
+        })
+        .catch(err => console.error(err));
+    }
+  }
+};
 </script>
 <style lang="css">
-  b{
-    color: dodgerblue;
-    font-size: large;
-  }
+b {
+  color: dodgerblue;
+  font-size: large;
+}
 </style>

@@ -94,16 +94,16 @@
       </v-list>
     </v-navigation-drawer>
     <v-footer :absolute="!fixed" app>
-      <span>
-        New<font style="color: blue">Dev</font> Maroc &copy;
-        {{ new Date().getFullYear() }}</span
+      <a href="https://newdevmaroc.com">
+        <font color="blue">NewDev</font> Maroc &copy;
+        {{ new Date().getFullYear() }}</a
       >
     </v-footer>
   </v-app>
 </template>
 
 <script>
-import createMenu from '~/components/createMenu.vue'
+import createMenu from "~/components/createMenu.vue";
 export default {
   components: { createMenu },
   data() {
@@ -113,88 +113,86 @@ export default {
       fixed: false,
       items: [
         {
-          icon: 'mdi-apps',
-          title: 'Accueil',
-          to: '/',
+          icon: "mdi-apps",
+          title: "Accueil",
+          to: "/"
         },
         {
-          icon: 'mdi-folder-network',
-          title: 'Atelier',
-          to: '/home'
+          icon: "mdi-folder-network",
+          title: "Atelier",
+          to: "/home"
         },
         {
-          icon: 'mdi-folder',
-          title: 'Dossiers',
-          to: '/dossiers',
+          icon: "mdi-folder",
+          title: "Dossiers",
+          to: "/dossiers"
         },
         {
-          icon: 'mdi-account-group',
-          title: 'Comparants',
-          to: '/comparent',
+          icon: "mdi-account-group",
+          title: "Comparants",
+          to: "/comparent"
         },
         {
-          icon: 'mdi-domain',
-          title: 'Biens',
-          to: '/biens',
+          icon: "mdi-domain",
+          title: "Biens",
+          to: "/biens"
         },
         {
-          icon: 'mdi-gavel',
-          title: 'Actes',
-          to: '/actes',
+          icon: "mdi-gavel",
+          title: "Actes",
+          to: "/actes"
         },
         {
-          icon: 'mdi-pencil',
-          title: 'Modeles',
-          to: '/modeles',
+          icon: "mdi-pencil",
+          title: "Modeles",
+          to: "/modeles"
         },
         {
-          icon: 'mdi-file',
-          title: 'إقرار',
-          to: '/aveu',
+          icon: "mdi-file",
+          title: "إقرار",
+          to: "/aveu"
         },
         {
-          icon: 'mdi-file-document',
-          title: 'Factures',
-          to: '/factures',
+          icon: "mdi-file-document",
+          title: "Factures",
+          to: "/factures"
         },
         {
-          icon: 'mdi-cash',
-          title: 'Devis',
-          to: '/devis',
+          icon: "mdi-cash",
+          title: "Devis",
+          to: "/devis"
         },
         {
-          icon: 'mdi-archive',
-          title: 'Archives',
-          to: '/archives'
+          icon: "mdi-archive",
+          title: "Archives",
+          to: "/archives"
         },
         {
-          icon: 'mdi-bank',
-          title: 'Banques',
-          to: '/banque'
-        },
+          icon: "mdi-bank",
+          title: "Banques",
+          to: "/banque"
+        }
       ],
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'Notary',
-    }
+      title: "Notary"
+    };
   },
   methods: {
-    logout() {
-
-    }
-  },
-}
+    logout() {}
+  }
+};
 </script>
 <style lang="css">
-  .minifVariant{
-    position: absolute;
-    top: 80px;
-  }
-  .btn{
-    cursor: pointer;
-  }
-  .sideBar::-webkit-scrollbar {
+.minifVariant {
+  position: absolute;
+  top: 80px;
+}
+.btn {
+  cursor: pointer;
+}
+.sideBar::-webkit-scrollbar {
   display: none;
 }
 </style>

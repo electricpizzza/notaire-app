@@ -59,7 +59,7 @@
                 class="mt-7"
                 icon
                 fab
-                @click="deleChemps(i)"
+                @click="deleChemps(champ.name)"
                 x-small
               >
                 <v-icon x-small>mdi-close</v-icon>
@@ -139,10 +139,14 @@ export default {
   },
   methods: {
     addChamps() {
-      this.nbCamps++;
+      this.champs.push({
+        label : '',
+        name:'',
+        type:'text',
+      });
     },
-    deleChemps(index) {
-      this.nbCamps--;
+    deleChemps(id) {
+      this.champs= this.champs.filter(chmp => chmp.name !== id);
     },
     enregistrer() {
       this.boilerplate = MarkdownStore.data.markdown;

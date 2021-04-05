@@ -47,13 +47,12 @@
                 <v-btn color="primary" nuxt :to="'./actes/' + item.id"
                   >Consulter</v-btn
                 >
-                <v-btn
+                <!-- <v-btn
                   color="success lighten-1"
                   nuxt
                   :to="'./actes/modifier/' + item.id"
-                  disabled
                   >Modifier</v-btn
-                >
+                > -->
                 <v-btn color="error lighten-1" @click="remove(item.id)"
                   >Suprimer</v-btn
                 >
@@ -66,50 +65,56 @@
   </v-card>
 </template>
 <script>
-import axios from 'axios'
+import axios from "axios";
 
 export default {
   data() {
     return {
-      search: '',
+      search: "",
       expanded: [],
       headers: [
         {
-          text: 'ID',
-          align: 'start',
+          text: "ID",
+          align: "start",
           filterable: false,
-          value: 'id',
+          value: "id"
         },
-        { text: 'Libelle', value: 'libelle' },
-        { text: 'Date de Redaction', value: 'dateRedaction' },
-        { text: 'Redacteur', value: 'redacteur' },
-        { text: '', value: 'data-table-expand' },
+        { text: "Libelle", value: "libelle" },
+        { text: "Date de Redaction", value: "dateRedaction" },
+        { text: "Redacteur", value: "redacteur" },
+        { text: "", value: "data-table-expand" }
       ],
       actes: [],
       error: false,
-      errorText: '',
-    }
+      errorText: ""
+    };
   },
   beforeCreate() {
-    axios.get('http://localhost:1337/actes').then(resp => {
-      this.actes = resp.data;
-    }).catch(err => {
-      this.error = true;
-      this.errorText = 'veuillez verifier votre connexion !!';
-    });
+    axios
+      .get("http://localhost:1337/actes")
+      .then(resp => {
+        this.actes = resp.data;
+      })
+      .catch(err => {
+        this.error = true;
+        this.errorText = "veuillez verifier votre connexion !!";
+      });
   },
   created() {
-    this.success = this.$route.query.success
+    this.success = this.$route.query.success;
   },
   methods: {
     remove(id) {
-      axios.delete('http://localhost:1337/actes/' + id).then(resp => {
-        this.actes = this.actes.filter(acte => acte.id !== id);
-      }).catch(err => {
-        this.error = true;
-        this.errorText = err + 'veuillez verifier votre connexion !!';
-      })
+      axios
+        .delete("http://localhost:1337/actes/" + id)
+        .then(resp => {
+          this.actes = this.actes.filter(acte => acte.id !== id);
+        })
+        .catch(err => {
+          this.error = true;
+          this.errorText = err + "veuillez verifier votre connexion !!";
+        });
     }
-  },
-}
+  }
+};
 </script>
