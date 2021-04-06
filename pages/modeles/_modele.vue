@@ -31,47 +31,49 @@
         </v-row>
       </v-col>
       <v-col cols="12">
-        <RichEditor :libelle="libelle" />
+        <acte-document :libelle="libelle" />
       </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
-import Axios from 'axios'
-import MarkdownStore from '~/assets/store/MarkdownStore'
+import Axios from "axios";
+import MarkdownStore from "~/assets/store/MarkdownStore";
+import ActeDocument from "../../components/actesComponents/ActeDocument.vue";
 export default {
+  components: { ActeDocument },
   async asyncData({ params }) {
-    const slug = params.modele
-    return { slug }
+    const slug = params.modele;
+    return { slug };
   },
   data() {
     return {
       language: null,
-      redacteur: '',
+      redacteur: "",
       libelle: null,
-      boilerplate: '',
-      type: '',
-      champs: [],
-    }
+      boilerplate: "",
+      type: "",
+      champs: []
+    };
   },
   created() {
-    Axios.get('http://localhost:1337/model/' + this.slug).then(resp => {
-      this.libelle = resp.data[0].libelle;
-      this.redacteur = resp.data[0].redacteur;
-      this.language = resp.data[0].language;
-      this.champs = JSON.parse(resp.data[0].champs);
-      this.type = resp.data[0].type;
-      this.boilerplate = resp.data[0].boilerPlate;
-      MarkdownStore.data.markdown = this.boilerplate;
-    }).catch(err => {
-
-    });
-  },
-}
+    Axios.get("http://localhost:1337/model/" + this.slug)
+      .then(resp => {
+        this.libelle = resp.data[0].libelle;
+        this.redacteur = resp.data[0].redacteur;
+        this.language = resp.data[0].language;
+        this.champs = JSON.parse(resp.data[0].champs);
+        this.type = resp.data[0].type;
+        this.boilerplate = resp.data[0].boilerPlate;
+        MarkdownStore.data.markdown = this.boilerplate;
+      })
+      .catch(err => {});
+  }
+};
 </script>
 <style lang="css">
-    .font-bold{
-        font-size: large;
-    }
+.font-bold {
+  font-size: large;
+}
 </style>

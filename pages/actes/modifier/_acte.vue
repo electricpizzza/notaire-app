@@ -1,6 +1,6 @@
 <template>
   <v-container v-if="model || contenu">
-    <Acteform :model="model" :oldContenu="contenu" />
+    <Acteform :model="model" :oldContenu="contenu" :id="slug" />
   </v-container>
 </template>
 

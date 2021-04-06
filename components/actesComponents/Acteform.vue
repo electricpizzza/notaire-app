@@ -8,6 +8,13 @@
         </v-btn>
       </template>
     </v-snackbar>
+    <v-overlay :value="loading">
+      <v-progress-circular
+        color="primary"
+        indeterminate
+        v-model="loading"
+      ></v-progress-circular>
+    </v-overlay>
     <v-form>
       <v-row>
         <v-col cols="12">
@@ -205,10 +212,11 @@ export default {
       ],
       selectedItems: [],
       snackbar: false,
-      error: ""
+      error: "",
+      loading: false
     };
   },
-  props: ["model", "oldContenu"],
+  props: ["model", "oldContenu", "id"],
 
   beforeCreate() {
     comparentService.getAllComparents().then(resp => {
@@ -262,6 +270,7 @@ export default {
       this.selectedItems = [];
     },
     enregistrer() {
+      this.loading = true;
       const chmps = document.querySelectorAll("input");
       chmps.forEach(chmp => {
         if (chmp.name != "") {
@@ -277,40 +286,78 @@ export default {
         chmp.data.forEach(element => {
           objs.push(element.id);
         });
-        this.champs.push({
-          name: chmp.nom,
-          type: chmp.type,
-          value: [...objs]
-        });
+        if (chmp.type === "comparent") {
+          const comps = [];
+          objs.forEach(comp => {
+            axios.get(`http://localhost:1337/comparent/${comp}`).then(resp => {
+              comps.push(resp.data.comparentInfo[0]);
+              this.champs.push({
+                name: chmp.nom,
+                type: chmp.type,
+                value: [...comps]
+              });
+            });
+          });
+        } else {
+          this.champs.push({
+            name: chmp.nom,
+            type: chmp.type,
+            value: [...objs]
+          });
+        }
       });
 
-      // console.log({
-      //   contenu: this.champs,
-      //   model: this.model.id,
-      //   redacteur: this.redacteur,
-      //   fichier: this.fichier,
-      //   dossierId: this.dossier,
-      //   libelle: this.libelle,
-      //   data: this.dynamicData
-      // });
-      axios
-        .post("http://localhost:1337/actes", {
+      if (this.model) {
+        console.log({
           contenu: this.champs,
           model: this.model.id,
           redacteur: this.redacteur,
           fichier: this.fichier,
           dossierId: this.dossier,
           libelle: this.libelle,
-          data: this.dynamicData,
-          dateRedaction: new Date().toDateString()
-        })
-        .then(resp => {
-          this.$router.push(`/actes?success=Acte est bien enregistré`);
-        })
-        .catch(err => {
-          this.error = err;
-          this.snackbar = true;
+          data: this.champs
         });
+        setTimeout(() => {
+          axios
+            .post("http://localhost:1337/actes", {
+              contenu: this.champs,
+              model: this.model.id,
+              redacteur: this.redacteur,
+              fichier: this.fichier,
+              dossierId: this.dossier,
+              libelle: this.libelle,
+              data: this.champs,
+              dateRedaction: new Date().toDateString()
+            })
+            .then(resp => {
+              this.$router.push(`/actes?success=Acte est bien enregistré`);
+            })
+            .catch(err => {
+              this.error = err;
+              this.snackbar = true;
+              this.loading = false;
+            });
+        }, 1000);
+      } else {
+        axios
+          .put("http://localhost:1337/actes" + this.id, {
+            contenu: this.champs,
+            model: this.model.id,
+            redacteur: this.redacteur,
+            fichier: this.fichier,
+            dossierId: this.dossier,
+            libelle: this.libelle,
+            data: this.dynamicData,
+            dateRedaction: new Date().toDateString()
+          })
+          .then(resp => {
+            this.$router.push(`/actes?success=Acte est bien enregistré`);
+          })
+          .catch(err => {
+            this.error = err;
+            this.snackbar = true;
+          });
+      }
     }
   }
 };
