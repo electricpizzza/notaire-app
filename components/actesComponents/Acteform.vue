@@ -20,7 +20,7 @@
         <v-col cols="12">
           <v-text-field v-model="libelle" label="Titre"></v-text-field>
         </v-col>
-        <v-col cols="12" v-for="(champ, index) in schema" :key="index">
+        <v-col cols="6" v-for="(champ, index) in schema" :key="index">
           <v-sheet
             elevation="10"
             rounded="xl"

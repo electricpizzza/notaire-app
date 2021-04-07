@@ -14,7 +14,7 @@
         <v-col cols="12">
           <v-text-field v-model="libelle" label="Titre Foncier"></v-text-field>
         </v-col>
-        <v-col cols="12" md="6">
+        <!-- <v-col cols="12" md="6">
           <v-select
             :items="bineTypes"
             v-model="type"
@@ -30,7 +30,7 @@
             label="نوع العقار"
             reverse
           ></v-text-field>
-        </v-col>
+        </v-col> -->
         <v-col cols="12" md="6">
           <v-text-field v-model="valeur" label="Valeur(DHs)"></v-text-field>
         </v-col>
@@ -138,42 +138,42 @@
   </div>
 </template>
 <script>
-import Axios from 'axios'
+import Axios from "axios";
 export default {
   async asyncData({ params }) {
-    const slug = params.bien
-    return { slug }
+    const slug = params.bien;
+    return { slug };
   },
   data() {
     return {
-      libelle: '',
-      type: '',
+      libelle: "",
+      type: "",
       ville: "",
       Superficie: null,
-      address: '',
-      address1: '',
-      ville: '',
-      description: '',
+      address: "",
+      address1: "",
+      ville: "",
+      description: "",
       etage: null,
       nb_piece: null,
       valeur: null,
-      ancfcc: '',
-      Immeuble: '',
-      terrainType: '',
+      ancfcc: "",
+      Immeuble: "",
+      terrainType: "",
       snackbar: false,
-      error: '',
+      error: "",
       details: [],
-      detailSuperficie: '',
-      typeAr: '',
-      descriptionAr: '',
-      addressAr: '',
-      villeAr: '',
-      detailSuperficieAr: '',
-    }
+      detailSuperficie: "",
+      typeAr: "",
+      descriptionAr: "",
+      addressAr: "",
+      villeAr: "",
+      detailSuperficieAr: ""
+    };
   },
   methods: {
     enregistrer() {
-      Axios.put('http://localhost:1337/bien/' + this.slug, {
+      Axios.put("http://localhost:1337/bien/" + this.slug, {
         libelle: this.libelle,
         type: this.type,
         ville: this.ville,
@@ -193,26 +193,30 @@ export default {
         descriptionAr: this.descriptionAr,
         addressAr: this.addressAr,
         villeAr: this.villeAr,
-        detailSuperficieAr: this.detailSuperficieAr,
-      }).then(resp => {
-        this.$router.push(
-          '/biens?success=Bien est bien modifié'
-        )
-      }).catch((err) => {
-        this.error = err;
-        this.snackbar = true;
-      });
+        detailSuperficieAr: this.detailSuperficieAr
+      })
+        .then(resp => {
+          this.$router.push("/biens?success=Bien est bien modifié");
+        })
+        .catch(err => {
+          this.error = err;
+          this.snackbar = true;
+        });
     },
     typeChanged() {
-      this.details = this.bineTypes.find(type => type.value === this.type).details;
-      this.typeAr = this.bineTypes.find(type => type.value === newval).libelleAr
+      this.details = this.bineTypes.find(
+        type => type.value === this.type
+      ).details;
+      this.typeAr = this.bineTypes.find(
+        type => type.value === newval
+      ).libelleAr;
     }
   },
   created() {
-    Axios.get('http://localhost:1337/data').then(resp => {
+    Axios.get("http://localhost:1337/data").then(resp => {
       this.bineTypes = resp.data.typeBien;
-    })
-    Axios.get('http://localhost:1337/bien/' + this.slug).then(resp => {
+    });
+    Axios.get("http://localhost:1337/bien/" + this.slug).then(resp => {
       this.libelle = resp.data.libelle;
       this.type = resp.data.type;
       this.ville = resp.data.ville;
@@ -234,6 +238,6 @@ export default {
       this.detailSuperficieAr = resp.data.detailSuperficieAr;
       this.details = JSON.parse(resp.data.details);
     });
-  },
-}
+  }
+};
 </script>

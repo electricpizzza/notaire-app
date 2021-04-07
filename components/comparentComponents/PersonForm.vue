@@ -141,7 +141,7 @@
       <v-col cols="12" sm="6">
         <v-text-field
           v-model="lieuxNaissance"
-          label="Lieux de Naissance"
+          label="Lieu de Naissance"
         ></v-text-field>
       </v-col>
       <v-col cols="12" sm="6">
@@ -226,82 +226,86 @@
   </v-form>
 </template>
 <script>
-import ComparentService from './../../assets/sevices/comparentService'
-const comparentService = new ComparentService()
+import ComparentService from "./../../assets/sevices/comparentService";
+const comparentService = new ComparentService();
 export default {
   props: {
     comparent: {
-      type: Object,
+      type: Object
     },
     modifier: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   data: () => ({
     valid: true,
     menu: false,
     menu2: false,
-    nomFr: '',
-    nomAr: '',
-    prenomFr: '',
-    prenomAr: '',
-    nationalite: '',
-    nationaliteAr: '',
-    fonction: '',
-    fonctionAr: '',
-    nomPereFr: '',
-    nomPereAr: '',
-    nomMereFr: '',
-    nomMereAr: '',
-    situation: '',
-    tel: '',
-    nomCompanionFr: '',
-    nomCompanionAr: '',
-    typeIdentification: '',
-    Identification: '',
-    lieuxNaissance: '',
-    lieuxNaissanceAr: '',
-    Adresse: '',
-    AdresseAr: '',
+    nomFr: "",
+    nomAr: "",
+    prenomFr: "",
+    prenomAr: "",
+    nationalite: "",
+    nationaliteAr: "",
+    fonction: "",
+    fonctionAr: "",
+    nomPereFr: "",
+    nomPereAr: "",
+    nomMereFr: "",
+    nomMereAr: "",
+    situation: "",
+    tel: "",
+    nomCompanionFr: "",
+    nomCompanionAr: "",
+    typeIdentification: "",
+    Identification: "",
+    lieuxNaissance: "",
+    lieuxNaissanceAr: "",
+    Adresse: "",
+    AdresseAr: "",
     IdentificationValable: new Date().toISOString().substr(0, 0),
     dateNaissance: new Date().toISOString().substr(0, 0),
     situations: [
       { situ: "celibataire", lib: "Célibataire" },
       { situ: "marie", lib: "Marié(e)" },
       { situ: "divorce", lib: "Divorcé(e)" },
-      { situ: "veuf", lib: "Veuf(ve)" },
-
+      { situ: "veuf", lib: "Veuf(ve)" }
     ],
-    idTypes: ['CIN', 'Carte de séjour', 'Acte de naissance', 'Permis de conduire'],
+    idTypes: [
+      "CIN",
+      "Carte de séjour",
+      "Acte de naissance",
+      "Permis de conduire"
+    ],
     snackbar: false,
-    error: '',
-    loading: false,
+    error: "",
+    loading: false
   }),
   created() {
     if (this.modifier) {
-      this.nomFr = this.comparent.nomFr
-      this.nomAr = this.comparent.nomAr
-      this.prenomFr = this.comparent.prenomFr
-      this.prenomAr = this.comparent.prenomAr
-      this.nationalite = this.comparent.nationalite
-      this.nationaliteAr = this.comparent.nationaliteAr
-      this.fonction = this.comparent.fonction
-      this.fonctionAr = this.comparent.fonctionAr
-      this.nomPereFr = this.comparent.nomPereFr
-      this.nomPereAr = this.comparent.nomPereAr
-      this.nomMereFr = this.comparent.nomMereFr
-      this.nomMereAr = this.comparent.nomMereAr
-      this.situation = this.comparent.situation
-      this.nomCompanionFr = this.comparent.nomCompanionFr
-      this.nomCompanionAr = this.comparent.nomCompanionAr
-      this.typeIdentification = this.comparent.typeIdentification
-      this.Identification = this.comparent.Identification
-      this.IdentificationValable = this.comparent.IdentificationValable
-      this.dateNaissance = this.comparent.dateNaissance
-      this.lieuxNaissance = this.comparent.lieuxNaissance
-      this.lieuxNaissanceAr = this.comparent.lieuxNaissanceAr
-      this.tel = this.comparent.tel
+      this.nomFr = this.comparent.nomFr;
+      this.nomAr = this.comparent.nomAr;
+      this.prenomFr = this.comparent.prenomFr;
+      this.prenomAr = this.comparent.prenomAr;
+      this.nationalite = this.comparent.nationalite;
+      this.nationaliteAr = this.comparent.nationaliteAr;
+      this.fonction = this.comparent.fonction;
+      this.fonctionAr = this.comparent.fonctionAr;
+      this.nomPereFr = this.comparent.nomPereFr;
+      this.nomPereAr = this.comparent.nomPereAr;
+      this.nomMereFr = this.comparent.nomMereFr;
+      this.nomMereAr = this.comparent.nomMereAr;
+      this.situation = this.comparent.situation;
+      this.nomCompanionFr = this.comparent.nomCompanionFr;
+      this.nomCompanionAr = this.comparent.nomCompanionAr;
+      this.typeIdentification = this.comparent.typeIdentification;
+      this.Identification = this.comparent.Identification;
+      this.IdentificationValable = this.comparent.IdentificationValable;
+      this.dateNaissance = this.comparent.dateNaissance;
+      this.lieuxNaissance = this.comparent.lieuxNaissance;
+      this.lieuxNaissanceAr = this.comparent.lieuxNaissanceAr;
+      this.tel = this.comparent.tel;
       this.Adresse = this.comparent.Adresse;
       this.AdresseAr = this.comparent.AdresseAr;
     }
@@ -312,7 +316,50 @@ export default {
       if (this.modifier) {
         this.edit();
       } else
-        comparentService.createPerson(
+        comparentService
+          .createPerson(
+            this.comparent,
+            this.nomFr,
+            this.nomAr,
+            this.prenomFr,
+            this.prenomAr,
+            this.nationalite,
+            this.nationaliteAr,
+            this.fonction,
+            this.fonctionAr,
+            this.nomPereFr,
+            this.nomPereAr,
+            this.nomMereFr,
+            this.nomMereAr,
+            this.situation,
+            this.nomCompanionFr,
+            this.nomCompanionAr,
+            this.typeIdentification,
+            this.Identification,
+            this.IdentificationValable,
+            this.dateNaissance,
+            this.lieuxNaissance,
+            this.lieuxNaissanceAr,
+            this.tel,
+            this.Adresse,
+            this.AdresseAr
+          )
+          .then(resp => {
+            console.log(resp);
+            this.loading = false;
+            this.$router.push(
+              `/comparent?success=Comparent était bien enregistré`
+            );
+          })
+          .catch(err => {
+            this.loading = false;
+            this.error = err;
+            this.snackbar = true;
+          });
+    },
+    edit() {
+      comparentService
+        .editPerson(
           this.comparent,
           this.nomFr,
           this.nomAr,
@@ -338,62 +385,22 @@ export default {
           this.tel,
           this.Adresse,
           this.AdresseAr
-        ).then(resp => {
-          console.log(resp)
+        )
+        .then(resp => {
           this.loading = false;
-          this.$router.push(
-            `/comparent?success=Comparent était bien enregistré`
-          )
-        }).catch((err) => {
-          this.loading = false;
+          this.$router.push(`/comparent?success=Comparent était bien Modifié`);
+        })
+        .catch(err => {
           this.error = err;
+          this.loading = false;
           this.snackbar = true;
         });
-    },
-    edit() {
-      comparentService.editPerson(
-        this.comparent,
-        this.nomFr,
-        this.nomAr,
-        this.prenomFr,
-        this.prenomAr,
-        this.nationalite,
-        this.nationaliteAr,
-        this.fonction,
-        this.fonctionAr,
-        this.nomPereFr,
-        this.nomPereAr,
-        this.nomMereFr,
-        this.nomMereAr,
-        this.situation,
-        this.nomCompanionFr,
-        this.nomCompanionAr,
-        this.typeIdentification,
-        this.Identification,
-        this.IdentificationValable,
-        this.dateNaissance,
-        this.lieuxNaissance,
-        this.lieuxNaissanceAr,
-        this.tel,
-        this.Adresse,
-        this.AdresseAr
-      ).then(resp => {
-        this.loading = false;
-        this.$router.push(
-          `/comparent?success=Comparent était bien Modifié`
-        )
-      }).catch((err) => {
-        this.error = err;
-        this.loading = false;
-        this.snackbar = true;
-      });
     }
-  },
-
-}
+  }
+};
 </script>
 <style>
-  .formTitle{
-    color: deepskyblue;
-  }
+.formTitle {
+  color: deepskyblue;
+}
 </style>
