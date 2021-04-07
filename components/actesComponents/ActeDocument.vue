@@ -20,10 +20,7 @@ export default {
       type: Array
     },
     value: {
-      type: String,
-      default: `
-<h1>Headline!!</h1>
-<p>All these <strong>cool tags</strong> are working now.</p>`
+      type: String
     }
   },
   data() {
@@ -33,8 +30,11 @@ export default {
   },
 
   created() {
-    this.markdown = this.value;
-    //this.markdown = `<h1>${this.libelle}</h1>`;
+    if (this.value !== undefined) {
+      this.markdown = this.value;
+    } else {
+      this.markdown = MarkdownStore.data.markdown;
+    }
   },
   updated() {
     //console.log(this.model);

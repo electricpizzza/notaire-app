@@ -17,8 +17,17 @@
     </v-overlay>
     <v-form>
       <v-row>
-        <v-col cols="12">
+        <v-col cols="6">
           <v-text-field v-model="libelle" label="Titre"></v-text-field>
+        </v-col>
+        <v-col cols="6">
+          <v-select
+            :items="dossiers"
+            v-model="dossier"
+            label="Dossier"
+            item-text="title"
+            item-value="id"
+          ></v-select>
         </v-col>
         <v-col cols="6" v-for="(champ, index) in schema" :key="index">
           <v-sheet
@@ -34,40 +43,6 @@
                 <v-card-title class="headline grey lighten-2">
                   Choix de(s) Comparant(s)
                 </v-card-title>
-                <!-- <v-card-text>
-                  <v-list shaped>
-                    <v-list-item-group v-model="selectedItems" multiple>
-                      <template v-for="(item, i) in items">
-                        <v-divider
-                          v-if="!item"
-                          :key="`divider-${i}`"
-                        ></v-divider>
-
-                        <v-list-item
-                          v-else
-                          :key="`item-${i}`"
-                          :value="item"
-                          active-class="deep-purple--text text--accent-4"
-                        >
-                          <template v-slot:default="{ active }">
-                            <v-list-item-content>
-                              <v-list-item-title
-                                v-text="item.name + ' : ' + item.identif"
-                              ></v-list-item-title>
-                            </v-list-item-content>
-
-                            <v-list-item-action>
-                              <v-checkbox
-                                :input-value="active"
-                                color="deep-purple accent-4"
-                              ></v-checkbox>
-                            </v-list-item-action>
-                          </template>
-                        </v-list-item>
-                      </template>
-                    </v-list-item-group>
-                  </v-list>
-                </v-card-text> -->
                 <v-card-text>
                   <v-list shaped>
                     <v-row>
@@ -148,8 +123,10 @@
           </v-sheet>
           <v-select
             v-else-if="champ.type === 'bien'"
-            :items="['bien 1', 'bien 2']"
-            v-model="champ.name"
+            :items="biens"
+            item-text="libelle"
+            item-value="id"
+            v-model="data[index]"
             :label="champ.label"
             :name="champ.name"
           ></v-select>
@@ -161,15 +138,7 @@
             @change="changed"
           ></v-text-field>
         </v-col>
-        <v-col cols="12">
-          <v-select
-            :items="dossiers"
-            v-model="dossier"
-            label="Dossier"
-            item-text="title"
-            item-value="id"
-          ></v-select>
-        </v-col>
+
         <v-col cols="12">
           <!-- <acte-document :value="document" :libelle="libelle" :model="model" :data="data"/> -->
         </v-col>
@@ -199,6 +168,7 @@ export default {
       dossier: "",
       libelle: "",
       comparents: [],
+      biens: [],
       dossiers: [],
       dynamicData: [],
       dialogChoix: false,
@@ -226,6 +196,15 @@ export default {
       .get("http://localhost:1337/dossiers")
       .then(res => {
         this.dossiers = res.data;
+      })
+      .catch(err => {
+        this.error = err;
+        this.snackbar = true;
+      });
+    axios
+      .get("http://localhost:1337/bien")
+      .then(res => {
+        this.biens = res.data;
       })
       .catch(err => {
         this.error = err;
@@ -273,12 +252,22 @@ export default {
       this.loading = true;
       const chmps = document.querySelectorAll("input");
       chmps.forEach(chmp => {
-        if (chmp.name != "") {
-          this.champs.push({
-            name: chmp.name,
-            type: chmp.type,
-            value: chmp.value
-          });
+        if (chmp.name !== "") {
+          if (chmp.type === "hidden") {
+            const bin = this.biens.find(b => b.id === Number(chmp.value));
+            console.log(this.biens.find(bi => bi.id === Number(chmp.value)));
+            this.champs.push({
+              name: chmp.name,
+              type: "bien",
+              value: bin
+            });
+          } else {
+            this.champs.push({
+              name: chmp.name,
+              type: chmp.type,
+              value: chmp.value
+            });
+          }
         }
       });
       this.dynamicData.forEach(chmp => {
