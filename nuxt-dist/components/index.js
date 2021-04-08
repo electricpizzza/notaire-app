@@ -6,9 +6,9 @@ export { default as Logo } from '../../components/Logo.vue'
 export { default as RichEditor } from '../../components/RichEditor.vue'
 export { default as VuetifyLogo } from '../../components/VuetifyLogo.vue'
 export { default as CreateMenu } from '../../components/createMenu.vue'
-export { default as AjouterArchive } from '../../components/archives/AjouterArchive.vue'
 export { default as ActeDocument } from '../../components/actesComponents/ActeDocument.vue'
 export { default as Acteform } from '../../components/actesComponents/Acteform.vue'
+export { default as AjouterArchive } from '../../components/archives/AjouterArchive.vue'
 export { default as ComparentList } from '../../components/comparentComponents/ComparentList.vue'
 export { default as EntrepriseForm } from '../../components/comparentComponents/EntrepriseForm.vue'
 export { default as MineurForm } from '../../components/comparentComponents/MineurForm.vue'
@@ -25,9 +25,9 @@ export const LazyLogo = import('../../components/Logo.vue' /* webpackChunkName: 
 export const LazyRichEditor = import('../../components/RichEditor.vue' /* webpackChunkName: "components/RichEditor" */).then(c => c.default || c)
 export const LazyVuetifyLogo = import('../../components/VuetifyLogo.vue' /* webpackChunkName: "components/VuetifyLogo" */).then(c => c.default || c)
 export const LazyCreateMenu = import('../../components/createMenu.vue' /* webpackChunkName: "components/createMenu" */).then(c => c.default || c)
-export const LazyAjouterArchive = import('../../components/archives/AjouterArchive.vue' /* webpackChunkName: "components/archives/AjouterArchive" */).then(c => c.default || c)
 export const LazyActeDocument = import('../../components/actesComponents/ActeDocument.vue' /* webpackChunkName: "components/actesComponents/ActeDocument" */).then(c => c.default || c)
 export const LazyActeform = import('../../components/actesComponents/Acteform.vue' /* webpackChunkName: "components/actesComponents/Acteform" */).then(c => c.default || c)
+export const LazyAjouterArchive = import('../../components/archives/AjouterArchive.vue' /* webpackChunkName: "components/archives/AjouterArchive" */).then(c => c.default || c)
 export const LazyComparentList = import('../../components/comparentComponents/ComparentList.vue' /* webpackChunkName: "components/comparentComponents/ComparentList" */).then(c => c.default || c)
 export const LazyEntrepriseForm = import('../../components/comparentComponents/EntrepriseForm.vue' /* webpackChunkName: "components/comparentComponents/EntrepriseForm" */).then(c => c.default || c)
 export const LazyMineurForm = import('../../components/comparentComponents/MineurForm.vue' /* webpackChunkName: "components/comparentComponents/MineurForm" */).then(c => c.default || c)

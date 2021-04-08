@@ -298,6 +298,7 @@ export default {
 
       if (this.model) {
         console.log({
+          lang: this.model.language,
           contenu: this.champs,
           model: this.model.id,
           redacteur: this.redacteur,
@@ -309,6 +310,7 @@ export default {
         setTimeout(() => {
           axios
             .post("http://localhost:1337/actes", {
+              lang: this.model.language,
               contenu: this.champs,
               model: this.model.id,
               redacteur: this.redacteur,
