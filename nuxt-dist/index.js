@@ -14,7 +14,7 @@ import { setContext, getLocation, getRouteData, normalizeError } from './utils'
 
 import nuxt_plugin_plugin_1d06c26a from 'nuxt_plugin_plugin_1d06c26a' // Source: ./components/plugin.js (mode: 'all')
 import nuxt_plugin_plugin_68dba9c4 from 'nuxt_plugin_plugin_68dba9c4' // Source: ./vuetify/plugin.js (mode: 'all')
-import nuxt_plugin_TiptapVuetify_5e6e5270 from 'nuxt_plugin_TiptapVuetify_5e6e5270' // Source: ../plugins/TiptapVuetify (mode: 'all')
+import nuxt_plugin_froalaEditor_347da356 from 'nuxt_plugin_froalaEditor_347da356' // Source: ../plugins/froalaEditor (mode: 'all')
 import nuxt_plugin_Vue2Editor_0ce7bb88 from 'nuxt_plugin_Vue2Editor_0ce7bb88' // Source: ../plugins/Vue2Editor.js (mode: 'all')
 
 // Component: <ClientOnly>
@@ -183,8 +183,8 @@ async function createApp(ssrContext, config = {}) {
     await nuxt_plugin_plugin_68dba9c4(app.context, inject)
   }
 
-  if (typeof nuxt_plugin_TiptapVuetify_5e6e5270 === 'function') {
-    await nuxt_plugin_TiptapVuetify_5e6e5270(app.context, inject)
+  if (typeof nuxt_plugin_froalaEditor_347da356 === 'function') {
+    await nuxt_plugin_froalaEditor_347da356(app.context, inject)
   }
 
   if (typeof nuxt_plugin_Vue2Editor_0ce7bb88 === 'function') {

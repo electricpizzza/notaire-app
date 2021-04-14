@@ -1,16 +1,22 @@
 <template>
   <div>
-    <!-- Use the component in the right place of the template -->
-    <vue-editor v-model="markdown" @input="typing" />
+    <froala
+      :tag="'textarea'"
+      :config="config"
+      v-model="markdown"
+      @input="typing"
+    ></froala>
   </div>
 </template>
 <script>
 // import the component and the necessary extensions
 import { VueEditor } from "vue2-editor";
+import { VueFroala } from "vue-froala-wysiwyg";
+
 import MarkdownStore from "./../../assets/store/MarkdownStore";
 export default {
   name: "ActeDocument",
-  components: { VueEditor },
+  components: { VueEditor, VueFroala },
   props: {
     libelle: String,
     model: {
@@ -25,7 +31,14 @@ export default {
   },
   data() {
     return {
-      markdown: ""
+      markdown: "",
+      config: {
+        events: {
+          "froalaEditor.initialized": function() {
+            console.log("initialized");
+          }
+        }
+      }
     };
   },
 
