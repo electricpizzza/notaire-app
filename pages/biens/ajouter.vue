@@ -36,6 +36,7 @@
             v-model="typeAr"
             label="نوع العقار"
             reverse
+            dir="rtl"
           ></v-text-field>
         </v-col>
         <v-col cols="12" md="6">
@@ -69,6 +70,7 @@
             type="text"
             label="تفصيل المساحة"
             reverse
+            dir="rtl"
           ></v-text-field>
         </v-col>
         <v-col cols="12" v-if="type !== null">
@@ -100,6 +102,7 @@
             v-model="addressAr"
             label="العنوان"
             reverse
+            dir="rtl"
           ></v-text-field>
         </v-col>
         <v-col cols="12" md="6">
@@ -110,6 +113,7 @@
             v-model="villeAr"
             label="المدينة"
             reverse
+            dir="rtl"
           ></v-text-field>
         </v-col>
         <!-- <v-col cols="12" md="4">
@@ -131,6 +135,7 @@
             v-model="descriptionAr"
             label="وصف"
             reverse
+            dir="rtl"
             textarea
           ></v-text-field>
         </v-col>
@@ -145,40 +150,40 @@
   </div>
 </template>
 <script>
-import Axios from 'axios'
+import Axios from "axios";
 export default {
   data() {
     return {
-      libelle: '',
+      libelle: "",
       type: null,
       ville: "",
       Superficie: 0,
-      address: '',
-      address1: '',
-      ville: '',
-      description: '',
+      address: "",
+      address1: "",
+      ville: "",
+      description: "",
       etage: 0,
       nb_piece: 0,
       valeur: 0,
-      ancfcc: '',
-      Immeuble: '',
-      terrainType: '',
+      ancfcc: "",
+      Immeuble: "",
+      terrainType: "",
       bineTypes: [],
       loading: false,
       details: [],
-      detailSuperficie: '',
-      typeAr: '',
-      descriptionAr: '',
-      addressAr: '',
-      villeAr: '',
-      detailSuperficieAr: '',
-    }
+      detailSuperficie: "",
+      typeAr: "",
+      descriptionAr: "",
+      addressAr: "",
+      villeAr: "",
+      detailSuperficieAr: ""
+    };
   },
   methods: {
     enregistrer() {
       this.loading = true;
       console.log(this.details);
-      Axios.post('http://localhost:1337/bien', {
+      Axios.post("http://localhost:1337/bien", {
         libelle: this.libelle,
         type: this.type,
         ville: this.ville,
@@ -198,30 +203,31 @@ export default {
         descriptionAr: this.descriptionAr,
         addressAr: this.addressAr,
         villeAr: this.villeAr,
-        detailSuperficieAr: this.detailSuperficieAr,
-
-      }).then(resp => {
-        this.loading = false;
-        this.$router.push(
-          `/biens?success=Bien est bien enregistré`
-        )
-      }).catch((err) => {
-        this.loading = false;
-        this.error = err;
-        this.snackbar = true;
-      });
+        detailSuperficieAr: this.detailSuperficieAr
+      })
+        .then(resp => {
+          this.loading = false;
+          this.$router.push(`/biens?success=Bien est bien enregistré`);
+        })
+        .catch(err => {
+          this.loading = false;
+          this.error = err;
+          this.snackbar = true;
+        });
     }
   },
   created() {
-    Axios.get('http://localhost:1337/data').then(resp => {
+    Axios.get("http://localhost:1337/data").then(resp => {
       this.bineTypes = resp.data.typeBien;
-    })
+    });
   },
   watch: {
     type(newval) {
-      this.details = this.bineTypes.find(type => type.value === newval).details
-      this.typeAr = this.bineTypes.find(type => type.value === newval).libelleAr
+      this.details = this.bineTypes.find(type => type.value === newval).details;
+      this.typeAr = this.bineTypes.find(
+        type => type.value === newval
+      ).libelleAr;
     }
   }
-}
+};
 </script>

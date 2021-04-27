@@ -58,6 +58,7 @@
                 type="file"
                 id="file"
                 ref="file"
+                accept="image/jpeg,image/jpg,image/png,application/pdf"
                 multiple
                 v-on:change="fileUpload()"
                 class="img-field ma-3"
@@ -118,34 +119,33 @@
 </template>
 
 <script>
-import Axios from 'axios'
+import Axios from "axios";
 export default {
   async asyncData({ params }) {
-    const archive = params.archive
-    return { archive }
+    const archive = params.archive;
+    return { archive };
   },
   data() {
     return {
-      titre: '',
+      titre: "",
       dossier: 1,
-      description: '',
-      mainFile: '',
+      description: "",
+      mainFile: "",
       files: [],
       addFileDialog: false,
       newFiles: [],
       loading: false,
-      error: '',
-      snackbar: false,
-    }
+      error: "",
+      snackbar: false
+    };
   },
   created() {
     Axios.get(`http://localhost:1337/archive/${this.archive}`).then(resp => {
       this.titre = resp.data.titre;
       this.description = resp.data.description;
       this.mainFile = resp.data.mainFile;
-      this.files = [...resp.data.filesPath]
-
-    })
+      this.files = [...resp.data.filesPath];
+    });
   },
   methods: {
     fileUpload() {
@@ -155,39 +155,40 @@ export default {
       this.loading = false;
       let formData = new FormData();
       this.newFiles.forEach(file => {
-        formData.append('files', file, file.name);
+        formData.append("files", file, file.name);
       });
 
-      Axios.post(`http://localhost:1337/archive/addFiles/${this.archive}`, formData).then(resp => {
-
-        this.files = [...resp.data.filesPath];
-        this.addFileDialog = false;
-        this.newFiles = [];
-
-      }).catch(err => {
-        this.loading = false;
-        this.error = err;
-        this.snackbar = true;
-      })
-    },
-
-  },
-
-}
+      Axios.post(
+        `http://localhost:1337/archive/addFiles/${this.archive}`,
+        formData
+      )
+        .then(resp => {
+          this.files = [...resp.data.filesPath];
+          this.addFileDialog = false;
+          this.newFiles = [];
+        })
+        .catch(err => {
+          this.loading = false;
+          this.error = err;
+          this.snackbar = true;
+        });
+    }
+  }
+};
 </script>
 <style lang="css">
-  .img-field::-webkit-file-upload-button {
-    color: white;
-    display: inline-block;
-    background: #1CB6E0;
-    border: none;
-    padding: 7px 15px;
-    font-weight: 700;
-    border-radius: 3px;
-    white-space: nowrap;
-    cursor: pointer;
-    font-size: 10pt;
-    width:100px;
-    height:100px;
-  }
+.img-field::-webkit-file-upload-button {
+  color: white;
+  display: inline-block;
+  background: #1cb6e0;
+  border: none;
+  padding: 7px 15px;
+  font-weight: 700;
+  border-radius: 3px;
+  white-space: nowrap;
+  cursor: pointer;
+  font-size: 10pt;
+  width: 100px;
+  height: 100px;
+}
 </style>

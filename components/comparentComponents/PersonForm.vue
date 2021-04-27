@@ -24,6 +24,7 @@
           v-model="nomAr"
           label="الاسم العائلي"
           reverse
+          dir="rtl"
         ></v-text-field>
       </v-col>
       <v-col cols="12" sm="6">
@@ -39,6 +40,7 @@
           v-model="prenomAr"
           label="الاسم الشخصي"
           reverse
+          dir="rtl"
         ></v-text-field>
       </v-col>
       <v-col cols="6">
@@ -49,19 +51,30 @@
           v-model="nationaliteAr"
           label="الجنسية"
           reverse
+          dir="rtl"
         ></v-text-field>
       </v-col>
       <v-col cols="12">
         <v-text-field v-model="Adresse" label="Adresse"></v-text-field>
       </v-col>
       <v-col cols="12">
-        <v-text-field v-model="AdresseAr" label="عنوان" reverse></v-text-field>
+        <v-text-field
+          v-model="AdresseAr"
+          label="عنوان"
+          reverse
+          dir="rtl"
+        ></v-text-field>
       </v-col>
       <v-col cols="12" md="6">
         <v-text-field v-model="fonction" label="Profession"></v-text-field>
       </v-col>
       <v-col cols="12" md="6">
-        <v-text-field v-model="fonctionAr" label="مهنة" reverse></v-text-field>
+        <v-text-field
+          v-model="fonctionAr"
+          label="مهنة"
+          reverse
+          dir="rtl"
+        ></v-text-field>
       </v-col>
       <v-col cols="12">
         <v-text-field v-model="tel" label="Telephone"></v-text-field>
@@ -80,6 +93,7 @@
           v-model="nomPereAr"
           label="اسم الاب"
           reverse
+          dir="rtl"
           id="id"
         ></v-text-field>
       </v-col>
@@ -97,6 +111,7 @@
           v-model="nomMereAr"
           label="اسم الأم"
           reverse
+          dir="rtl"
           id="id"
         ></v-text-field>
       </v-col>
@@ -149,6 +164,7 @@
           v-model="lieuxNaissanceAr"
           label="مكان الولادة"
           reverse
+          dir="rtl"
         ></v-text-field>
       </v-col>
       <v-col cols="12" sm="6" v-if="situation && situation === 'marie'">
@@ -165,6 +181,7 @@
           v-model="nomCompanionAr"
           label="اسم الزوج/الزوجة"
           reverse
+          dir="rtl"
         ></v-text-field>
       </v-col>
       <v-col cols="12" sm="4">

@@ -26,6 +26,7 @@
             name="raisonSociale"
             label="اسم الشركة"
             reverse
+            dir="rtl"
           ></v-text-field>
         </v-col>
         <v-col cols="12" sm="6">
@@ -79,6 +80,7 @@
             v-bind="AdresseAr"
             label="العنوان"
             reverse
+            dir="rtl"
             textarea
           ></v-text-field>
         </v-col>
@@ -104,6 +106,7 @@
                   v-model="representant.nomAr"
                   label="الاسم الشخصي و العائلي"
                   reverse
+                  dir="rtl"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" md="6">
@@ -112,7 +115,7 @@
                     'CIN',
                     'Carte de séjour',
                     'Acte de naissance',
-                    'Permis de conduire',
+                    'Permis de conduire'
                   ]"
                   v-model="representant.typeId"
                   label="Type d'identification"
@@ -139,6 +142,7 @@
                   textarea
                   label="العنوان الشخصي"
                   reverse
+                  dir="rtl"
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -155,9 +159,9 @@
   </v-form>
 </template>
 <script>
-import Axios from 'axios';
-import ComparentService from './../../assets/sevices/comparentService.js'
-const comparentService = new ComparentService()
+import Axios from "axios";
+import ComparentService from "./../../assets/sevices/comparentService.js";
+const comparentService = new ComparentService();
 export default {
   props: {
     comparent: {
@@ -165,52 +169,54 @@ export default {
     },
     modifier: {
       type: Boolean,
-      default: false,
+      default: false
     }
   },
   data: () => ({
     valid: true,
     dialogComp: false,
-    comp: '',
-    name: '',
+    comp: "",
+    name: "",
     representant: {
-      nom: '',
-      nomAR: '',
-      address: '',
-      addressAr: '',
-      typeId: '',
-      identification: ''
+      nom: "",
+      nomAR: "",
+      address: "",
+      addressAr: "",
+      typeId: "",
+      identification: ""
     },
-    raisonSociale: '',
-    raisonSocialeAr: '',
-    ice: '',
-    rc: '',
-    IDF: '',
-    RS: '',
-    capital: '',
-    tel: '',
-    cnss: '',
-    Adresse: '',
-    AdresseAr: '',
+    raisonSociale: "",
+    raisonSocialeAr: "",
+    ice: "",
+    rc: "",
+    IDF: "",
+    RS: "",
+    capital: "",
+    tel: "",
+    cnss: "",
+    Adresse: "",
+    AdresseAr: "",
     representants: [],
     select: null,
     checkbox: false,
     selectedItems: [],
     headersComp: [
-      { text: 'ID', value: 'id' },
-      { text: 'Nom de Comparant', value: 'type' },
-      { text: 'Nom de Comparant', value: 'nom' },
+      { text: "ID", value: "id" },
+      { text: "Nom de Comparant", value: "type" },
+      { text: "Nom de Comparant", value: "nom" }
     ],
     snackbar: false,
-    error: '',
+    error: ""
   }),
   beforeCreate() {
-    Axios.get('http://localhost:1337/comparent').then((resp) => {
-      this.representants = resp.data
-    }).catch((err) => {
-      this.error = err;
-      this.snackbar = true;
-    });
+    Axios.get("http://localhost:1337/comparent")
+      .then(resp => {
+        this.representants = resp.data;
+      })
+      .catch(err => {
+        this.error = err;
+        this.snackbar = true;
+      });
   },
   created() {
     if (this.modifier) {
@@ -226,24 +232,23 @@ export default {
       this.RS = this.comparent.RS;
       this.tel = this.comparent.tel;
       this.capital = this.comparent.capital;
-    } else
-      this.raisonSociale = this.comparent.nom
+    } else this.raisonSociale = this.comparent.nom;
   },
 
   methods: {
     selectComparant() {
-      this.representant = this.selectedItems
-      this.selectedItems = []
-      this.dialogComp = false
+      this.representant = this.selectedItems;
+      this.selectedItems = [];
+      this.dialogComp = false;
     },
     validate() {
-      this.$refs.form.validate()
+      this.$refs.form.validate();
     },
     reset() {
-      this.$refs.form.reset()
+      this.$refs.form.reset();
     },
     resetValidation() {
-      this.$refs.form.resetValidation()
+      this.$refs.form.resetValidation();
     },
     enregistrer() {
       if (this.modifier) {
@@ -265,39 +270,41 @@ export default {
             this.tel,
             this.capital
           )
-          .then((resp) => {
+          .then(resp => {
             this.$router.push(
               `/comparent?success=Comparent était bien enregistré`
-            )
-          }).catch((err) => {
+            );
+          })
+          .catch(err => {
             this.error = err;
             this.snackbar = true;
           });
     },
     edit() {
-      comparentService.editEntreprise(
-        this.comparent.comparent,
-        this.raisonSociale,
-        this.raisonSocialeAr,
-        this.ice,
-        this.rc,
-        this.IDF,
-        this.cnss,
-        this.representant,
-        this.Adresse,
-        this.AdresseAr,
-        this.RS,
-        this.tel,
-        this.capital
-      ).then(resp => {
-        this.$router.push(
-          `/comparent?success=Comparent était bien Modifié`
+      comparentService
+        .editEntreprise(
+          this.comparent.comparent,
+          this.raisonSociale,
+          this.raisonSocialeAr,
+          this.ice,
+          this.rc,
+          this.IDF,
+          this.cnss,
+          this.representant,
+          this.Adresse,
+          this.AdresseAr,
+          this.RS,
+          this.tel,
+          this.capital
         )
-      }).catch((err) => {
-        this.error = err;
-        this.snackbar = true;
-      });
+        .then(resp => {
+          this.$router.push(`/comparent?success=Comparent était bien Modifié`);
+        })
+        .catch(err => {
+          this.error = err;
+          this.snackbar = true;
+        });
     }
-  },
-}
+  }
+};
 </script>

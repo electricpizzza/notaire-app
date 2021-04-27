@@ -42,6 +42,7 @@
             type="file"
             id="file"
             ref="file"
+            accept="image/jpeg,image/jpg,image/png,application/pdf"
             @change="fileUpload"
             class="img-field ma-3"
             multiple
@@ -64,23 +65,21 @@
   </v-container>
 </template>
 <script>
-import Axios from 'axios';
+import Axios from "axios";
 export default {
   data() {
     return {
       files: [],
-      dossier: '',
-      titre: '',
-      description: '',
-      testimage: '',
+      dossier: "",
+      titre: "",
+      description: "",
+      testimage: "",
       loading: false,
-      error: '',
-      snackbar: false,
-    }
+      error: "",
+      snackbar: false
+    };
   },
-  created() {
-
-  },
+  created() {},
   methods: {
     fileUpload() {
       this.testimage = this.$refs.file.files[0].webkitRelativePath;
@@ -90,52 +89,52 @@ export default {
       this.loading = true;
       let formData = new FormData();
       this.files.forEach(file => {
-        formData.append('files', file, file.name);
+        formData.append("files", file, file.name);
       });
-      formData.append('titre', this.titre);
-      formData.append('dossier', this.dossier);
-      formData.append('description', this.description);
-      Axios.post('http://localhost:1337/archive', formData).then(resp => {
-        this.loading = false;
-        this.$router.push(
-          `/archives?success=Archive est bien enregistré`
-        )
-      }).catch(err => {
-        this.loading = false;
-        this.error = err;
-        this.snackbar = true;
-      })
+      formData.append("titre", this.titre);
+      formData.append("dossier", this.dossier);
+      formData.append("description", this.description);
+      Axios.post("http://localhost:1337/archive", formData)
+        .then(resp => {
+          this.loading = false;
+          this.$router.push(`/archives?success=Archive est bien enregistré`);
+        })
+        .catch(err => {
+          this.loading = false;
+          this.error = err;
+          this.snackbar = true;
+        });
     }
-  },
-}
+  }
+};
 </script>
 <style lang="css">
-  .img-field::-webkit-file-upload-button {
-    color: white;
-    display: inline-block;
-    background: #1CB6E0;
-    border: none;
-    padding: 7px 15px;
-    font-weight: 700;
-    border-radius: 3px;
-    white-space: nowrap;
-    cursor: pointer;
-    font-size: 10pt;
-    width:100px;
-    height:100px;
-  }
-  .img-show{
-    width: 100px;
-    height: 100px;
-    background-color: lightcyan;
-    background-image: url('/_nuxt/assets/placeholder.png');
-    background-size: cover;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-  .file-show{
-    display: flex;
-    flex-wrap: wrap;
-  }
+.img-field::-webkit-file-upload-button {
+  color: white;
+  display: inline-block;
+  background: #1cb6e0;
+  border: none;
+  padding: 7px 15px;
+  font-weight: 700;
+  border-radius: 3px;
+  white-space: nowrap;
+  cursor: pointer;
+  font-size: 10pt;
+  width: 100px;
+  height: 100px;
+}
+.img-show {
+  width: 100px;
+  height: 100px;
+  background-color: lightcyan;
+  background-image: url("/_nuxt/assets/placeholder.png");
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.file-show {
+  display: flex;
+  flex-wrap: wrap;
+}
 </style>

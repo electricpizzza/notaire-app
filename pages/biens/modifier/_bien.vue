@@ -28,7 +28,7 @@
           <v-text-field
             v-model="typeAr"
             label="نوع العقار"
-            reverse
+            reverse dir="rtl"
           ></v-text-field>
         </v-col> -->
         <v-col cols="12" md="6">
@@ -62,6 +62,7 @@
             type="text"
             label="تفصيل المساحة"
             reverse
+            dir="rtl"
           ></v-text-field>
         </v-col>
         <v-col cols="12" v-if="type !== null">
@@ -93,6 +94,7 @@
             v-model="addressAr"
             label="العنوان"
             reverse
+            dir="rtl"
           ></v-text-field>
         </v-col>
         <v-col cols="12" md="6">
@@ -103,6 +105,7 @@
             v-model="villeAr"
             label="المدينة"
             reverse
+            dir="rtl"
           ></v-text-field>
         </v-col>
         <!-- <v-col cols="12" md="4">
@@ -124,6 +127,7 @@
             v-model="descriptionAr"
             label="وصف"
             reverse
+            dir="rtl"
             textarea
           ></v-text-field>
         </v-col>

@@ -21,6 +21,7 @@
           v-model="nomAr"
           label="الاسم العائلي"
           reverse
+          dir="rtl"
         ></v-text-field>
       </v-col>
       <v-col cols="12" sm="6">
@@ -36,6 +37,7 @@
           v-model="prenomAr"
           label="الاسم الشخصي"
           reverse
+          dir="rtl"
         ></v-text-field>
       </v-col>
       <v-col cols="12">
@@ -58,6 +60,7 @@
           v-model="nomPereAr"
           label="اسم الاب"
           reverse
+          dir="rtl"
         ></v-text-field>
       </v-col>
       <v-col cols="12" sm="6">
@@ -73,6 +76,7 @@
           v-model="nomMereAr"
           label="اسم الأم"
           reverse
+          dir="rtl"
         ></v-text-field>
       </v-col>
       <v-col cols="12" sm="6">
@@ -170,87 +174,125 @@
   </v-form>
 </template>
 <script>
-import Axios from 'axios'
-import ComparentService from './../../assets/sevices/comparentService'
-const comparentService = new ComparentService()
+import Axios from "axios";
+import ComparentService from "./../../assets/sevices/comparentService";
+const comparentService = new ComparentService();
 export default {
   props: {
     modifier: {
       type: Boolean,
-      default: false,
+      default: false
     },
     comparent: {
-      type: Object,
+      type: Object
     }
   },
   data: () => ({
     valid: true,
     menu: false,
     menu2: false,
-    nomFr: '',
-    nomAr: '',
-    prenomFr: '',
-    prenomAr: '',
-    nationalite: '',
-    nomPereFr: '',
-    nomPereAr: '',
-    nomMereFr: '',
-    nomMereAr: '',
-    typeIdentification: '',
-    Identification: '',
+    nomFr: "",
+    nomAr: "",
+    prenomFr: "",
+    prenomAr: "",
+    nationalite: "",
+    nomPereFr: "",
+    nomPereAr: "",
+    nomMereFr: "",
+    nomMereAr: "",
+    typeIdentification: "",
+    Identification: "",
     IdentificationValable: new Date().toISOString().substr(0, 0),
     dateNaissance: new Date().toISOString().substr(0, 0),
-    tetulle: '',
+    tetulle: "",
     tetulles: [],
-    idTypes: ['CIN', 'Acte de naissance', 'Permis de conduire'],
+    idTypes: ["CIN", "Acte de naissance", "Permis de conduire"],
     snackbar: false,
-    error: '',
+    error: ""
   }),
 
   methods: {
     enregistrer() {
       if (this.modifier) {
         if (this.tetulle.id) {
-          this.tetulle = this.tetulle.id
+          this.tetulle = this.tetulle.id;
         }
-        comparentService.editMineur(
-          this.comparent.comparent, this.nomFr, this.nomAr, this.prenomFr, this.prenomAr, this.nationalite, this.nomPereFr, this.nomPereAr, this.nomMereFr, this.nomMereAr, this.typeIdentification, this.Identification, this.IdentificationValable, this.dateNaissance, this.tetulle
-        ).then(resp => {
-          console.log(resp.date);
-          this.$router.push(
-            `/comparent?success=Comparent était bien Modifié`
+        comparentService
+          .editMineur(
+            this.comparent.comparent,
+            this.nomFr,
+            this.nomAr,
+            this.prenomFr,
+            this.prenomAr,
+            this.nationalite,
+            this.nomPereFr,
+            this.nomPereAr,
+            this.nomMereFr,
+            this.nomMereAr,
+            this.typeIdentification,
+            this.Identification,
+            this.IdentificationValable,
+            this.dateNaissance,
+            this.tetulle
           )
-        }).catch((err) => {
-          this.error = err;
-          this.snackbar = true;
-        });
+          .then(resp => {
+            console.log(resp.date);
+            this.$router.push(
+              `/comparent?success=Comparent était bien Modifié`
+            );
+          })
+          .catch(err => {
+            this.error = err;
+            this.snackbar = true;
+          });
       } else
-        comparentService.createMineur(
-          this.comparent.id, this.nomFr, this.nomAr, this.prenomFr, this.prenomAr, this.nationalite, this.nomPereFr, this.nomPereAr, this.nomMereFr, this.nomMereAr, this.typeIdentification, this.Identification, this.IdentificationValable, this.dateNaissance, this.tetulle
-        ).then(resp => {
-          console.log(resp.date);
-          this.$router.push(
-            `/comparent?success=Comparent était bien enregistré`
+        comparentService
+          .createMineur(
+            this.comparent.id,
+            this.nomFr,
+            this.nomAr,
+            this.prenomFr,
+            this.prenomAr,
+            this.nationalite,
+            this.nomPereFr,
+            this.nomPereAr,
+            this.nomMereFr,
+            this.nomMereAr,
+            this.typeIdentification,
+            this.Identification,
+            this.IdentificationValable,
+            this.dateNaissance,
+            this.tetulle
           )
-        }).catch((err) => {
-          this.error = err;
-          this.snackbar = true;
-        });
+          .then(resp => {
+            console.log(resp.date);
+            this.$router.push(
+              `/comparent?success=Comparent était bien enregistré`
+            );
+          })
+          .catch(err => {
+            this.error = err;
+            this.snackbar = true;
+          });
     }
   },
 
-  beforeCreate() {
-
-  },
+  beforeCreate() {},
   created() {
-    Axios.get('http://localhost:1337/comparent').then(resp => {
-      this.tetulles = resp.data.filter(tet => tet.id != this.comparent.comparent && tet.type != "PM" && tet.type != "PPM")
+    Axios.get("http://localhost:1337/comparent").then(resp => {
+      this.tetulles = resp.data.filter(
+        tet =>
+          tet.id != this.comparent.comparent &&
+          tet.type != "PM" &&
+          tet.type != "PPM"
+      );
       if (this.modifier) {
-        this.tetulle = this.tetulles.filter(tet => tet.id === this.comparent.tutelle)[0];
+        this.tetulle = this.tetulles.filter(
+          tet => tet.id === this.comparent.tutelle
+        )[0];
       }
-    })
+    });
     if (this.modifier) {
-
       this.nomFr = this.comparent.nomFr;
       this.nomAr = this.comparent.nomAr;
       this.prenomFr = this.comparent.prenomFr;
@@ -264,8 +306,7 @@ export default {
       this.Identification = this.comparent.Identification;
       this.IdentificationValable = this.comparent.IdentificationValable;
       this.dateNaissance = this.comparent.dateNaissance;
-
     }
-  },
-}
+  }
+};
 </script>

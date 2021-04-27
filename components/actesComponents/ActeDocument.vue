@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="editor">
     <froala
       :tag="'textarea'"
       :config="config"
@@ -67,3 +67,9 @@ export default {
   }
 };
 </script>
+<style scoped>
+.editor {
+  width: 800px;
+  margin: auto;
+}
+</style>

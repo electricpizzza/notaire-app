@@ -352,6 +352,7 @@
                 type="file"
                 id="file"
                 ref="file"
+                accept="image/jpeg,image/jpg,image/png,application/pdf"
                 @change="fileUpload"
                 class="img-field ma-3"
                 multiple
@@ -372,7 +373,7 @@
   </v-stepper>
 </template>
 <script>
-import axios from 'axios'
+import axios from "axios";
 export default {
   data() {
     return {
@@ -380,26 +381,26 @@ export default {
       menu: false,
       menu1: false,
       headersComp: [
-        { text: 'ID', value: 'id' },
-        { text: 'Nom de Comparant', value: 'type' },
-        { text: 'Nom de Comparant', value: 'nom' },
+        { text: "ID", value: "id" },
+        { text: "Nom de Comparant", value: "type" },
+        { text: "Nom de Comparant", value: "nom" }
       ],
       headersBien: [
-        { text: 'ID', value: 'id' },
-        { text: 'Libelle', value: 'libelle' },
-        { text: 'Type', value: 'type' },
+        { text: "ID", value: "id" },
+        { text: "Libelle", value: "libelle" },
+        { text: "Type", value: "type" }
       ],
 
-      search: '',
-      identifiant: '',
-      nature: '',
-      libelle: '',
-      description: '',
-      dateOuverture: new Date().toISOString().split('T')[0],
+      search: "",
+      identifiant: "",
+      nature: "",
+      libelle: "",
+      description: "",
+      dateOuverture: new Date().toISOString().split("T")[0],
       dateFermeture: null,
       Bien: [],
       Comparant: [],
-      notaire: '',
+      notaire: "",
       dialogBien: false,
       dialogComp: false,
       compList: [],
@@ -410,36 +411,45 @@ export default {
       files: [],
       loading: false,
       snackbar: false,
-      error: '',
-    }
+      error: ""
+    };
   },
   beforeCreate() {
-    axios.get('http://localhost:1337/bien').then(resp => {
-      this.bienList = resp.data
-    }).catch((err) => {
-      this.error = err;
-      this.snackbar = true;
-    });
     axios
-      .get('http://localhost:1337/comparent', { mode: 'cors' })
-      .then((resp) => {
-        this.compList = resp.data
-      }).catch(err => {
+      .get("http://localhost:1337/bien")
+      .then(resp => {
+        this.bienList = resp.data;
+      })
+      .catch(err => {
         this.error = err;
         this.snackbar = true;
       });
-    axios.get('http://localhost:1337/data').then(resp => {
+    axios
+      .get("http://localhost:1337/comparent", { mode: "cors" })
+      .then(resp => {
+        this.compList = resp.data;
+      })
+      .catch(err => {
+        this.error = err;
+        this.snackbar = true;
+      });
+    axios.get("http://localhost:1337/data").then(resp => {
       this.NatureDossiers = resp.data.NatureDossier;
     });
   },
   watch: {
     nature: (newnature, oldnature) => {
-      axios.get('http://localhost:1337/data').then(resp => {
-        this.attachmentList = resp.data.NatureDossier.find(n => n.value = newnature).attachements
-      }).catch((err) => {
-        this.error = err;
-        this.snackbar = true;
-      });
+      axios
+        .get("http://localhost:1337/data")
+        .then(resp => {
+          this.attachmentList = resp.data.NatureDossier.find(
+            n => (n.value = newnature)
+          ).attachements;
+        })
+        .catch(err => {
+          this.error = err;
+          this.snackbar = true;
+        });
     }
   },
   methods: {
@@ -448,100 +458,105 @@ export default {
       this.files.push(...this.$refs.file.files);
     },
     selectComparant() {
-      this.Comparant = this.selectedItems
-      this.selectedItems = []
-      this.dialogComp = false
+      this.Comparant = this.selectedItems;
+      this.selectedItems = [];
+      this.dialogComp = false;
     },
     selectBien() {
-      this.Bien = this.selectedItems
-      this.selectedItems = []
-      this.dialogBien = false
+      this.Bien = this.selectedItems;
+      this.selectedItems = [];
+      this.dialogBien = false;
     },
     openComp() {
-      this.dialogComp = true
+      this.dialogComp = true;
     },
     openBien() {
-      this.dialogBien = true
+      this.dialogBien = true;
     },
     enregistrer() {
-
       this.loading = true;
       const comps = [];
       const bins = [];
 
       this.Comparant.forEach(Comp => {
-        comps.push(Comp.id)
+        comps.push(Comp.id);
       });
       this.Bien.forEach(b => {
-        bins.push(b.id)
+        bins.push(b.id);
       });
 
-      axios.post('http://localhost:1337/dossiers', {
-        title: `${this.libelle} -  ${this.nature}`,
-        nature: this.nature,
-        identifiant: this.identifiant,
-        description: this.description,
-        libelle: this.libelle,
-        dateOuverture: this.dateOuverture,
-        dateFermeture: this.dateFermeture,
-        Bien: JSON.stringify(bins),
-        Comparent: JSON.stringify(comps),
-        NomMaitre: this.notaire,
-      }).then(resp => {
-        console.log(resp);
-        let formData = new FormData();
-        this.files.forEach(file => {
-          formData.append('files', file, name.name);
-        });
-        formData.append('titre', this.libelle);
-        formData.append('dossier', resp.data.identifiers[0].id);
-        formData.append('description', this.description);
-        axios.post('http://localhost:1337/archive', formData).then(arch => {
-          this.loading = false;
-          this.$router.push(
-            `/dossiers?success=Dossiers est bien enregistré`
-          )
-        }).catch(err => {
+      axios
+        .post("http://localhost:1337/dossiers", {
+          title: `${this.libelle} -  ${this.nature}`,
+          nature: this.nature,
+          identifiant: this.identifiant,
+          description: this.description,
+          libelle: this.libelle,
+          dateOuverture: this.dateOuverture,
+          dateFermeture: this.dateFermeture,
+          Bien: JSON.stringify(bins),
+          Comparent: JSON.stringify(comps),
+          NomMaitre: this.notaire
+        })
+        .then(resp => {
+          console.log(resp);
+          let formData = new FormData();
+          this.files.forEach(file => {
+            formData.append("files", file, name.name);
+          });
+          formData.append("titre", this.libelle);
+          formData.append("dossier", resp.data.identifiers[0].id);
+          formData.append("description", this.description);
+          axios
+            .post("http://localhost:1337/archive", formData)
+            .then(arch => {
+              this.loading = false;
+              this.$router.push(
+                `/dossiers?success=Dossiers est bien enregistré`
+              );
+            })
+            .catch(err => {
+              this.error = err;
+              this.loading = false;
+              this.snackbar = true;
+            });
+        })
+        .catch(err => {
           this.error = err;
           this.loading = false;
           this.snackbar = true;
         });
-      }).catch(err => {
-        this.error = err;
-        this.loading = false;
-        this.snackbar = true;
-      })
     }
-  },
-}
+  }
+};
 </script>
 <style lang="css">
-  .img-field::-webkit-file-upload-button {
-    color: white;
-    display: inline-block;
-    background: #1CB6E0;
-    border: none;
-    padding: 7px 15px;
-    font-weight: 700;
-    border-radius: 3px;
-    white-space: nowrap;
-    cursor: pointer;
-    font-size: 10pt;
-    width:100px;
-    height:100px;
-  }
-  .img-show{
-    width: 100px;
-    height: 100px;
-    background-color: lightcyan;
-    background-image: url('/_nuxt/assets/placeholder.png');
-    background-size: cover;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-  .file-show{
-    display: flex;
-    flex-wrap: wrap;
-  }
+.img-field::-webkit-file-upload-button {
+  color: white;
+  display: inline-block;
+  background: #1cb6e0;
+  border: none;
+  padding: 7px 15px;
+  font-weight: 700;
+  border-radius: 3px;
+  white-space: nowrap;
+  cursor: pointer;
+  font-size: 10pt;
+  width: 100px;
+  height: 100px;
+}
+.img-show {
+  width: 100px;
+  height: 100px;
+  background-color: lightcyan;
+  background-image: url("/_nuxt/assets/placeholder.png");
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.file-show {
+  display: flex;
+  flex-wrap: wrap;
+}
 </style>
