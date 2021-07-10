@@ -193,7 +193,7 @@ export default {
       this.items = resp.data;
     });
     axios
-      .get("http://localhost:1337/dossiers")
+      .get("https://notaitre-api.herokuapp.com/dossiers")
       .then(res => {
         this.dossiers = res.data;
       })
@@ -202,7 +202,7 @@ export default {
         this.snackbar = true;
       });
     axios
-      .get("http://localhost:1337/bien")
+      .get("https://notaitre-api.herokuapp.com/bien")
       .then(res => {
         this.biens = res.data;
       })
@@ -278,14 +278,16 @@ export default {
         if (chmp.type === "comparent") {
           const comps = [];
           objs.forEach(comp => {
-            axios.get(`http://localhost:1337/comparent/${comp}`).then(resp => {
-              comps.push(resp.data.comparentInfo[0]);
-              this.champs.push({
-                name: chmp.nom,
-                type: chmp.type,
-                value: [...comps]
+            axios
+              .get(`https://notaitre-api.herokuapp.com/comparent/${comp}`)
+              .then(resp => {
+                comps.push(resp.data.comparentInfo[0]);
+                this.champs.push({
+                  name: chmp.nom,
+                  type: chmp.type,
+                  value: [...comps]
+                });
               });
-            });
           });
         } else {
           this.champs.push({
@@ -309,7 +311,7 @@ export default {
         });
         setTimeout(() => {
           axios
-            .post("http://localhost:1337/actes", {
+            .post("https://notaitre-api.herokuapp.com/actes", {
               lang: this.model.language,
               contenu: this.champs,
               model: this.model.id,
@@ -331,7 +333,7 @@ export default {
         }, 1000);
       } else {
         axios
-          .put("http://localhost:1337/actes" + this.id, {
+          .put("https://notaitre-api.herokuapp.com/actes" + this.id, {
             contenu: this.champs,
             model: this.model.id,
             redacteur: this.redacteur,

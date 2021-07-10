@@ -90,20 +90,25 @@
               class="d-flex justify-md-space-between"
               style="color: #295075; padding: 30px"
             >
-              <h4 class="pa-5 text-primary">Représentant :</h4>
-              <h4 class="pa-5 text-primary">:المسؤول</h4>
+              <h4 class="pa-5 text-primary">Représentants :</h4>
+              <h4 class="pa-5 text-primary">:المسؤولين</h4>
             </div>
-            <v-row class="pa-5">
+
+            <v-row
+              class="pa-5"
+              v-for="repres in representant"
+              :key="repres.nom"
+            >
               <v-col cols="12" md="6">
                 <v-text-field
-                  v-model="representant.nom"
+                  v-model="repres.nom"
                   label="Nom & Prenom"
                   id="id"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" md="6">
                 <v-text-field
-                  v-model="representant.nomAr"
+                  v-model="repres.nomAr"
                   label="الاسم الشخصي و العائلي"
                   reverse
                   dir="rtl"
@@ -117,20 +122,20 @@
                     'Acte de naissance',
                     'Permis de conduire'
                   ]"
-                  v-model="representant.typeId"
+                  v-model="repres.typeId"
                   label="Type d'identification"
                 ></v-select>
               </v-col>
               <v-col cols="12" md="6">
                 <v-text-field
-                  v-model="representant.identification"
+                  v-model="repres.identification"
                   label="Identification du Representant"
                   id="id"
                 ></v-text-field>
               </v-col>
               <v-col cols="12">
                 <v-text-field
-                  v-model="representant.address"
+                  v-model="repres.address"
                   textarea
                   label="Addresse du Representant"
                   id="id"
@@ -138,7 +143,7 @@
               </v-col>
               <v-col cols="12">
                 <v-text-field
-                  v-model="representant.addressAr"
+                  v-model="repres.addressAr"
                   textarea
                   label="العنوان الشخصي"
                   reverse
@@ -146,6 +151,11 @@
                 ></v-text-field>
               </v-col>
             </v-row>
+            <div class="d-flex justify-end pa-2">
+              <v-btn outlined small color="primary" @click="addRep">
+                <v-icon>mdi-plus</v-icon> Ajouter un(e) Representant(e)
+              </v-btn>
+            </div>
           </v-card>
         </v-col>
       </v-row>
@@ -177,14 +187,16 @@ export default {
     dialogComp: false,
     comp: "",
     name: "",
-    representant: {
-      nom: "",
-      nomAR: "",
-      address: "",
-      addressAr: "",
-      typeId: "",
-      identification: ""
-    },
+    representant: [
+      {
+        nom: "",
+        nomAR: "",
+        address: "",
+        addressAr: "",
+        typeId: "",
+        identification: ""
+      }
+    ],
     raisonSociale: "",
     raisonSocialeAr: "",
     ice: "",
@@ -209,7 +221,7 @@ export default {
     error: ""
   }),
   beforeCreate() {
-    Axios.get("http://localhost:1337/comparent")
+    Axios.get("https://notaitre-api.herokuapp.com/comparent")
       .then(resp => {
         this.representants = resp.data;
       })
@@ -249,6 +261,16 @@ export default {
     },
     resetValidation() {
       this.$refs.form.resetValidation();
+    },
+    addRep() {
+      this.representant.push({
+        nom: "",
+        nomAR: "",
+        address: "",
+        addressAr: "",
+        typeId: "",
+        identification: ""
+      });
     },
     enregistrer() {
       if (this.modifier) {

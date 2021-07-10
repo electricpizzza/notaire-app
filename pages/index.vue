@@ -105,7 +105,7 @@ export default {
   methods: {
     connetToSever() {
       if (this.etatServeur === "Deconecté") {
-        Axios.get('http://localhost:1337').then(resp => {
+        Axios.get('https://notaitre-api.herokuapp.com').then(resp => {
           console.log(resp.data);
           this.etatServeur = "Conecté";
           this.snackbarErr = false;
@@ -123,7 +123,7 @@ export default {
     }
   },
   created() {
-    Axios.get('http://localhost:1337/').then(resp => {
+    Axios.get('https://notaitre-api.herokuapp.com/').then(resp => {
       console.log(resp.data);
       this.etatServeur = "Conecté";
       this.snackbarErr = false;

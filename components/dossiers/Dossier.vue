@@ -142,86 +142,92 @@
   </v-card>
 </template>
 <script>
-import ComparentService from './../../assets/sevices/comparentService'
-import BienService from './../../assets/sevices/bienService'
-import Axios from 'axios'
-import dossierSotre from '~/assets/store/dossierSotre'
-import ActionTimeline from '../ActionTimeline.vue'
+import ComparentService from "./../../assets/sevices/comparentService";
+import BienService from "./../../assets/sevices/bienService";
+import Axios from "axios";
+import dossierSotre from "~/assets/store/dossierSotre";
+import ActionTimeline from "../ActionTimeline.vue";
 
-const comparentService = new ComparentService()
-const bienService = new BienService()
+const comparentService = new ComparentService();
+const bienService = new BienService();
 
 export default {
   components: { ActionTimeline },
   props: {
     dossier: {
-      type: Object,
+      type: Object
     }
   },
   data: () => ({
     deleteDialog: false,
     reveal: false,
-    search: '',
+    search: "",
     dateFermeture: null,
     headersComp: [
       {
-        text: 'ID',
-        align: 'start',
+        text: "ID",
+        align: "start",
         filterable: false,
-        value: 'id',
+        value: "id"
       },
-      { text: 'Type', value: 'type' },
-      { text: 'Nom / Raison Social', value: 'nom' },
-      { text: 'Date Ajout', value: 'dateAjout' },
+      { text: "Type", value: "type" },
+      { text: "Nom / Raison Social", value: "nom" },
+      { text: "Date Ajout", value: "dateAjout" }
     ],
     headersBien: [
       {
-        text: 'ID',
-        align: 'start',
+        text: "ID",
+        align: "start",
         filterable: false,
-        value: 'id',
+        value: "id"
       },
-      { text: 'Libelle', value: 'libelle' },
-      { text: 'Type', value: 'type' },
-      { text: 'Ville', value: 'ville' },
-      { text: '', value: 'data-table-expand' },
+      { text: "Libelle", value: "libelle" },
+      { text: "Type", value: "type" },
+      { text: "Ville", value: "ville" },
+      { text: "", value: "data-table-expand" }
     ],
     comparents: [],
-    biens: [],
+    biens: []
   }),
   created() {
     const comps = JSON.parse(this.dossier.comparents);
     const lesBiens = JSON.parse(this.dossier.bien);
     comps.forEach(comparent => {
-      Axios.get('http://localhost:1337/comparent/' + comparent).then(resp => {
-        this.comparents.push(resp.data.comparent[0])
-      }).catch(err => console.log(err))
+      Axios.get("https://notaitre-api.herokuapp.com/comparent/" + comparent)
+        .then(resp => {
+          this.comparents.push(resp.data.comparent[0]);
+        })
+        .catch(err => console.log(err));
     });
 
     lesBiens.forEach(bien => {
       bienService.getOneBien(bien).then(resp => {
-        this.biens.push(resp.data)
-      })
+        this.biens.push(resp.data);
+      });
     });
-
   },
 
   methods: {
     fermerDossier() {
-      Axios.put(`http://localhost:1337/dossiers/close/${this.dossier.id}`).then(resp => {
-        const today = new Date()
-        this.dossier.dateFermeture = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`
-      }).catch(err => console.error(err))
+      Axios.put(
+        `https://notaitre-api.herokuapp.com/dossiers/close/${this.dossier.id}`
+      )
+        .then(resp => {
+          const today = new Date();
+          this.dossier.dateFermeture = `${today.getFullYear()}-${today.getMonth() +
+            1}-${today.getDate()}`;
+        })
+        .catch(err => console.error(err));
     },
     deleteDossier() {
-      Axios.delete(`http://localhost:13f37/dossiers/${this.dossier.id}`).then(resp => {
-        dossierSotre.deleteDossier(this.dossier.id)
-      }).catch(err => console.error(err))
+      Axios.delete(`http://localhost:13f37/dossiers/${this.dossier.id}`)
+        .then(resp => {
+          dossierSotre.deleteDossier(this.dossier.id);
+        })
+        .catch(err => console.error(err));
     }
-  },
-
-
-}
+  }
+};
 </script>
 <style>
 .v-card--reveal {

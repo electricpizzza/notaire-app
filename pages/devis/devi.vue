@@ -60,38 +60,37 @@
   </v-card>
 </template>
 <script>
-import Axios from 'axios'
+import Axios from "axios";
 export default {
   data() {
     return {
-      search: '',
+      search: "",
       expanded: [],
       headers: [
         {
-          text: 'ID',
-          align: 'start',
+          text: "ID",
+          align: "start",
           filterable: false,
-          value: 'id',
+          value: "id"
         },
-        { text: 'Libelle', value: 'libelle' },
-        { text: 'Type', value: 'type' },
-        { text: 'Ville', value: 'ville' },
-        { text: '', value: 'data-table-expand' },
+        { text: "Libelle", value: "libelle" },
+        { text: "Type", value: "type" },
+        { text: "Ville", value: "ville" },
+        { text: "", value: "data-table-expand" }
       ],
-      devis: [],
-    }
+      devis: []
+    };
   },
   beforeCreate() {
-    Axios.get('http://localhost:1337/bien').then(resp => {
+    Axios.get("https://notaitre-api.herokuapp.com/bien").then(resp => {
       this.devis = resp.data;
-
-    })
-  },
-}
+    });
+  }
+};
 </script>
 <style lang="css">
-  b{
-    color: dodgerblue;
-    font-size: large;
-  }
+b {
+  color: dodgerblue;
+  font-size: large;
+}
 </style>

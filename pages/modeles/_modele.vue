@@ -58,7 +58,7 @@ export default {
     };
   },
   created() {
-    Axios.get("http://localhost:1337/model/" + this.slug)
+    Axios.get("https://notaitre-api.herokuapp.com/model/" + this.slug)
       .then(resp => {
         this.libelle = resp.data[0].libelle;
         this.redacteur = resp.data[0].redacteur;

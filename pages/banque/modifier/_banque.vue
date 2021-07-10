@@ -70,73 +70,78 @@
 </template>
 
 <script>
-import Axios from 'axios'
+import Axios from "axios";
 export default {
   async asyncData({ params }) {
-    const slug = params.banque
-    return { slug }
+    const slug = params.banque;
+    return { slug };
   },
   data() {
     return {
-      libelle: '',
-      Agence: '',
-      addresse: '',
-      libelleAr: '',
-      AgenceAr: '',
-      addresseAr: '',
-      tel: '',
-      ville: '',
-      villeAr: '',
+      libelle: "",
+      Agence: "",
+      addresse: "",
+      libelleAr: "",
+      AgenceAr: "",
+      addresseAr: "",
+      tel: "",
+      ville: "",
+      villeAr: "",
       snackbar: false,
-      error: '',
-      loading: false,
-    }
+      error: "",
+      loading: false
+    };
   },
   created() {
     this.loading = true;
-    Axios.get('http://localhost:1337/comparent/' + this.slug).then(resp => {
-      this.libelle = resp.data.comparentInfo[0].libelle;
-      this.libelleAr = resp.data.comparentInfo[0].libelleAr;
-      this.ville = resp.data.comparentInfo[0].ville;
-      this.villeAr = resp.data.comparentInfo[0].villeAr;
-      this.Agence = resp.data.comparentInfo[0].Agence;
-      this.AgenceAr = resp.data.comparentInfo[0].AgenceAr;
-      this.tel = resp.data.comparentInfo[0].tel;
-      this.addresse = resp.data.comparentInfo[0].addresse;
-      this.addresseAr = resp.data.comparentInfo[0].addresseAr;
-      this.loading = false;
-    }).catch(err => {
-      this.loading = false;
-      this.error = err;
-      this.snackbar = true;
-    });
+    Axios.get("https://notaitre-api.herokuapp.com/comparent/" + this.slug)
+      .then(resp => {
+        this.libelle = resp.data.comparentInfo[0].libelle;
+        this.libelleAr = resp.data.comparentInfo[0].libelleAr;
+        this.ville = resp.data.comparentInfo[0].ville;
+        this.villeAr = resp.data.comparentInfo[0].villeAr;
+        this.Agence = resp.data.comparentInfo[0].Agence;
+        this.AgenceAr = resp.data.comparentInfo[0].AgenceAr;
+        this.tel = resp.data.comparentInfo[0].tel;
+        this.addresse = resp.data.comparentInfo[0].addresse;
+        this.addresseAr = resp.data.comparentInfo[0].addresseAr;
+        this.loading = false;
+      })
+      .catch(err => {
+        this.loading = false;
+        this.error = err;
+        this.snackbar = true;
+      });
   },
   methods: {
     enregistrer() {
       this.loading = true;
 
-      Axios.put('http://localhost:1337/comparent/banque' + this.slug, {
-        libelle: this.libelle,
-        libelleAr: this.libelleAr,
-        Agence: this.Agence,
-        AgenceAr: this.AgenceAr,
-        addresse: this.addresse,
-        addresseAr: this.addresseAr,
-        tel: this.tel,
-        ville: this.ville,
-        villeAr: this.villeAr,
-      }).then(resp => {
-        this.$router.push('/banque?success=Banque était bien ajouté');
-      }).catch(err => {
-        this.loading = false;
-        this.error = err;
-        this.snackbar = true;
-      });
+      Axios.put(
+        "https://notaitre-api.herokuapp.com/comparent/banque" + this.slug,
+        {
+          libelle: this.libelle,
+          libelleAr: this.libelleAr,
+          Agence: this.Agence,
+          AgenceAr: this.AgenceAr,
+          addresse: this.addresse,
+          addresseAr: this.addresseAr,
+          tel: this.tel,
+          ville: this.ville,
+          villeAr: this.villeAr
+        }
+      )
+        .then(resp => {
+          this.$router.push("/banque?success=Banque était bien ajouté");
+        })
+        .catch(err => {
+          this.loading = false;
+          this.error = err;
+          this.snackbar = true;
+        });
     }
-  },
-}
+  }
+};
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

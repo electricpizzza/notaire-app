@@ -36,25 +36,27 @@
   </div>
 </template>
 <script>
-import Axios from 'axios'
-import comptabiliteStore from './../../../assets/store/comptabiliteStore'
+import Axios from "axios";
+import comptabiliteStore from "./../../../assets/store/comptabiliteStore";
 export default {
   data() {
     return {
       services: [],
       servicesChoix: []
-    }
+    };
   },
   created() {
-    Axios.get('http://localhost:1337/service').then(resp => {
-      this.services = resp.data.filter(ser => ser.partie === 'etude');
-    }).catch(err => console.log(err));
+    Axios.get("https://notaitre-api.herokuapp.com/service")
+      .then(resp => {
+        this.services = resp.data.filter(ser => ser.partie === "etude");
+      })
+      .catch(err => console.log(err));
   },
   methods: {
     continuer() {
       comptabiliteStore.services = this.servicesChoix;
-      this.$router.push('/factures/ajouter/terminer')
+      this.$router.push("/factures/ajouter/terminer");
     }
-  },
-}
+  }
+};
 </script>

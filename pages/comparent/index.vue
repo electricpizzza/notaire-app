@@ -189,7 +189,7 @@ export default {
         this.snackbar = true;
       }
       axios
-        .get("http://localhost:1337/comparent", { mode: "cors" })
+        .get("https://notaitre-api.herokuapp.com/comparent", { mode: "cors" })
         .then(resp => {
           this.comparents = resp.data;
         })
@@ -205,13 +205,17 @@ export default {
     },
 
     deleteItemConfirm() {
-      Axios.delete("http://localhost:1337/comparent/" + this.editedIndex)
+      Axios.delete(
+        "https://notaitre-api.herokuapp.com/comparent/" + this.editedIndex
+      )
         .then(resp => {
           this.comparents = this.comparents.filter(
             comp => comp.id !== this.editedIndex
           );
           axios
-            .get("http://localhost:1337/comparent", { mode: "cors" })
+            .get("https://notaitre-api.herokuapp.com/comparent", {
+              mode: "cors"
+            })
             .then(resp => {
               this.comparents = resp.data;
             })

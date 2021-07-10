@@ -206,10 +206,10 @@
   </v-card>
 </template>
 <script>
-import axios from 'axios'
-import DossierCard from '~/components/dossiers/DossierCard.vue';
-import dossierSotre from './../assets/store/dossierSotre'
-import auth from './../assets/store/authStore'
+import axios from "axios";
+import DossierCard from "~/components/dossiers/DossierCard.vue";
+import dossierSotre from "./../assets/store/dossierSotre";
+import auth from "./../assets/store/authStore";
 export default {
   components: { DossierCard },
   // middleware: 'authentification',
@@ -221,20 +221,20 @@ export default {
     singleSelect: false,
     selected: [],
     docs: [],
-    dossierSearch: '',
-    compSearch: '',
-    bienSearch: '',
+    dossierSearch: "",
+    compSearch: "",
+    bienSearch: "",
     loading: false,
     snackbar: false,
-    error: '',
+    error: ""
   }),
   methods: {
     closeTab(id) {
-      this.docs = this.docs.filter(doc => doc.id != id)
+      this.docs = this.docs.filter(doc => doc.id != id);
       dossierSotre.closeDossier(id);
     },
     openDoc() {
-      this.docs.push(...this.selected)
+      this.docs.push(...this.selected);
       dossierSotre.addDossier(...this.selected);
       this.toBeOpen = null;
       this.dialogDos = false;
@@ -251,50 +251,53 @@ export default {
     },
     rechercher() {
       this.loading = true;
-      axios.get(`http://localhost:1337/dossiers?dossier=${this.dossierSearch}&comp=${this.compSearch}&bien=${this.bienSearch}`).then(resp => {
-        console.log(resp.data);
-        if (resp.data.length !== undefined) {
-          this.dossiers = resp.data;
-        } else {
-          this.docs.push(resp.data)
+      axios
+        .get(
+          `https://notaitre-api.herokuapp.com/dossiers?dossier=${this.dossierSearch}&comp=${this.compSearch}&bien=${this.bienSearch}`
+        )
+        .then(resp => {
+          console.log(resp.data);
+          if (resp.data.length !== undefined) {
+            this.dossiers = resp.data;
+          } else {
+            this.docs.push(resp.data);
+            this.closeDialog();
+            dossierSotre.addDossier(resp.data);
+          }
+          this.loading = false;
+          this.dossierSearch = "";
+          this.bienSearch = "";
+          this.compSearch = "";
+        })
+        .catch(err => {
+          console.log(err);
+          this.loading = false;
+          this.snackbar = true;
+          this.error = "Aucun dossier n'est trouvé avec ces coordonnes";
+          this.dossierSearch = "";
+          this.bienSearch = "";
+          this.compSearch = "";
           this.closeDialog();
-          dossierSotre.addDossier(resp.data);
-        }
-        this.loading = false;
-        this.dossierSearch = '';
-        this.bienSearch = '';
-        this.compSearch = '';
-      }).catch(err => {
-        console.log(err);
-        this.loading = false;
-        this.snackbar = true;
-        this.error = "Aucun dossier n'est trouvé avec ces coordonnes";
-        this.dossierSearch = '';
-        this.bienSearch = '';
-        this.compSearch = '';
-        this.closeDialog();
-      })
+        });
     }
-
   },
   created() {
     // const usr = auth.user
     console.log(dossierSotre);
     this.docs = dossierSotre.data.dossiers;
-  },
-}
+  }
+};
 </script>
 <style lang="css" scoped>
-  .v-card{
-    background-image: url('https://raw.githubusercontent.com/electricpizzza/BloodDonation/master/public/img/background.png');
-  }
-  .v-data-table {
-    background: whitesmoke;
-  }
-  .open-btn{
-    position:absolute;
-    top: 250px;
-    right: 41%;
-
-  }
+.v-card {
+  background-image: url("https://raw.githubusercontent.com/electricpizzza/BloodDonation/master/public/img/background.png");
+}
+.v-data-table {
+  background: whitesmoke;
+}
+.open-btn {
+  position: absolute;
+  top: 250px;
+  right: 41%;
+}
 </style>

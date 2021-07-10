@@ -177,7 +177,7 @@ export default {
   },
   methods: {
     enregistrer() {
-      Axios.put("http://localhost:1337/bien/" + this.slug, {
+      Axios.put("https://notaitre-api.herokuapp.com/bien/" + this.slug, {
         libelle: this.libelle,
         type: this.type,
         ville: this.ville,
@@ -217,31 +217,33 @@ export default {
     }
   },
   created() {
-    Axios.get("http://localhost:1337/data").then(resp => {
+    Axios.get("https://notaitre-api.herokuapp.com/data").then(resp => {
       this.bineTypes = resp.data.typeBien;
     });
-    Axios.get("http://localhost:1337/bien/" + this.slug).then(resp => {
-      this.libelle = resp.data.libelle;
-      this.type = resp.data.type;
-      this.ville = resp.data.ville;
-      this.Superficie = resp.data.Superficie;
-      this.address = resp.data.address;
-      this.ville = resp.data.ville;
-      this.description = resp.data.description;
-      this.etage = resp.data.etage;
-      this.nb_piece = resp.data.nb_piece;
-      this.valeur = resp.data.valeur;
-      this.ancfcc = resp.data.ancfcc;
-      this.Immeuble = resp.data.Immeuble;
-      this.terrainType = resp.data.terrainType;
-      this.detailSuperficie = resp.data.detailSuperficie;
-      this.typeAr = resp.data.typeAr;
-      this.descriptionAr = resp.data.descriptionAr;
-      this.addressAr = resp.data.addressAr;
-      this.villeAr = resp.data.villeAr;
-      this.detailSuperficieAr = resp.data.detailSuperficieAr;
-      this.details = JSON.parse(resp.data.details);
-    });
+    Axios.get("https://notaitre-api.herokuapp.com/bien/" + this.slug).then(
+      resp => {
+        this.libelle = resp.data.libelle;
+        this.type = resp.data.type;
+        this.ville = resp.data.ville;
+        this.Superficie = resp.data.Superficie;
+        this.address = resp.data.address;
+        this.ville = resp.data.ville;
+        this.description = resp.data.description;
+        this.etage = resp.data.etage;
+        this.nb_piece = resp.data.nb_piece;
+        this.valeur = resp.data.valeur;
+        this.ancfcc = resp.data.ancfcc;
+        this.Immeuble = resp.data.Immeuble;
+        this.terrainType = resp.data.terrainType;
+        this.detailSuperficie = resp.data.detailSuperficie;
+        this.typeAr = resp.data.typeAr;
+        this.descriptionAr = resp.data.descriptionAr;
+        this.addressAr = resp.data.addressAr;
+        this.villeAr = resp.data.villeAr;
+        this.detailSuperficieAr = resp.data.detailSuperficieAr;
+        this.details = JSON.parse(resp.data.details);
+      }
+    );
   }
 };
 </script>

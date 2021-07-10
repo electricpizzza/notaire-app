@@ -70,61 +70,62 @@
 </template>
 
 <script>
-import ComparentService from './../../assets/sevices/comparentService'
-import Axios from 'axios'
-const comparentService = new ComparentService()
+import ComparentService from "./../../assets/sevices/comparentService";
+import Axios from "axios";
+const comparentService = new ComparentService();
 export default {
   data() {
     return {
-      libelle: '',
-      Agence: '',
-      addresse: '',
-      libelleAr: '',
-      AgenceAr: '',
-      addresseAr: '',
-      tel: '',
-      ville: '',
-      villeAr: '',
+      libelle: "",
+      Agence: "",
+      addresse: "",
+      libelleAr: "",
+      AgenceAr: "",
+      addresseAr: "",
+      tel: "",
+      ville: "",
+      villeAr: "",
       snackbar: false,
-      error: '',
-      loading: false,
-    }
+      error: "",
+      loading: false
+    };
   },
-  created() {
-
-  },
+  created() {},
   methods: {
     enregistrer() {
       this.loading = true;
-      comparentService.createComparent(this.libelle, "B").then(comp => {
-        Axios.post('http://localhost:1337/comparent/banque', {
-          comparent: comp.data.raw.insertId,
-          libelle: this.libelle,
-          libelleAr: this.libelleAr,
-          Agence: this.Agence,
-          AgenceAr: this.AgenceAr,
-          addresse: this.addresse,
-          addresseAr: this.addresseAr,
-          tel: this.tel,
-          ville: this.ville,
-          villeAr: this.villeAr,
-        }).then(resp => {
-          this.$router.push('/banque?success=Banque était bien ajouté');
-        }).catch(err => {
+      comparentService
+        .createComparent(this.libelle, "B")
+        .then(comp => {
+          Axios.post("https://notaitre-api.herokuapp.com/comparent/banque", {
+            comparent: comp.data.raw.insertId,
+            libelle: this.libelle,
+            libelleAr: this.libelleAr,
+            Agence: this.Agence,
+            AgenceAr: this.AgenceAr,
+            addresse: this.addresse,
+            addresseAr: this.addresseAr,
+            tel: this.tel,
+            ville: this.ville,
+            villeAr: this.villeAr
+          })
+            .then(resp => {
+              this.$router.push("/banque?success=Banque était bien ajouté");
+            })
+            .catch(err => {
+              this.loading = false;
+              this.error = err;
+              this.snackbar = true;
+            });
+        })
+        .catch(err => {
           this.loading = false;
           this.error = err;
           this.snackbar = true;
         });
-      }).catch(err => {
-        this.loading = false;
-        this.error = err;
-        this.snackbar = true;
-      });
     }
-  },
-}
+  }
+};
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

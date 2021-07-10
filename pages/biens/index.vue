@@ -77,38 +77,37 @@
   </v-card>
 </template>
 <script>
-import Axios from 'axios'
+import Axios from "axios";
 export default {
   data() {
     return {
-      search: '',
+      search: "",
       snackbar: false,
       success: null,
       expanded: [],
       headers: [
         {
-          text: 'ID',
-          align: 'start',
+          text: "ID",
+          align: "start",
           filterable: false,
-          value: 'id',
+          value: "id"
         },
-        { text: 'Titre Foncier', value: 'libelle' },
-        { text: 'Type', value: 'type' },
-        { text: 'Ville', value: 'ville' },
-        { text: '', value: 'data-table-expand' },
+        { text: "Titre Foncier", value: "libelle" },
+        { text: "Type", value: "type" },
+        { text: "Ville", value: "ville" },
+        { text: "", value: "data-table-expand" }
       ],
       biens: [],
-      loading: false,
-    }
+      loading: false
+    };
   },
   beforeCreate() {
-    Axios.get('http://localhost:1337/bien').then(resp => {
+    Axios.get("https://notaitre-api.herokuapp.com/bien").then(resp => {
       this.biens = resp.data;
-
     });
   },
   created() {
-    this.success = this.$route.query.success
+    this.success = this.$route.query.success;
     if (this.success != null) {
       this.snackbar = true;
     }
@@ -116,19 +115,21 @@ export default {
   methods: {
     remove(id) {
       this.loading = true;
-      Axios.delete('http://localhost:1337/bien/' + id).then(resp => {
-        this.biens = this.biens.filter(bien => bien.id !== id);
-        this.loading = false;
-      }).catch(err => {
-        this.loading = false;
-      })
+      Axios.delete("https://notaitre-api.herokuapp.com/bien/" + id)
+        .then(resp => {
+          this.biens = this.biens.filter(bien => bien.id !== id);
+          this.loading = false;
+        })
+        .catch(err => {
+          this.loading = false;
+        });
     }
-  },
-}
+  }
+};
 </script>
 <style lang="css">
-  b{
-    color: dodgerblue;
-    font-size: large;
-  }
+b {
+  color: dodgerblue;
+  font-size: large;
+}
 </style>

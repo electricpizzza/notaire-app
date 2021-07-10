@@ -279,7 +279,7 @@ export default {
 
   beforeCreate() {},
   created() {
-    Axios.get("http://localhost:1337/comparent").then(resp => {
+    Axios.get("https://notaitre-api.herokuapp.com/comparent").then(resp => {
       this.tetulles = resp.data.filter(
         tet =>
           tet.id != this.comparent.comparent &&

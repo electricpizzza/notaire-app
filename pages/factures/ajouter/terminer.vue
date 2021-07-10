@@ -341,14 +341,14 @@ export default {
   },
   created() {
     this.articles = comptabiliteStore.services;
-    Axios.get("http://localhost:1337/devis/count")
+    Axios.get("https://notaitre-api.herokuapp.com/devis/count")
       .then(resp => {
         const ref = (resp.data + 1) / 10000;
         this.reference =
           new Date().getFullYear() + ref.toString().replace("0.", "/");
       })
       .catch(err => console.log(err));
-    Axios.get("http://localhost:1337/service")
+    Axios.get("https://notaitre-api.herokuapp.com/service")
       .then(resp => {
         this.items = resp.data;
       })
@@ -391,7 +391,7 @@ export default {
       });
     },
     enregistrer() {
-      Axios.post("http://localhost:1337/facture", {
+      Axios.post("https://notaitre-api.herokuapp.com/facture", {
         articles: this.articles,
         reference: this.reference,
         remisG: this.remisG,

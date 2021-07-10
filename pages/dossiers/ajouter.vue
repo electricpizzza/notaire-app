@@ -416,7 +416,7 @@ export default {
   },
   beforeCreate() {
     axios
-      .get("http://localhost:1337/bien")
+      .get("https://notaitre-api.herokuapp.com/bien")
       .then(resp => {
         this.bienList = resp.data;
       })
@@ -425,7 +425,7 @@ export default {
         this.snackbar = true;
       });
     axios
-      .get("http://localhost:1337/comparent", { mode: "cors" })
+      .get("https://notaitre-api.herokuapp.com/comparent", { mode: "cors" })
       .then(resp => {
         this.compList = resp.data;
       })
@@ -433,14 +433,14 @@ export default {
         this.error = err;
         this.snackbar = true;
       });
-    axios.get("http://localhost:1337/data").then(resp => {
+    axios.get("https://notaitre-api.herokuapp.com/data").then(resp => {
       this.NatureDossiers = resp.data.NatureDossier;
     });
   },
   watch: {
     nature: (newnature, oldnature) => {
       axios
-        .get("http://localhost:1337/data")
+        .get("https://notaitre-api.herokuapp.com/data")
         .then(resp => {
           this.attachmentList = resp.data.NatureDossier.find(
             n => (n.value = newnature)
@@ -486,7 +486,7 @@ export default {
       });
 
       axios
-        .post("http://localhost:1337/dossiers", {
+        .post("https://notaitre-api.herokuapp.com/dossiers", {
           title: `${this.libelle} -  ${this.nature}`,
           nature: this.nature,
           identifiant: this.identifiant,
@@ -508,7 +508,7 @@ export default {
           formData.append("dossier", resp.data.identifiers[0].id);
           formData.append("description", this.description);
           axios
-            .post("http://localhost:1337/archive", formData)
+            .post("https://notaitre-api.herokuapp.com/archive", formData)
             .then(arch => {
               this.loading = false;
               this.$router.push(

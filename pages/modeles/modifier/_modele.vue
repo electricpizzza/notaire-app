@@ -124,21 +124,23 @@ export default {
     };
   },
   beforeCreate() {
-    axios.get("http://localhost:1337/data").then(resp => {
+    axios.get("https://notaitre-api.herokuapp.com/data").then(resp => {
       this.typeActes = resp.data.typeActe;
     });
   },
   created() {
-    axios.get("http://localhost:1337/model/" + this.slug).then(resp => {
-      console.log(resp.data[0]);
-      this.libelle = resp.data[0].libelle;
-      this.redacteur = resp.data[0].redacteur;
-      this.language = resp.data[0].language;
-      this.champs = JSON.parse(resp.data[0].champs);
-      this.type = resp.data[0].type;
-      this.boilerplate = resp.data[0].boilerplate;
-      MarkdownStore.data.markdown = resp.data[0].boilerPlate;
-    });
+    axios
+      .get("https://notaitre-api.herokuapp.com/model/" + this.slug)
+      .then(resp => {
+        console.log(resp.data[0]);
+        this.libelle = resp.data[0].libelle;
+        this.redacteur = resp.data[0].redacteur;
+        this.language = resp.data[0].language;
+        this.champs = JSON.parse(resp.data[0].champs);
+        this.type = resp.data[0].type;
+        this.boilerplate = resp.data[0].boilerplate;
+        MarkdownStore.data.markdown = resp.data[0].boilerPlate;
+      });
   },
   methods: {
     addChamps() {
@@ -181,7 +183,7 @@ export default {
         this.error = "Veuillez Bien Saisire les données S.V.P.";
       } else {
         axios
-          .put("http://localhost:1337/model/" + this.slug, {
+          .put("https://notaitre-api.herokuapp.com/model/" + this.slug, {
             language: this.language,
             redacteur: this.redacteur,
             libelle: this.libelle,

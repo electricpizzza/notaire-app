@@ -48,36 +48,36 @@
   </v-card>
 </template>
 <script>
-import Axios from 'axios'
-import DossierService from './../../assets/sevices/dossierService.js'
-const dossierService = new DossierService()
+import Axios from "axios";
+import DossierService from "./../../assets/sevices/dossierService.js";
+const dossierService = new DossierService();
 
 export default {
   data() {
     return {
-      search: '',
+      search: "",
       expanded: [],
       headers: [
         {
-          text: 'ID',
-          align: 'start',
+          text: "ID",
+          align: "start",
           filterable: false,
-          value: 'id',
+          value: "id"
         },
-        { text: 'Dossier', value: 'dossier' },
-        { text: 'Description', value: 'description' },
-        { text: '', value: 'data-table-expand' },
+        { text: "Dossier", value: "dossier" },
+        { text: "Description", value: "description" },
+        { text: "", value: "data-table-expand" }
       ],
-      comptabilite: [],
-    }
+      comptabilite: []
+    };
   },
 
   created() {
-    this.success = this.$route.query.success
-    Axios.get('http://localhost:1337/comptabilite/').then(resp => {
+    this.success = this.$route.query.success;
+    Axios.get("https://notaitre-api.herokuapp.com/comptabilite/").then(resp => {
       this.comptabilite = resp.data;
       console.log(resp.data);
     });
-  },
-}
+  }
+};
 </script>

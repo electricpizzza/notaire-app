@@ -79,8 +79,8 @@
                 <v-btn
                   color="primary"
                   dark
-                  :href="`http://localhost:1337/${item.link}`"
-                  :download="`http://localhost:1337/${item.link}`"
+                  :href="`https://notaitre-api.herokuapp.com/${item.link}`"
+                  :download="`https://notaitre-api.herokuapp.com/${item.link}`"
                   target="_blank"
                   >Telecharger</v-btn
                 >
@@ -127,7 +127,7 @@ export default {
     };
   },
   beforeCreate() {
-    Axios.get("http://localhost:1337/devis").then(resp => {
+    Axios.get("https://notaitre-api.herokuapp.com/devis").then(resp => {
       this.devis = resp.data;
       console.log(this.devis);
     });
@@ -138,7 +138,7 @@ export default {
       this.dialogDelete = true;
     },
     deleteItemConfirm() {
-      Axios.delete(`http://localhost:1337/devis/${this.todelete}`)
+      Axios.delete(`https://notaitre-api.herokuapp.com/devis/${this.todelete}`)
         .then(resp => {
           this.devis = this.devis.filter(fac => fac.id !== this.todelete);
           this.dialogDelete = false;

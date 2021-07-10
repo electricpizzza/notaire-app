@@ -56,16 +56,18 @@ export default {
     };
   },
   created() {
-    Axios.get("http://localhost:1337/actes/" + this.slug).then(resp => {
-      this.contenu = JSON.parse(resp.data[0].contenu);
-      this.model = resp.data[0].model;
-      this.redacteur = resp.data[0].redacteur;
-      this.dateRedaction = resp.data[0].dateRedaction;
-      this.libelle = resp.data[0].libelle;
-      this.fichier = resp.data[0].fichier;
-      MarkdownStore.data.markdown = this.fichier;
-      console.log(MarkdownStore.data.markdown);
-    });
+    Axios.get("https://notaitre-api.herokuapp.com/actes/" + this.slug).then(
+      resp => {
+        this.contenu = JSON.parse(resp.data[0].contenu);
+        this.model = resp.data[0].model;
+        this.redacteur = resp.data[0].redacteur;
+        this.dateRedaction = resp.data[0].dateRedaction;
+        this.libelle = resp.data[0].libelle;
+        this.fichier = resp.data[0].fichier;
+        MarkdownStore.data.markdown = this.fichier;
+        console.log(MarkdownStore.data.markdown);
+      }
+    );
   },
   methods: {
     exportHTML() {

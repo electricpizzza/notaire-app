@@ -24,36 +24,38 @@
   </v-container>
 </template>
 <script>
-import Axios from 'axios'
-import ComparentService from '../../../assets/sevices/comparentService.js'
-const comparentService = new ComparentService()
+import Axios from "axios";
+import ComparentService from "../../../assets/sevices/comparentService.js";
+const comparentService = new ComparentService();
 export default {
-  name: 'Ajoter',
+  name: "Ajoter",
   async asyncData({ params }) {
-    const comparent = params.comparent
-    return { comparent }
+    const comparent = params.comparent;
+    return { comparent };
   },
   data() {
     return {
       comparent: null,
       type: null,
       snackbar: false,
-      error: '',
-    }
+      error: ""
+    };
   },
-  beforeCreate() {
-
-  },
+  beforeCreate() {},
   created() {
-    Axios.get('http://localhost:1337/comparent/' + this.comparent).then(resp => {
-      if (resp.data.comparentInfo[0] === undefined)
-        this.$router.push('/comparent/ajouter?id=' + resp.data.comparent[0].id);
-      this.type = resp.data.comparent[0].type
-      this.comparent = resp.data.comparentInfo[0];
-    }).catch((err) => {
-      this.error = err;
-      this.snackbar = true;
-    });
-  },
-}
+    Axios.get("https://notaitre-api.herokuapp.com/comparent/" + this.comparent)
+      .then(resp => {
+        if (resp.data.comparentInfo[0] === undefined)
+          this.$router.push(
+            "/comparent/ajouter?id=" + resp.data.comparent[0].id
+          );
+        this.type = resp.data.comparent[0].type;
+        this.comparent = resp.data.comparentInfo[0];
+      })
+      .catch(err => {
+        this.error = err;
+        this.snackbar = true;
+      });
+  }
+};
 </script>

@@ -95,7 +95,7 @@ export default {
     if (this.success != null) {
       this.snackbar = true;
     }
-    Axios.get("http://localhost:1337/dossiers").then(resp => {
+    Axios.get("https://notaitre-api.herokuapp.com/dossiers").then(resp => {
       this.dossiers = resp.data;
       console.log(resp.data);
     });

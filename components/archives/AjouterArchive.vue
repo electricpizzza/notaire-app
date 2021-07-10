@@ -48,19 +48,17 @@
   </v-container>
 </template>
 <script>
-import Axios from 'axios';
+import Axios from "axios";
 export default {
   data() {
     return {
       files: [],
-      dossier: '',
-      titre: '',
-      description: '',
-    }
+      dossier: "",
+      titre: "",
+      description: ""
+    };
   },
-  created() {
-
-  },
+  created() {},
   methods: {
     fileUpload() {
       this.files.push(...this.$refs.file.files);
@@ -69,43 +67,45 @@ export default {
     enregistrer() {
       let formData = new FormData();
       this.files.forEach(file => {
-        formData.append('files', file, name.name);
+        formData.append("files", file, name.name);
       });
-      formData.append('titre', this.titre);
-      formData.append('dossier', this.dossier);
-      formData.append('description', this.dossier);
-      Axios.post('http://localhost:1337/archive', formData).then(resp => {
-        console.log(resp);
-      }).catch(err => console.error(err))
+      formData.append("titre", this.titre);
+      formData.append("dossier", this.dossier);
+      formData.append("description", this.dossier);
+      Axios.post("https://notaitre-api.herokuapp.com/archive", formData)
+        .then(resp => {
+          console.log(resp);
+        })
+        .catch(err => console.error(err));
     }
-  },
-}
+  }
+};
 </script>
 <style lang="css">
-  .img-field::-webkit-file-upload-button {
-    color: white;
-    display: inline-block;
-    background: #1c81e0c0;
-    border: none;
-    padding: 7px 15px;
-    font-weight: 700;
-    border-radius: 3px;
-    white-space: nowrap;
-    cursor: pointer;
-    font-size: 10pt;
-    width:100px;
-    height:100px;
-  }
-  .img-showd{
-        width: 100px;
-    height: 100px;
-    background-color: gainsboro;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-  .file-show{
-    display: flex;
-    flex-wrap: wrap;
-  }
+.img-field::-webkit-file-upload-button {
+  color: white;
+  display: inline-block;
+  background: #1c81e0c0;
+  border: none;
+  padding: 7px 15px;
+  font-weight: 700;
+  border-radius: 3px;
+  white-space: nowrap;
+  cursor: pointer;
+  font-size: 10pt;
+  width: 100px;
+  height: 100px;
+}
+.img-showd {
+  width: 100px;
+  height: 100px;
+  background-color: gainsboro;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.file-show {
+  display: flex;
+  flex-wrap: wrap;
+}
 </style>

@@ -23,13 +23,15 @@ export default {
     };
   },
   created() {
-    Axios.get("http://localhost:1337/actes/" + this.slug).then(resp => {
-      console.log(resp.data[0]);
-      this.contenu = JSON.parse(resp.data[0].contenu);
-      this.redacteur = resp.data[0].redacteur;
-      this.dateRedaction = resp.data[0].dateRedaction;
-      this.libelle = resp.data[0].libelle;
-    });
+    Axios.get("https://notaitre-api.herokuapp.com/actes/" + this.slug).then(
+      resp => {
+        console.log(resp.data[0]);
+        this.contenu = JSON.parse(resp.data[0].contenu);
+        this.redacteur = resp.data[0].redacteur;
+        this.dateRedaction = resp.data[0].dateRedaction;
+        this.libelle = resp.data[0].libelle;
+      }
+    );
   }
 };
 </script>

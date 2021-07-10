@@ -94,7 +94,7 @@ export default {
       formData.append("titre", this.titre);
       formData.append("dossier", this.dossier);
       formData.append("description", this.description);
-      Axios.post("http://localhost:1337/archive", formData)
+      Axios.post("https://notaitre-api.herokuapp.com/archive", formData)
         .then(resp => {
           this.loading = false;
           this.$router.push(`/archives?success=Archive est bien enregistré`);

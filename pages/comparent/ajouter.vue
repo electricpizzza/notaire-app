@@ -16,26 +16,30 @@
   </v-container>
 </template>
 <script>
-import Axios from 'axios'
-import ComparentService from '../../assets/sevices/comparentService.js'
-const comparentService = new ComparentService()
+import Axios from "axios";
+import ComparentService from "../../assets/sevices/comparentService.js";
+const comparentService = new ComparentService();
 export default {
-  name: 'Ajoter',
+  name: "Ajoter",
   data() {
     return {
       comparent: null,
       snackbar: false,
-      error: '',
-    }
+      error: ""
+    };
   },
   created() {
-    Axios.get('http://localhost:1337/comparent/' + this.$route.query.id).then(resp => {
-      this.comparent = resp.data.comparent[0];
-      console.log(resp.data.comparent[0]);
-    }).catch((err) => {
-      this.error = err;
-      this.snackbar = true;
-    });
-  },
-}
+    Axios.get(
+      "https://notaitre-api.herokuapp.com/comparent/" + this.$route.query.id
+    )
+      .then(resp => {
+        this.comparent = resp.data.comparent[0];
+        console.log(resp.data.comparent[0]);
+      })
+      .catch(err => {
+        this.error = err;
+        this.snackbar = true;
+      });
+  }
+};
 </script>

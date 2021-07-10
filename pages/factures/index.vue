@@ -79,8 +79,8 @@
                 <v-btn
                   color="primary"
                   dark
-                  :href="`http://localhost:1337/${item.link}`"
-                  :download="`http://localhost:1337/${item.link}`"
+                  :href="`https://notaitre-api.herokuapp.com/${item.link}`"
+                  :download="`https://notaitre-api.herokuapp.com/${item.link}`"
                   target="_blank"
                   >Telecharger</v-btn
                 >
@@ -125,7 +125,7 @@ export default {
     };
   },
   beforeCreate() {
-    Axios.get("http://localhost:1337/facture").then(resp => {
+    Axios.get("https://notaitre-api.herokuapp.com/facture").then(resp => {
       this.factures = resp.data;
       console.log(this.factures);
     });
@@ -136,7 +136,9 @@ export default {
       this.dialogDelete = true;
     },
     deleteItemConfirm() {
-      Axios.delete(`http://localhost:1337/facture/${this.todelete}`)
+      Axios.delete(
+        `https://notaitre-api.herokuapp.com/facture/${this.todelete}`
+      )
         .then(resp => {
           this.factures = this.factures.filter(fac => fac.id !== this.todelete);
           this.dialogDelete = false;

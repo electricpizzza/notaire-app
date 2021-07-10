@@ -187,91 +187,108 @@
 </template>
 
 <script>
-import Axios from 'axios';
+import Axios from "axios";
 export default {
   data() {
     return {
       dialog: true,
       loading: false,
-      error: '',
+      error: "",
       snackbar: false,
       info: {
-        lang: '',
+        lang: "",
         dossier: null,
-        model: null,
+        model: null
       },
       models: [],
       dossiers: [],
-      status: '',
+      status: "",
       recus: [
-        { annee: new Date().getFullYear(), num: '', date: new Date().toLocaleString().split(',')[0] }
+        {
+          annee: new Date().getFullYear(),
+          num: "",
+          date: new Date().toLocaleString().split(",")[0]
+        }
       ],
-      partieChp: [
-        { superficie: '', accentuation: '', prix: '', montant: '' }
-      ],
-      partieStr: '',
+      partieChp: [{ superficie: "", accentuation: "", prix: "", montant: "" }],
+      partieStr: "",
       comparents: [],
       biens: []
-
-    }
+    };
   },
   created() {
-    Axios.get('http://localhost:1337/data').then(resp => {
-      this.models = resp.data.modelAveu;
-    }).catch((err) => {
-
-    });
-    Axios.get('http://localhost:1337/dossiers').then(resp => {
+    Axios.get("https://notaitre-api.herokuapp.com/data")
+      .then(resp => {
+        this.models = resp.data.modelAveu;
+      })
+      .catch(err => {});
+    Axios.get("https://notaitre-api.herokuapp.com/dossiers").then(resp => {
       this.dossiers = resp.data;
       console.log(this.dossiers);
-    })
+    });
   },
   methods: {
     rediger() {
-      if (this.info.lang !== '' && this.info.dossier !== null && this.info.model !== null) {
-        const comps = JSON.parse(this.dossiers.find(dos => dos.id === this.info.dossier).comparents);
-        const bns = JSON.parse(this.dossiers.find(dos => dos.id === this.info.dossier).bien);
+      if (
+        this.info.lang !== "" &&
+        this.info.dossier !== null &&
+        this.info.model !== null
+      ) {
+        const comps = JSON.parse(
+          this.dossiers.find(dos => dos.id === this.info.dossier).comparents
+        );
+        const bns = JSON.parse(
+          this.dossiers.find(dos => dos.id === this.info.dossier).bien
+        );
         comps.forEach(comp => {
-          Axios.get('http://localhost:1337/comparent/' + comp).then(resp => {
+          Axios.get(
+            "https://notaitre-api.herokuapp.com/comparent/" + comp
+          ).then(resp => {
             this.comparents.push(resp.data.comparent[0]);
-          })
+          });
         });
         bns.forEach(bien => {
-          Axios.get('http://localhost:1337/bien/' + bien).then(resp => {
-            this.biens.push(resp.data)
-          })
-        })
+          Axios.get("https://notaitre-api.herokuapp.com/bien/" + bien).then(
+            resp => {
+              this.biens.push(resp.data);
+            }
+          );
+        });
         this.dialog = false;
       }
     },
     addRecu() {
-      this.recus.push({ annee: 2020, num: '', date: new Date().toLocaleString().split(',')[0] })
+      this.recus.push({
+        annee: 2020,
+        num: "",
+        date: new Date().toLocaleString().split(",")[0]
+      });
     },
     addPartie() {
-      this.partieChp.push({ feild1: '', feild2: '', feild3: '' })
+      this.partieChp.push({ feild1: "", feild2: "", feild3: "" });
     },
     enregistrer() {
       this.loading = true;
-      Axios.post('http://localhost:1337/aveu', {
+      Axios.post("https://notaitre-api.herokuapp.com/aveu", {
         comparent: this.comparent,
         bien: this.bien,
         status: this.status,
         partieChp: this.partieChp,
         partieStr: this.partieStr,
-        recu: this.recus,
-      }).then(resp => {
-        this.loading = false;
-        this.$router.push('/aveu?success=Aveu était beien Ajouté')
-      }).catch(err => {
-        this.loading = false
-        this.error = err;
-        this.snackbar = true;
+        recu: this.recus
       })
+        .then(resp => {
+          this.loading = false;
+          this.$router.push("/aveu?success=Aveu était beien Ajouté");
+        })
+        .catch(err => {
+          this.loading = false;
+          this.error = err;
+          this.snackbar = true;
+        });
     }
-  },
-}
+  }
+};
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

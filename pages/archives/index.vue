@@ -73,7 +73,9 @@
 
               <v-list-item-avatar tile size="80">
                 <img
-                  :src="'http://localhost:1337/' + item.filesPath[0]"
+                  :src="
+                    'https://notaitre-api.herokuapp.com/' + item.filesPath[0]
+                  "
                   alt=""
                   srcset=""
                 />
@@ -142,61 +144,59 @@
   </v-data-iterator>
 </template>
 <script>
-import Axios from 'axios'
+import Axios from "axios";
 
 export default {
   data() {
     return {
       dialog: false,
       itemsPerPageArray: [4, 8, 12],
-      search: '',
+      search: "",
       filter: {},
       sortDesc: false,
       page: 1,
       itemsPerPage: 4,
-      sortBy: 'titre',
-      keys: [
-        'titre',
-        'Dossier',
-        'Description'
-      ],
+      sortBy: "titre",
+      keys: ["titre", "Dossier", "Description"],
       tags: [],
       items: [],
       file: null,
-      titre: '',
+      titre: "",
       dossier: null,
-      description: '',
-      files: [],
-    }
+      description: "",
+      files: []
+    };
   },
   computed: {
     numberOfPages() {
-      return Math.ceil(this.items.length / this.itemsPerPage)
+      return Math.ceil(this.items.length / this.itemsPerPage);
     },
     filteredKeys() {
-      return this.keys.filter(key => key !== 'Name')
-    },
+      return this.keys.filter(key => key !== "Name");
+    }
   },
   created() {
-    Axios.get('http://localhost:1337/archive').then(resp => {
-      this.items = resp.data
-    }).catch(err => console.error(err))
+    Axios.get("https://notaitre-api.herokuapp.com/archive")
+      .then(resp => {
+        this.items = resp.data;
+      })
+      .catch(err => console.error(err));
   },
   methods: {
     nextPage() {
-      if (this.page + 1 <= this.numberOfPages) this.page += 1
+      if (this.page + 1 <= this.numberOfPages) this.page += 1;
     },
     formerPage() {
-      if (this.page - 1 >= 1) this.page -= 1
+      if (this.page - 1 >= 1) this.page -= 1;
     },
     updateItemsPerPage(number) {
-      this.itemsPerPage = number
-    },
-  },
-}
+      this.itemsPerPage = number;
+    }
+  }
+};
 </script>
 <style lang="css" scoped>
-  .v-card{
-    background-image: url('https://raw.githubusercontent.com/electricpizzza/BloodDonation/master/public/img/background.png');
-  }
+.v-card {
+  background-image: url("https://raw.githubusercontent.com/electricpizzza/BloodDonation/master/public/img/background.png");
+}
 </style>

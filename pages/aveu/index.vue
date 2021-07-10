@@ -69,37 +69,39 @@
 </template>
 
 <script>
-import Axios from 'axios'
+import Axios from "axios";
 export default {
   data() {
     return {
       aveus: [],
       loading: false,
-      search: '',
+      search: "",
       snackbar: false,
       success: null,
       expanded: [],
       headers: [
         {
-          text: 'ID',
-          align: 'start',
+          text: "ID",
+          align: "start",
           filterable: false,
-          value: 'id',
+          value: "id"
         },
-        { text: 'Status', value: 'status' },
-        { text: '', value: 'data-table-expand' },
+        { text: "Status", value: "status" },
+        { text: "", value: "data-table-expand" }
       ],
-      error: '',
-    }
+      error: ""
+    };
   },
   created() {
-    Axios.get('http://localhost:1337/aveu').then(resp => {
-      console.log(resp.data);
-      this.aveus = resp.data;
-    }).catch(err => {
-      console.error(err);
-    });
-    this.success = this.$route.query.success
+    Axios.get("https://notaitre-api.herokuapp.com/aveu")
+      .then(resp => {
+        console.log(resp.data);
+        this.aveus = resp.data;
+      })
+      .catch(err => {
+        console.error(err);
+      });
+    this.success = this.$route.query.success;
     if (this.success != null) {
       this.snackbar = true;
     }
@@ -107,17 +109,17 @@ export default {
   methods: {
     remove(id) {
       this.loading = true;
-      Axios.delete('http://localhost:1337/aveu/' + id).then(resp => {
-        this.aveus = this.aveus.filter(aveu => aveu.id !== id);
-        this.loading = false;
-      }).catch(err => {
-        this.loading = false;
-      })
+      Axios.delete("https://notaitre-api.herokuapp.com/aveu/" + id)
+        .then(resp => {
+          this.aveus = this.aveus.filter(aveu => aveu.id !== id);
+          this.loading = false;
+        })
+        .catch(err => {
+          this.loading = false;
+        });
     }
-  },
-}
+  }
+};
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

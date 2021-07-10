@@ -183,7 +183,7 @@ export default {
     enregistrer() {
       this.loading = true;
       console.log(this.details);
-      Axios.post("http://localhost:1337/bien", {
+      Axios.post("https://notaitre-api.herokuapp.com/bien", {
         libelle: this.libelle,
         type: this.type,
         ville: this.ville,
@@ -217,7 +217,7 @@ export default {
     }
   },
   created() {
-    Axios.get("http://localhost:1337/data").then(resp => {
+    Axios.get("https://notaitre-api.herokuapp.com/data").then(resp => {
       this.bineTypes = resp.data.typeBien;
     });
   },

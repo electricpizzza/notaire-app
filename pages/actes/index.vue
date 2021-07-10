@@ -91,7 +91,7 @@ export default {
   },
   beforeCreate() {
     axios
-      .get("http://localhost:1337/actes")
+      .get("https://notaitre-api.herokuapp.com/actes")
       .then(resp => {
         this.actes = resp.data;
       })
@@ -106,7 +106,7 @@ export default {
   methods: {
     remove(id) {
       axios
-        .delete("http://localhost:1337/actes/" + id)
+        .delete("https://notaitre-api.herokuapp.com/actes/" + id)
         .then(resp => {
           this.actes = this.actes.filter(acte => acte.id !== id);
         })

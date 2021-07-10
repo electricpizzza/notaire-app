@@ -29,7 +29,7 @@
           color="info"
           dark
           target="_blank"
-          :href="`http://localhost:1337/${mainFile}`"
+          :href="`https://notaitre-api.herokuapp.com/${mainFile}`"
           download
         >
           Telecharger l'Archive
@@ -96,7 +96,11 @@
             </v-list-item-content>
 
             <v-list-item-avatar tile size="80">
-              <img :src="`http://localhost:1337/${file}`" alt="" srcset="" />
+              <img
+                :src="`https://notaitre-api.herokuapp.com/${file}`"
+                alt=""
+                srcset=""
+              />
             </v-list-item-avatar>
           </v-list-item>
 
@@ -105,7 +109,7 @@
               outlined
               rounded
               color="info"
-              :href="`http://localhost:1337/${file}`"
+              :href="`https://notaitre-api.herokuapp.com/${file}`"
               target="_blank"
               class="px-5"
             >
@@ -140,7 +144,9 @@ export default {
     };
   },
   created() {
-    Axios.get(`http://localhost:1337/archive/${this.archive}`).then(resp => {
+    Axios.get(
+      `https://notaitre-api.herokuapp.com/archive/${this.archive}`
+    ).then(resp => {
       this.titre = resp.data.titre;
       this.description = resp.data.description;
       this.mainFile = resp.data.mainFile;
@@ -159,7 +165,7 @@ export default {
       });
 
       Axios.post(
-        `http://localhost:1337/archive/addFiles/${this.archive}`,
+        `https://notaitre-api.herokuapp.com/archive/addFiles/${this.archive}`,
         formData
       )
         .then(resp => {

@@ -340,14 +340,14 @@
   </v-stepper>
 </template>
 <script>
-import axios from 'axios'
-import ComparentService from '~/assets/sevices/comparentService'
-import Axios from 'axios'
-const comparentService = new ComparentService()
+import axios from "axios";
+import ComparentService from "~/assets/sevices/comparentService";
+import Axios from "axios";
+const comparentService = new ComparentService();
 export default {
   async asyncData({ params }) {
-    const doss = params.dossier
-    return { doss }
+    const doss = params.dossier;
+    return { doss };
   },
   data() {
     return {
@@ -355,77 +355,88 @@ export default {
       menu: false,
       menu1: false,
       headersComp: [
-        { text: 'ID', value: 'id' },
-        { text: 'Nom de Comparant', value: 'type' },
-        { text: 'Nom de Comparant', value: 'nom' },
+        { text: "ID", value: "id" },
+        { text: "Nom de Comparant", value: "type" },
+        { text: "Nom de Comparant", value: "nom" }
       ],
       headersBien: [
-        { text: 'ID', value: 'id' },
-        { text: 'Libelle', value: 'libelle' },
-        { text: 'Type', value: 'type' },
+        { text: "ID", value: "id" },
+        { text: "Libelle", value: "libelle" },
+        { text: "Type", value: "type" }
       ],
 
-      search: '',
-      nature: '',
-      libelle: '',
-      description: '',
+      search: "",
+      nature: "",
+      libelle: "",
+      description: "",
       dateOuverture: null,
       dateFermeture: null,
       Bien: [],
       Comparant: [],
-      notaire: '',
+      notaire: "",
       dialogBien: false,
       dialogComp: false,
       compList: [],
       bienList: [],
       selectedItems: [],
       snackbar: false,
-      error: '',
-    }
+      error: ""
+    };
   },
   created() {
-    axios.get(`http://localhost:1337/dossiers/${this.doss}`).then(resp => {
-      this.nature = resp.data.nature;
-      this.description = resp.data.description;
-      this.libelle = resp.data.libelle;
-      this.dateOuverture = resp.data.dateOuverture;
-      this.dateFermeture = resp.data.dateFermeture;
-      this.notaire = resp.data.NomMaitre;
+    axios
+      .get(`https://notaitre-api.herokuapp.com/dossiers/${this.doss}`)
+      .then(resp => {
+        this.nature = resp.data.nature;
+        this.description = resp.data.description;
+        this.libelle = resp.data.libelle;
+        this.dateOuverture = resp.data.dateOuverture;
+        this.dateFermeture = resp.data.dateFermeture;
+        this.notaire = resp.data.NomMaitre;
 
-      console.log(resp.data);
-      JSON.parse(resp.data.comparents).forEach(comp => {
-        Axios.get(`http://localhost:1337/comparent/${comp}`).then(c => {
-          this.Comparant.push(c.data.comparent[0]);
-        }).catch((err) => {
-          this.error = err;
-          this.snackbar = true;
+        console.log(resp.data);
+        JSON.parse(resp.data.comparents).forEach(comp => {
+          Axios.get(`https://notaitre-api.herokuapp.com/comparent/${comp}`)
+            .then(c => {
+              this.Comparant.push(c.data.comparent[0]);
+            })
+            .catch(err => {
+              this.error = err;
+              this.snackbar = true;
+            });
         });
-      });
-      JSON.parse(resp.data.bien).forEach(bien => {
-        Axios.get(`http://localhost:1337/bien/${bien}`).then(b => {
-          this.Bien.push(b.data);
-        }).catch((err) => {
-          this.error = err;
-          this.snackbar = true;
+        JSON.parse(resp.data.bien).forEach(bien => {
+          Axios.get(`https://notaitre-api.herokuapp.com/bien/${bien}`)
+            .then(b => {
+              this.Bien.push(b.data);
+            })
+            .catch(err => {
+              this.error = err;
+              this.snackbar = true;
+            });
         });
+      })
+      .catch(err => {
+        this.error = err;
+        this.snackbar = true;
       });
-    }).catch((err) => {
-      this.error = err;
-      this.snackbar = true;
-    });
   },
   beforeCreate() {
-    axios.get('http://localhost:1337/bien').then(resp => {
-      this.bienList = resp.data
-    }).catch((err) => {
-      this.error = err;
-      this.snackbar = true;
-    });
     axios
-      .get('http://localhost:1337/comparent', { mode: 'cors' })
-      .then((resp) => {
-        this.compList = resp.data
-      }).catch((err) => {
+      .get("https://notaitre-api.herokuapp.com/bien")
+      .then(resp => {
+        this.bienList = resp.data;
+      })
+      .catch(err => {
+        this.error = err;
+        this.snackbar = true;
+      });
+    axios
+      .get("https://notaitre-api.herokuapp.com/comparent", { mode: "cors" })
+      .then(resp => {
+        this.compList = resp.data;
+      })
+      .catch(err => {
         this.error = err;
         this.snackbar = true;
       });
@@ -433,54 +444,54 @@ export default {
 
   methods: {
     selectComparant() {
-      this.Comparant = this.selectedItems
-      this.selectedItems = []
-      this.dialogComp = false
+      this.Comparant = this.selectedItems;
+      this.selectedItems = [];
+      this.dialogComp = false;
     },
     selectBien() {
-      this.Bien = this.selectedItems
-      this.selectedItems = []
-      this.dialogBien = false
+      this.Bien = this.selectedItems;
+      this.selectedItems = [];
+      this.dialogBien = false;
     },
     openComp() {
-      this.selectedItems = this.Comparant
-      this.dialogComp = true
+      this.selectedItems = this.Comparant;
+      this.dialogComp = true;
     },
     openBien() {
       this.selectedItems = this.Bien;
-      this.dialogBien = true
+      this.dialogBien = true;
     },
     enregistrer() {
       const comps = [];
       const bins = [];
 
       this.Comparant.forEach(Comp => {
-        comps.push(Comp.id)
+        comps.push(Comp.id);
       });
       this.Bien.forEach(b => {
-        bins.push(b.id)
+        bins.push(b.id);
       });
 
-
-      axios.put(`http://localhost:1337/dossiers/${this.doss}`, {
-        title: `${this.libelle} -  ${this.nature}`,
-        nature: this.nature,
-        description: this.description,
-        libelle: this.libelle,
-        dateOuverture: this.dateOuverture,
-        dateFermeture: this.dateFermeture,
-        Bien: JSON.stringify(bins),
-        Comparent: JSON.stringify(comps),
-        NomMaitre: this.notaire,
-      }).then(resp => {
-        this.$router.push(
-          `/dossiers?success=Dossiers est bien enregistré`
-        )
-      }).catch((err) => {
-        this.error = err;
-        this.snackbar = true;
-      });
+      axios
+        .put(`https://notaitre-api.herokuapp.com/dossiers/${this.doss}`, {
+          title: `${this.libelle} -  ${this.nature}`,
+          nature: this.nature,
+          description: this.description,
+          libelle: this.libelle,
+          dateOuverture: this.dateOuverture,
+          dateFermeture: this.dateFermeture,
+          Bien: JSON.stringify(bins),
+          Comparent: JSON.stringify(comps),
+          NomMaitre: this.notaire
+        })
+        .then(resp => {
+          this.$router.push(`/dossiers?success=Dossiers est bien enregistré`);
+        })
+        .catch(err => {
+          this.error = err;
+          this.snackbar = true;
+        });
     }
-  },
-}
+  }
+};
 </script>

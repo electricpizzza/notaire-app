@@ -151,7 +151,7 @@ export default {
     };
   },
   beforeCreate() {
-    axios.get("http://localhost:1337/data").then(resp => {
+    axios.get("https://notaitre-api.herokuapp.com/data").then(resp => {
       console.log(resp.data);
       this.typeActes = resp.data.typeActe;
     });
@@ -193,7 +193,7 @@ export default {
         this.error = "Veuillez Bien Saisire les données S.V.P.";
       } else {
         axios
-          .post("http://localhost:1337/model", {
+          .post("https://notaitre-api.herokuapp.com/model", {
             language: this.language,
             redacteur: this.redacteur,
             libelle: this.libelle,

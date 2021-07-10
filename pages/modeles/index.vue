@@ -79,7 +79,7 @@ export default {
     };
   },
   beforeCreate() {
-    axios.get("http://localhost:1337/model").then(resp => {
+    axios.get("https://notaitre-api.herokuapp.com/model").then(resp => {
       this.modeles = resp.data;
     });
   },

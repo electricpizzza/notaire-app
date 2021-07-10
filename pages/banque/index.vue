@@ -61,32 +61,34 @@
 </template>
 
 <script>
-import Axios from 'axios'
+import Axios from "axios";
 export default {
   data() {
     return {
-      search: '',
+      search: "",
       headers: [
         {
-          text: 'Tite',
-          align: 'start',
+          text: "Tite",
+          align: "start",
           sortable: false,
-          value: 'nom',
+          value: "nom"
         },
-        { text: 'Agence', value: 'Agence' },
-        { text: 'Ville', value: 'ville' },
+        { text: "Agence", value: "Agence" },
+        { text: "Ville", value: "ville" }
       ],
       banques: [],
       dialogDel: false,
       loading: false,
-      toDelete: null,
-    }
+      toDelete: null
+    };
   },
   created() {
-    Axios.get('http://localhost:1337/comparent/banques').then(resp => {
-      console.log(resp);
-      this.banques = resp.data;
-    })
+    Axios.get("https://notaitre-api.herokuapp.com/comparent/banques").then(
+      resp => {
+        console.log(resp);
+        this.banques = resp.data;
+      }
+    );
   },
   methods: {
     remove(id) {
@@ -94,26 +96,28 @@ export default {
       this.toDelete = id;
     },
     del() {
-      this.loading = true
-      Axios.delete('http://localhost:1337/comparent/' + this.toDelete).then(resp => {
-        console.log(resp.data);
-        this.loading = false;
-        this.dialogDel = false;
-        this.banques = this.banques.filter(bnq => bnq.id !== this.toDelete)
-      }).catch((err) => {
-        console.error(err);
-        this.loading = false;
-        this.dialogDel = false;
-      });
+      this.loading = true;
+      Axios.delete(
+        "https://notaitre-api.herokuapp.com/comparent/" + this.toDelete
+      )
+        .then(resp => {
+          console.log(resp.data);
+          this.loading = false;
+          this.dialogDel = false;
+          this.banques = this.banques.filter(bnq => bnq.id !== this.toDelete);
+        })
+        .catch(err => {
+          console.error(err);
+          this.loading = false;
+          this.dialogDel = false;
+        });
     },
     cancel() {
       this.toDelete = null;
       this.dialogDel = false;
     }
-  },
-}
+  }
+};
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

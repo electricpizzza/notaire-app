@@ -218,9 +218,9 @@
 </template>
 
 <script>
-import Axios from 'axios';
+import Axios from "axios";
 export default {
-  layout: 'none',
+  layout: "none",
   asyncData({ params }) {
     const slug = params.aveu;
     console.log(slug);
@@ -228,41 +228,51 @@ export default {
   },
   data() {
     return {
-      status: '',
-      recus: [{ annee: 2020, num: '', date: new Date().toLocaleString().split(',')[0] }],
-      partieChp: [{
-        prix: '',
-        montant: '',
-        superficie: '',
-        accentuation: ''
-      }],
-      partieStr: '',
+      status: "",
+      recus: [
+        {
+          annee: 2020,
+          num: "",
+          date: new Date().toLocaleString().split(",")[0]
+        }
+      ],
+      partieChp: [
+        {
+          prix: "",
+          montant: "",
+          superficie: "",
+          accentuation: ""
+        }
+      ],
+      partieStr: "",
       bien: null,
-      comparent: null,
-    }
+      comparent: null
+    };
   },
   created() {
-
-    Axios.get('http://localhost:1337/aveu/' + this.slug).then(resp => {
-      const bien = resp.data.bien;
-      const comparent = resp.data.comparent;
-      this.partieChp = resp.data.partieChp;
-      this.partieStr = resp.data.partieStr;
-      this.recus = resp.data.recu;
-      console.log(this.recus);
-      this.status = resp.data.status;
-      Axios.get('http://localhost:1337/comparent/' + comparent).then(resp => {
-        this.comparent = resp.data;
-      })
-      Axios.get('http://localhost:1337/bien/' + bien).then(resp => {
-        this.bien = resp.data;
-      })
-    })
+    Axios.get("https://notaitre-api.herokuapp.com/aveu/" + this.slug).then(
+      resp => {
+        const bien = resp.data.bien;
+        const comparent = resp.data.comparent;
+        this.partieChp = resp.data.partieChp;
+        this.partieStr = resp.data.partieStr;
+        this.recus = resp.data.recu;
+        console.log(this.recus);
+        this.status = resp.data.status;
+        Axios.get(
+          "https://notaitre-api.herokuapp.com/comparent/" + comparent
+        ).then(resp => {
+          this.comparent = resp.data;
+        });
+        Axios.get("https://notaitre-api.herokuapp.com/bien/" + bien).then(
+          resp => {
+            this.bien = resp.data;
+          }
+        );
+      }
+    );
   }
-
-}
+};
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

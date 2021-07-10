@@ -51,8 +51,8 @@
   </div>
 </template>
 <script>
-import axios from 'axios'
-import model1 from './../../assets/model1.json'
+import axios from "axios";
+import model1 from "./../../assets/model1.json";
 export default {
   name: "AjouterActe",
   data() {
@@ -61,16 +61,19 @@ export default {
       dialog: this.model ? false : true,
       models: [],
       snackbar: false,
-      error: '',
-    }
+      error: ""
+    };
   },
   beforeCreate() {
-    axios.get('http://localhost:1337/model').then(resp => {
-      this.models = resp.data;
-    }).catch((err) => {
-      this.error = err;
-      this.snackbar = true;
-    });
+    axios
+      .get("https://notaitre-api.herokuapp.com/model")
+      .then(resp => {
+        this.models = resp.data;
+      })
+      .catch(err => {
+        this.error = err;
+        this.snackbar = true;
+      });
   }
-}
+};
 </script>

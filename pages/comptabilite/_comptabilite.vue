@@ -53,7 +53,7 @@
                   <v-select
                     :items="[
                       { label: 'Espece', value: 'Espece' },
-                      { label: 'Chèque', value: 'Cheque' },
+                      { label: 'Chèque', value: 'Cheque' }
                     ]"
                     item-text="label"
                     item-value="value"
@@ -237,38 +237,38 @@
   </v-container>
 </template>
 <script>
-import Axios from 'axios'
+import Axios from "axios";
 export default {
   async asyncData({ params }) {
     const comp = params.comptabilite;
-    return { comp }
+    return { comp };
   },
   data() {
     return {
       dialog: false,
       headers: [
         {
-          text: 'ID',
-          align: 'start',
+          text: "ID",
+          align: "start",
           sortable: false,
-          value: 'id',
+          value: "id"
         },
-        { text: 'libelle', value: 'libelle' },
-        { text: 'typePay', value: 'typePay' },
-        { text: 'valeur (DHS)', value: 'valeur' },
-        { text: 'Date de Transaction', value: 'dateTrans' },
+        { text: "libelle", value: "libelle" },
+        { text: "typePay", value: "typePay" },
+        { text: "valeur (DHS)", value: "valeur" },
+        { text: "Date de Transaction", value: "dateTrans" }
       ],
       transactions: [],
       service: {},
-      libelle: '',
-      typeTrans: '',
-      typePay: '',
-      numCheque: '',
+      libelle: "",
+      typeTrans: "",
+      typePay: "",
+      numCheque: "",
       comparent: null,
       valeur: null,
       comparentList: [],
-      comparents: '',
-      error: '',
+      comparents: "",
+      error: "",
       loading: false,
       snackbar: false,
       services: [],
@@ -278,63 +278,77 @@ export default {
       totalClientDepense: 0,
       tva: 0,
       recuDialog: false,
-      recuLink: '',
-      titre: '',
-    }
+      recuLink: "",
+      titre: ""
+    };
   },
   created() {
-    Axios.get('http://localhost:1337/transaction/comptabilite/' + this.comp).then(resp => {
-      this.transactions = resp.data;
-      const transetude = resp.data.filter(trans => trans.service.partie === 'etude');
-      const transClient = resp.data.filter(trans => trans.service.partie === 'client');
+    Axios.get(
+      "https://notaitre-api.herokuapp.com/transaction/comptabilite/" + this.comp
+    )
+      .then(resp => {
+        this.transactions = resp.data;
+        const transetude = resp.data.filter(
+          trans => trans.service.partie === "etude"
+        );
+        const transClient = resp.data.filter(
+          trans => trans.service.partie === "client"
+        );
 
-      transetude.forEach(trans => {
-        if (trans.service.type === 'recette')
-          this.totalEtudeRecette += trans.valeur;
-        if (trans.service.type === 'depense') {
-          this.tva += (trans.valeur * trans.service.tva) / 100;
-          this.totalEtudeDepense += trans.valeur;
-        }
-      });
-
-      transClient.forEach(trans => {
-        if (trans.service.type === 'recette')
-          this.totalClientRecette += trans.valeur;
-        if (trans.service.type === 'depense')
-          this.totalClientDepense += trans.valeur;
-      });
-      this.totalEtudeDepense += this.tva;
-    }).catch((err) => {
-      this.error = err;
-      this.snackbar = true;
-    });
-    Axios.get('http://localhost:1337/dossiers/' + this.comp).then(resp => {
-      this.titre = resp.data.identifiant + " / " + resp.data.libelle
-      JSON.parse(resp.data.comparents).forEach(element => {
-        Axios.get('http://localhost:1337/comparent/' + element).then(c => {
-          this.comparentList.push(c.data.comparent[0]);
-        }).catch((err) => {
-          this.error = err;
-          this.snackbar = true;
+        transetude.forEach(trans => {
+          if (trans.service.type === "recette")
+            this.totalEtudeRecette += trans.valeur;
+          if (trans.service.type === "depense") {
+            this.tva += (trans.valeur * trans.service.tva) / 100;
+            this.totalEtudeDepense += trans.valeur;
+          }
         });
+
+        transClient.forEach(trans => {
+          if (trans.service.type === "recette")
+            this.totalClientRecette += trans.valeur;
+          if (trans.service.type === "depense")
+            this.totalClientDepense += trans.valeur;
+        });
+        this.totalEtudeDepense += this.tva;
+      })
+      .catch(err => {
+        this.error = err;
+        this.snackbar = true;
       });
-    }).catch((err) => {
-      this.error = err;
-      this.snackbar = true;
-    });
-    Axios.get('http://localhost:1337/service').then(resp => {
-      this.services = resp.data;
-    }).catch((err) => {
-      this.error = err;
-      this.snackbar = true;
-    });
+    Axios.get("https://notaitre-api.herokuapp.com/dossiers/" + this.comp)
+      .then(resp => {
+        this.titre = resp.data.identifiant + " / " + resp.data.libelle;
+        JSON.parse(resp.data.comparents).forEach(element => {
+          Axios.get("https://notaitre-api.herokuapp.com/comparent/" + element)
+            .then(c => {
+              this.comparentList.push(c.data.comparent[0]);
+            })
+            .catch(err => {
+              this.error = err;
+              this.snackbar = true;
+            });
+        });
+      })
+      .catch(err => {
+        this.error = err;
+        this.snackbar = true;
+      });
+    Axios.get("https://notaitre-api.herokuapp.com/service")
+      .then(resp => {
+        this.services = resp.data;
+      })
+      .catch(err => {
+        this.error = err;
+        this.snackbar = true;
+      });
   },
   methods: {
     ajouter() {
       this.dialog = false;
       this.loading = true;
       this.service = this.services.find(ser => ser.id === this.service.id);
-      Axios.post('http://localhost:1337/transaction/', {
+      Axios.post("https://notaitre-api.herokuapp.com/transaction/", {
         comptabilite: this.comp,
         libelle: this.service.libelle,
         typeTrans: this.typeTrans,
@@ -342,90 +356,98 @@ export default {
         comparent: this.comparents,
         valeur: this.valeur,
         numCheque: this.numCheque,
-        service: this.service,
-      }).then(resp => {
-        if (resp.data.recu !== null) {
-          this.recuDialog = true;
-          this.recuLink = `http://localhost:1337/${resp.data.recu}`;
-
-        }
-        const today = new Date();
-        this.transactions.push({
-          id: resp.data.transaction.identifiers[0].id,
-          comptabilite: this.comp,
-          libelle: this.service.libelle,
-          typeTrans: this.typeTrans,
-          typePay: this.typePay,
-          comparent: this.comp,
-          valeur: this.valeur,
-          service: this.service,
-          dateTrans: `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`,
+        service: this.service
+      })
+        .then(resp => {
+          if (resp.data.recu !== null) {
+            this.recuDialog = true;
+            this.recuLink = `https://notaitre-api.herokuapp.com/${resp.data.recu}`;
+          }
+          const today = new Date();
+          this.transactions.push({
+            id: resp.data.transaction.identifiers[0].id,
+            comptabilite: this.comp,
+            libelle: this.service.libelle,
+            typeTrans: this.typeTrans,
+            typePay: this.typePay,
+            comparent: this.comp,
+            valeur: this.valeur,
+            service: this.service,
+            dateTrans: `${today.getFullYear()}-${today.getMonth() +
+              1}-${today.getDate()}`
+          });
+          //this.calcule();
+          this.loading = false;
+        })
+        .catch(err => {
+          this.loading = false;
+          this.error = err;
+          this.snackbar = true;
         });
-        //this.calcule();
-        this.loading = false;
-      }).catch((err) => {
-        this.loading = false;
-        this.error = err;
-        this.snackbar = true;
-      });
     },
     printRecu(id) {
       const trans = this.transactions.find(tra => tra.id === id);
       this.loading = true;
-      Axios.post('http://localhost:1337/recu', {
+      Axios.post("https://notaitre-api.herokuapp.com/recu", {
         somme: trans.valeur,
         libelle: trans.libelle,
         dateTrans: trans.dateTrans,
         client: trans.comparent
-      }).then(resp => {
-        console.log(resp.data);
-        this.loading = false;
-        this.recuDialog = true;
-        this.recuLink = `http://localhost:1337/${resp.data}`;
-      }).catch((err) => {
-        this.loading = false;
-        this.error = err;
-        this.snackbar = true;
-      });
+      })
+        .then(resp => {
+          console.log(resp.data);
+          this.loading = false;
+          this.recuDialog = true;
+          this.recuLink = `https://notaitre-api.herokuapp.com/${resp.data}`;
+        })
+        .catch(err => {
+          this.loading = false;
+          this.error = err;
+          this.snackbar = true;
+        });
     },
     calcule() {
-      const transetude = resp.data.filter(trans => trans.service.partie === 'etude');
-      const transClient = resp.data.filter(trans => trans.service.partie === 'client');
+      const transetude = resp.data.filter(
+        trans => trans.service.partie === "etude"
+      );
+      const transClient = resp.data.filter(
+        trans => trans.service.partie === "client"
+      );
 
       transetude.forEach(trans => {
-        if (trans.service.type === 'recette')
+        if (trans.service.type === "recette")
           this.totalEtudeRecette += trans.valeur;
-        if (trans.service.type === 'depense') {
+        if (trans.service.type === "depense") {
           this.tva += (trans.valeur * trans.service.tva) / 100;
           this.totalEtudeDepense += trans.valeur;
         }
       });
 
       transClient.forEach(trans => {
-        if (trans.service.type === 'recette')
+        if (trans.service.type === "recette")
           this.totalClientRecette += trans.valeur;
-        if (trans.service.type === 'depense')
+        if (trans.service.type === "depense")
           this.totalClientDepense += trans.valeur;
       });
       this.totalEtudeDepense += this.tva;
     }
-  },
-
-}
+  }
+};
 </script>
 <style scoped>
-  th{
-    text-transform: uppercase;
-    border: 1px solid black;
-  }
-  thead{
-    border: 1px solid black;
-  }
-  td{
-    border-left: 1px solid black;
-    border-right: 1px solid black;
-  }
-  .bordered, table{
-    border: 1px solid black;
-  }
+th {
+  text-transform: uppercase;
+  border: 1px solid black;
+}
+thead {
+  border: 1px solid black;
+}
+td {
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+}
+.bordered,
+table {
+  border: 1px solid black;
+}
 </style>
